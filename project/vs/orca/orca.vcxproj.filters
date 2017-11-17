@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="lib">
+      <UniqueIdentifier>{5b08afce-a524-4fc9-9ea0-5584a75c4254}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src">
+      <UniqueIdentifier>{035bf3d7-dc4d-4a25-9cdf-a5ae0f784dde}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\base">
+      <UniqueIdentifier>{982adc93-c645-41ff-8666-5c291b36e531}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\base\uv">
+      <UniqueIdentifier>{b66ba66d-7fa1-4a0c-b4d2-befde5f8536f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="lib\libuv">
+      <UniqueIdentifier>{6b05ad2f-ebc6-4614-b9af-c6a1b48be781}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\orca">
+      <UniqueIdentifier>{f0d4caa8-80c4-49ef-b6af-d2b652f5ca45}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\examples">
+      <UniqueIdentifier>{052a3d20-4c6e-4adb-8141-7e0b0c7f3b23}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\src\base\uv\Async.h">
+      <Filter>src\base\uv</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\base\uv\EventLoop.h">
+      <Filter>src\base\uv</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\base\uv\SignalCtrl.h">
+      <Filter>src\base\uv</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\base\uv\SocketAddr.h">
+      <Filter>src\base\uv</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\base\uv\TcpAccepter.h">
+      <Filter>src\base\uv</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\base\uv\TcpClient.h">
+      <Filter>src\base\uv</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\base\uv\TcpConnection.h">
+      <Filter>src\base\uv</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\base\uv\TcpServer.h">
+      <Filter>src\base\uv</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\base\uv\Timer.h">
+      <Filter>src\base\uv</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\base\uv\TimerWheel.h">
+      <Filter>src\base\uv</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\orca\MessageBox.h">
+      <Filter>src\orca</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\orca\MessageTraits.h">
+      <Filter>src\orca</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\src\base\uv\EventLoop.cpp">
+      <Filter>src\base\uv</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\base\uv\SignalCtrl.cpp">
+      <Filter>src\base\uv</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\base\uv\TcpAccepter.cpp">
+      <Filter>src\base\uv</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\base\uv\TcpClient.cpp">
+      <Filter>src\base\uv</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\base\uv\TcpConnection.cpp">
+      <Filter>src\base\uv</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\base\uv\TcpServer.cpp">
+      <Filter>src\base\uv</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\base\uv\TimerWheel.cpp">
+      <Filter>src\base\uv</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\examples\main.cpp">
+      <Filter>src\examples</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="..\..\..\lib\libuv\lib\vc2017\Release.x64\libuv.lib">
+      <Filter>lib\libuv</Filter>
+    </Library>
+  </ItemGroup>
+</Project>
