@@ -1,19 +1,22 @@
-#ifndef      ORCA_MESSAGE_H
-#define      ORCA_MESSAGE_H
+#ifndef      ORCA_MESSAGE_PACK_H
+#define      ORCA_MESSAGE_PACK_H
 
 #include <memory>
 #include <string>
 
 #include <orca/MessageTraits.h>
+#include <orca/Define.h>
 
 namespace orca
 {
+namespace core
+{ 
 
-template <typename MessageType>
-class MessageBox
+template <typename MessageType = MESSAGE_TYPE>
+class MessagePack
 {
 public:
-    MessageBox(MessageType* ptr = nullptr)
+    MessagePack(MessageType* ptr = nullptr)
         :messagePtr_(ptr)
     {
     }
@@ -43,5 +46,6 @@ private:
     std::shared_ptr<MessageType> messagePtr_;
 };
 }
-#endif // ! ACTOR_MESSAGE_H
+}
+#endif 
 

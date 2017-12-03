@@ -54,10 +54,34 @@
     <ClInclude Include="..\..\..\src\base\uv\TimerWheel.h">
       <Filter>src\base\uv</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\src\orca\MessageBox.h">
+    <ClInclude Include="..\..\..\src\orca\MessageTraits.h">
       <Filter>src\orca</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\src\orca\MessageTraits.h">
+    <ClInclude Include="..\..\..\src\orca\Actor.h">
+      <Filter>src\orca</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\orca\Address.h">
+      <Filter>src\orca</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\orca\Define.h">
+      <Filter>src\orca</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\orca\Framework.h">
+      <Filter>src\orca</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\orca\Orca.h">
+      <Filter>src\orca</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\orca\Thread.h">
+      <Filter>src\orca</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\orca\ThreadPool.h">
+      <Filter>src\orca</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\orca\MessagePack.h">
+      <Filter>src\orca</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\orca\MailBoxThread.h">
       <Filter>src\orca</Filter>
     </ClInclude>
   </ItemGroup>
@@ -85,6 +109,21 @@
     </ClCompile>
     <ClCompile Include="..\..\..\src\examples\main.cpp">
       <Filter>src\examples</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\orca\Actor.cpp">
+      <Filter>src\orca</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\orca\Framework.cpp">
+      <Filter>src\orca</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\orca\Thread.cpp">
+      <Filter>src\orca</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\orca\ThreadPool.cpp">
+      <Filter>src\orca</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\orca\MailBoxThread.cpp">
+      <Filter>src\orca</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -1,10 +1,12 @@
-#ifndef    ORCA_MESSAGE_TRAITS
-#define    ORCA_MESSAGE_TRAITS
+#ifndef    ORCA_MESSAGE_TRAITS_H
+#define    ORCA_MESSAGE_TRAITS_H
 
 #include <string>
 
 namespace orca
 {
+namespace core
+{ 
 
 template<typename T>
 struct MessageTraits
@@ -23,6 +25,6 @@ struct MessageTraits<std::string>
         return static_cast<const void*>(object.c_str());
     }
 };
-
+}
 }
 #endif

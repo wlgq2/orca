@@ -29,8 +29,16 @@
     <ClInclude Include="..\..\..\src\base\uv\TcpServer.h" />
     <ClInclude Include="..\..\..\src\base\uv\Timer.h" />
     <ClInclude Include="..\..\..\src\base\uv\TimerWheel.h" />
-    <ClInclude Include="..\..\..\src\orca\MessageBox.h" />
+    <ClInclude Include="..\..\..\src\orca\Actor.h" />
+    <ClInclude Include="..\..\..\src\orca\Address.h" />
+    <ClInclude Include="..\..\..\src\orca\Define.h" />
+    <ClInclude Include="..\..\..\src\orca\Framework.h" />
+    <ClInclude Include="..\..\..\src\orca\MailBoxThread.h" />
+    <ClInclude Include="..\..\..\src\orca\MessagePack.h" />
     <ClInclude Include="..\..\..\src\orca\MessageTraits.h" />
+    <ClInclude Include="..\..\..\src\orca\Orca.h" />
+    <ClInclude Include="..\..\..\src\orca\Thread.h" />
+    <ClInclude Include="..\..\..\src\orca\ThreadPool.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\src\base\uv\EventLoop.cpp" />
@@ -41,6 +49,11 @@
     <ClCompile Include="..\..\..\src\base\uv\TcpServer.cpp" />
     <ClCompile Include="..\..\..\src\base\uv\TimerWheel.cpp" />
     <ClCompile Include="..\..\..\src\examples\main.cpp" />
+    <ClCompile Include="..\..\..\src\orca\Actor.cpp" />
+    <ClCompile Include="..\..\..\src\orca\Framework.cpp" />
+    <ClCompile Include="..\..\..\src\orca\MailBoxThread.cpp" />
+    <ClCompile Include="..\..\..\src\orca\Thread.cpp" />
+    <ClCompile Include="..\..\..\src\orca\ThreadPool.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="..\..\..\lib\libuv\lib\vc2017\Release.x64\libuv.lib" />
