@@ -9,7 +9,6 @@
 class AsyncLog :public uv::LogInterface
 {
 public:
-public:
     AsyncLog()
         : async_(nullptr),
         console_(spdlog::stdout_color_mt("console"))
@@ -61,5 +60,5 @@ private:
     std::shared_ptr<spdlog::logger> async_;
     std::shared_ptr<spdlog::logger> console_;
 };
-#endif // ! LOG_OUT_H
+#endif 
 
