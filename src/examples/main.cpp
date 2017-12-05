@@ -3,6 +3,7 @@
 #include <orca/Framework.h>
 #include <future>
 #include <uv/uv11.h>
+#include "base/AsyncLog.h"
 
 using namespace  std;
 
@@ -35,6 +36,10 @@ REGISTER_MESSAGE_TYPE(MyMessage);
 
 int main(int argc, char** args)
 {
+    //log
+    AsyncLog log;
+    uv::Log::Instance()->registerInterface(&log);
+
     orca::MessagePack message;
     message.create("my message type");
 

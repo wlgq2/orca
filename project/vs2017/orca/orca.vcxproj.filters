@@ -84,6 +84,12 @@
     <ClInclude Include="..\..\..\src\orca\MailBoxThread.h">
       <Filter>src\orca</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\src\base\uv\LogInterface.h">
+      <Filter>src\base\uv</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\base\AsyncLog.h">
+      <Filter>src\base</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\src\base\uv\EventLoop.cpp">
