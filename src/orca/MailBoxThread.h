@@ -1,5 +1,5 @@
-#ifndef  ORCA_MAILBOX_THREAD
-#define  ORCA_MAILBOX_THREAD
+#ifndef  ORCA_MAILBOX_THREAD_H
+#define  ORCA_MAILBOX_THREAD_H
 
 class  MailBoxThread
 {
