@@ -1,4 +1,5 @@
 #ifndef    ORCA_THREAD_POOL
+#define    ORCA_THREAD_POOL
 
 #include   <orca/Thread.h>
 #include   <vector>
