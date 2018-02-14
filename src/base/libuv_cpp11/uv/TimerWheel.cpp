@@ -8,7 +8,7 @@
    Description: 
 */
 
-#include "uv/TimerWheel.h"
+#include "TimerWheel.h"
 
 using namespace uv;
 using namespace std;
@@ -22,14 +22,14 @@ TimerWheel::TimerWheel(EventLoop* loop)
 TimerWheel::TimerWheel(EventLoop* loop,unsigned int timeout)
     :index_(0),
     timeoutSec_(timeout),
-    timer_(loop,1000,1000,std::bind(&TimerWheel::wheelCallback,this,std::placeholders::_1),nullptr)
+    timer_(loop,1000,1000,std::bind(&TimerWheel::wheelCallback,this,std::placeholders::_1, std::placeholders::_2),nullptr)
 {
 
 }
 
-void TimerWheel::setTimeout(unsigned int timeout)
+void TimerWheel::setTimeout(unsigned int second)
 {
-    timeoutSec_ = timeout;
+    timeoutSec_ = second;
 }
 
 void TimerWheel::start()
@@ -62,9 +62,8 @@ void TimerWheel::insertNew(shared_ptr<TcpConnection> connection)
     wheel[index_].insert(conn);
 }
 
-void TimerWheel::wheelCallback(void* data)
+void TimerWheel::wheelCallback(Timer<void*>*,void*)
 {
-    data = data;
     if(!timeoutSec_)
         return;
     if(++index_ ==timeoutSec_)

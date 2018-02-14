@@ -8,10 +8,10 @@ Last modified: 2017-11-8
 Description:
 */
 
-#include "uv/TcpConnection.h"
-#include "uv/TcpServer.h"
-#include "uv/Async.h"
-#include "uv/LogInterface.h"
+#include "TcpConnection.h"
+#include "TcpServer.h"
+#include "Async.h"
+#include "LogInterface.h"
 
 using namespace std;
 using namespace std::chrono;
@@ -42,23 +42,19 @@ struct WriteArgs
 
 TcpConnection:: ~TcpConnection()
 {
-    //libuv 在loop轮询中会检测关闭句柄，delete会导致程序异常退出。
-    ::uv_close((uv_handle_t*)client_,
-        [](uv_handle_t* handle)
-    {
-        delete handle;
-    });
+    delete handle_;
 }
 
 TcpConnection::TcpConnection(EventLoop* loop, std::string& name, uv_tcp_t* client, bool isConnected)
     :name_(name),
     connected_(isConnected),
     loop_(loop),
-    client_(client),
+    handle_(client),
     onMessageCallback_(nullptr),
-    onConnectCloseCallback_(nullptr)
+    onConnectCloseCallback_(nullptr),
+    closeCompleteCallback_(nullptr)
 {
-    client->data = static_cast<void*>(this);
+    handle_->data = static_cast<void*>(this);
     ::uv_read_start((uv_stream_t*)client,
         [](uv_handle_t *handle, size_t suggested_size, uv_buf_t *buf)
     {
@@ -81,10 +77,28 @@ void TcpConnection::onMessage(const char* buf, ssize_t size)
         onMessageCallback_(shared_from_this(), buf, size);
 }
 
-void TcpConnection::onClose()
+void TcpConnection::onSocketClose()
 {
     if (onConnectCloseCallback_)
         onConnectCloseCallback_(name_);
+}
+
+void TcpConnection::close(std::function<void(std::string&)> callback)
+{
+    if (uv_is_active((uv_handle_t*)handle_)) 
+    {
+        uv_read_stop((uv_stream_t*)handle_);
+    }
+    if (uv_is_closing((uv_handle_t*)handle_) == 0)
+    {
+        //libuv 在loop轮询中会检测关闭句柄，delete会导致程序异常退出。
+        ::uv_close((uv_handle_t*)handle_,
+            [](uv_handle_t* handle)
+        {
+            auto connection = static_cast<TcpConnection*>(handle->data);
+            connection->CloseComplete();
+        });
+    }
 }
 
 int TcpConnection::write(const char* buf, ssize_t size, AfterWriteCallback callback)
@@ -95,7 +109,7 @@ int TcpConnection::write(const char* buf, ssize_t size, AfterWriteCallback callb
         WriteReq* req = new WriteReq;
         req->buf = uv_buf_init(const_cast<char*>(buf), static_cast<unsigned int>(size));
         req->callback = callback;
-        rst = ::uv_write((uv_write_t*)req, (uv_stream_t*)client_, &req->buf, 1,
+        rst = ::uv_write((uv_write_t*)req, (uv_stream_t*)handle_, &req->buf, 1,
             [](uv_write_t *req, int status)
         {
             WriteReq *wr = (WriteReq*)req;
@@ -170,7 +184,6 @@ void  TcpConnection::onMesageReceive(uv_stream_t* client, ssize_t nread, const u
     {
         connection->onMessage(buf->base, nread);
         delete[](buf->base);
-        return;
     }
     else if (nread < 0)
     {
@@ -180,7 +193,7 @@ void  TcpConnection::onMesageReceive(uv_stream_t* client, ssize_t nread, const u
 
         if (nread != UV_EOF)
         {
-            connection->onClose();
+            connection->onSocketClose();
             return;
         }
 
@@ -190,7 +203,7 @@ void  TcpConnection::onMesageReceive(uv_stream_t* client, ssize_t nread, const u
             [](uv_shutdown_t* req, int status)
         {
             auto connection = static_cast<TcpConnection*>(req->data);
-            connection->onClose();
+            connection->onSocketClose();
             delete req;
         });
     }

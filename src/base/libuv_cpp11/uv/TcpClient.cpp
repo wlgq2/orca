@@ -10,8 +10,8 @@
 
 #include <string>
 
-#include "uv/TcpClient.h"
-#include "uv/LogInterface.h"
+#include "TcpClient.h"
+#include "LogInterface.h"
 
 using namespace uv;
 using namespace std;
@@ -66,14 +66,28 @@ void TcpClient::onConnect(bool successed)
         connection_->setMessageCallback(std::bind(&TcpClient::onMessage,this,std::placeholders::_1,std::placeholders::_2,std::placeholders::_3));
         connection_->setConnectCloseCallback(std::bind(&TcpClient::onConnectClose,this,std::placeholders::_1));
     }
+    else
+    {
+        updata();
+    }
     if(connectCallback_)
         connectCallback_(successed);
 }
 void TcpClient::onConnectClose(string& name)
 {
-    updata();
-    if(onConnectCloseCallback_)
-        onConnectCloseCallback_();
+    if (connection_)
+    {
+        connection_->close([this](std::string& name)
+        {
+            //this old socket_ point will release in connection object release when re-connect.
+            socket_ = new uv_tcp_t();
+            updata();
+            uv::Log::Instance()->info("Close tcp client conenction complete.");
+            if (onConnectCloseCallback_)
+                onConnectCloseCallback_();
+        });
+    }
+
 }
 void TcpClient::onMessage(shared_ptr<TcpConnection> connection,const char* buf,ssize_t size)
 {
@@ -81,11 +95,13 @@ void TcpClient::onMessage(shared_ptr<TcpConnection> connection,const char* buf,s
         onMessageCallback_(buf,size);
 }
 
+void uv::TcpClient::close(std::function<void(std::string&)> callback)
+{
+    connection_->close(callback);
+}
+
 void TcpClient::updata()
 {
-    connection_ = nullptr;
-    //this ptr release in connection object.
-    socket_ = new uv_tcp_t();
     ::uv_tcp_init(loop_->hanlde(), socket_);
     socket_->data = static_cast<void*>(this);
 }

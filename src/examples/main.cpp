@@ -2,7 +2,7 @@
 
 #include <orca/Framework.h>
 #include <future>
-#include <uv/uv11.h>
+#include <base/libuv_cpp11/uv/uv11.h>
 #include "base/AsyncLog.h"
 
 using namespace  std;
@@ -57,7 +57,7 @@ int main(int argc, char** args)
     auto async = std::async( []( )
     {
         uv::EventLoop loop(uv::EventLoop::NewLoop);
-        uv::Timer<void*> timer(&loop, 1000, 1000 ,[](void*)
+        uv::Timer<void*> timer(&loop, 1000, 1000 ,[](uv::Timer<void*>*, void*)
         {
 
         },nullptr);

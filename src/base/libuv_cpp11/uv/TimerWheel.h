@@ -14,8 +14,8 @@
 #include <vector>
 #include <set>
 #include <memory>
-#include "uv/Timer.h"
-#include "uv/TcpConnection.h"
+#include "Timer.h"
+#include "TcpConnection.h"
 
 namespace uv
 {
@@ -36,7 +36,7 @@ public:
         std::shared_ptr<TcpConnection> connection = connection_.lock();
         if(connection)
         {
-            connection->onClose();
+            connection->onSocketClose();
         }
     }
 
@@ -62,7 +62,7 @@ private:
 
     std::vector< std::set< std::shared_ptr<ConnectionElement>>> wheel;
 
-    void wheelCallback(void* data);
+    void wheelCallback(Timer<void*>*, void*);
 
 };
 

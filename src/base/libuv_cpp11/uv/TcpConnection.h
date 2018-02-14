@@ -19,7 +19,7 @@
 #include <functional>
 #include <atomic>
 
-#include <uv/EventLoop.h>
+#include "EventLoop.h"
 
 namespace uv
 {
@@ -38,10 +38,10 @@ class TcpServer;
 class ConnectionElement;
 
 
-using AfterWriteCallback =  std::function<void (WriteInfo& info)> ;
-using OnMessageCallback =  std::function<void (std::shared_ptr<TcpConnection>,const char* buf,ssize_t size)>  ;
-using OnConnectCloseCallback =  std::function<void (std::string& )>  ;
-
+using AfterWriteCallback =  std::function<void (WriteInfo& )> ;
+using OnMessageCallback =  std::function<void (std::shared_ptr<TcpConnection>,const char*,ssize_t)>  ;
+using OnCloseCallback =  std::function<void (std::string& )>  ;
+using CloseCompleteCallback =  std::function<void (std::string&)>  ;
 
 
 class TcpConnection : public std::enable_shared_from_this<TcpConnection>
@@ -51,8 +51,9 @@ public :
     TcpConnection(EventLoop* loop,std::string& name,uv_tcp_t* client,bool isConnected = true);
     virtual ~TcpConnection();
     void onMessage(const char* buf,ssize_t size);
-    void onClose();
-
+    void onSocketClose();
+    void close(std::function<void(std::string&)> callback);
+    
     int write(const char* buf,ssize_t size,AfterWriteCallback callback);
     void writeInLoop(const char* buf,ssize_t size,AfterWriteCallback callback);
 
@@ -67,11 +68,18 @@ public :
         onMessageCallback_ = callback;
     }
 
-    void setConnectCloseCallback(OnConnectCloseCallback callback)
+    void setConnectCloseCallback(OnCloseCallback callback)
     {
         onConnectCloseCallback_ = callback;
     }
 
+    void CloseComplete()
+    {
+        if(closeCompleteCallback_)
+        {
+            closeCompleteCallback_(name_);
+        }
+    }
     void setConnectStatus(bool status)
     {
         connected_ = status;
@@ -90,12 +98,14 @@ private :
     std::string name_;
     bool connected_;
     EventLoop* loop_;
-    uv_tcp_t* client_;
+    uv_tcp_t* handle_;
 
     std::weak_ptr<ConnectionElement> element_;
 
     OnMessageCallback onMessageCallback_;
-    OnConnectCloseCallback onConnectCloseCallback_;
+    OnCloseCallback onConnectCloseCallback_;
+    CloseCompleteCallback closeCompleteCallback_;
+    
 
 };
 

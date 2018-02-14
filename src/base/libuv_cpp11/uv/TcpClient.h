@@ -12,15 +12,16 @@
 #define   UV_TCP_CLIENT_H
 
 #include  <functional>
+#include  <memory>
 
-#include  "uv/TcpConnection.h"
-#include  "uv/SocketAddr.h"
+#include  "TcpConnection.h"
+#include  "SocketAddr.h"
 
 namespace uv
 {
 
 using ConnectCallback =  std::function<void(bool)>  ;
-using NewMessageCallback =  std::function<void(const char* buf,ssize_t size)>  ;
+using NewMessageCallback =  std::function<void(const char*,ssize_t)>  ;
 using OnConnectClose =  std::function<void()> ;
 
 class TcpClient
@@ -34,7 +35,7 @@ public:
     void onConnect(bool successed);
     void onConnectClose(std::string& name);
     void onMessage(std::shared_ptr<TcpConnection> connection,const char* buf,ssize_t size);
-
+    void close(std::function<void(std::string&)> callback);
     void write(const char* buf,unsigned int size,AfterWriteCallback callback = nullptr)
     {
         if(connection_)
@@ -60,6 +61,10 @@ public:
         onConnectCloseCallback_ = callback;
     }
 
+    EventLoop* Loop()
+    {
+        return loop_;
+    }
 protected:
     EventLoop* loop_;
 private:
@@ -75,5 +80,6 @@ private:
     void updata();
 };
 
+using TcpClientPtr = std::shared_ptr<uv::TcpClient>;
 }
 #endif

@@ -13,8 +13,8 @@
 #include <memory>
 #include <string>
 
-#include "uv/TcpServer.h"
-#include "uv/LogInterface.h"
+#include "TcpServer.h"
+#include "LogInterface.h"
 
 using namespace std;
 using namespace uv;
@@ -26,6 +26,7 @@ TcpServer::TcpServer(EventLoop* loop, SocketAddr& addr)
     accetper_(new TcpAccepter(loop, addr)),
     onMessageCallback_(nullptr),
     onNewConnectCallback_(nullptr),
+    onConnectCloseCallback_(nullptr),
     timerWheel_(loop)
 {
     accetper_->setNewConnectinonCallback( [this] (EventLoop* loop,uv_tcp_t* client)
@@ -40,6 +41,7 @@ TcpServer::TcpServer(EventLoop* loop, SocketAddr& addr)
         {
             connection->setMessageCallback(std::bind(&TcpServer::onMessage,this,placeholders::_1,placeholders::_2,placeholders::_3));
             connection->setConnectCloseCallback(std::bind(&TcpServer::closeConnection,this,placeholders::_1));
+            
             addConnnection(key,connection);
             timerWheel_.insertNew(connection);
             if(onNewConnectCallback_)
@@ -61,9 +63,9 @@ TcpServer:: ~TcpServer()
 }
 
 
-void TcpServer::setTimeout(unsigned int timeout)
+void TcpServer::setTimeout(unsigned int seconds)
 {
-    timerWheel_.setTimeout(timeout);
+    timerWheel_.setTimeout(seconds);
 }
 
 void TcpServer::start()
@@ -96,8 +98,23 @@ shared_ptr<TcpConnection> TcpServer::getConnnection(string& name)
 
 void TcpServer::closeConnection(string& name)
 {
-    if(nullptr != getConnnection(name))
-        connnections_.erase(name);
+    auto connection = getConnnection(name);
+    if (nullptr != connection)
+    {
+        connection->close([this](std::string& name)
+        {
+            auto connection = getConnnection(name);
+            if (nullptr != connection)
+            {
+                if (onConnectCloseCallback_)
+                {
+                    onConnectCloseCallback_(connection);
+                }
+                connnections_.erase(name);
+            }
+
+        });
+    }
 }
 
 
@@ -153,4 +170,9 @@ void TcpServer::writeInLoop(string& name,const char* buf,unsigned int size,After
 void TcpServer::setNewConnectCallback(OnNewConnectCallback callback)
 {
     onNewConnectCallback_ = callback;
+}
+
+void  TcpServer::setConnectCloseCallback(OnConnectCloseCallback callback)
+{
+    onConnectCloseCallback_ = callback;
 }

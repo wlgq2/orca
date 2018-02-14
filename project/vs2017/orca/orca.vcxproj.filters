@@ -24,36 +24,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\src\base\uv\Async.h">
-      <Filter>src\base\uv</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\base\uv\EventLoop.h">
-      <Filter>src\base\uv</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\base\uv\SignalCtrl.h">
-      <Filter>src\base\uv</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\base\uv\SocketAddr.h">
-      <Filter>src\base\uv</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\base\uv\TcpAccepter.h">
-      <Filter>src\base\uv</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\base\uv\TcpClient.h">
-      <Filter>src\base\uv</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\base\uv\TcpConnection.h">
-      <Filter>src\base\uv</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\base\uv\TcpServer.h">
-      <Filter>src\base\uv</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\base\uv\Timer.h">
-      <Filter>src\base\uv</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\base\uv\TimerWheel.h">
-      <Filter>src\base\uv</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\src\orca\MessageTraits.h">
       <Filter>src\orca</Filter>
     </ClInclude>
@@ -84,35 +54,47 @@
     <ClInclude Include="..\..\..\src\orca\MailBoxThread.h">
       <Filter>src\orca</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\src\base\uv\LogInterface.h">
-      <Filter>src\base\uv</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\src\base\AsyncLog.h">
       <Filter>src\base</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\src\base\libuv_cpp11\uv\Async.h">
+      <Filter>src\base\uv</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\base\libuv_cpp11\uv\EventLoop.h">
+      <Filter>src\base\uv</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\base\libuv_cpp11\uv\LogInterface.h">
+      <Filter>src\base\uv</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\base\libuv_cpp11\uv\SignalCtrl.h">
+      <Filter>src\base\uv</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\base\libuv_cpp11\uv\SocketAddr.h">
+      <Filter>src\base\uv</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\base\libuv_cpp11\uv\TcpAccepter.h">
+      <Filter>src\base\uv</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\base\libuv_cpp11\uv\TcpClient.h">
+      <Filter>src\base\uv</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\base\libuv_cpp11\uv\TcpConnection.h">
+      <Filter>src\base\uv</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\base\libuv_cpp11\uv\TcpServer.h">
+      <Filter>src\base\uv</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\base\libuv_cpp11\uv\Timer.h">
+      <Filter>src\base\uv</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\base\libuv_cpp11\uv\TimerWheel.h">
+      <Filter>src\base\uv</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\base\libuv_cpp11\uv\uv11.h">
+      <Filter>src\base\uv</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\src\base\uv\EventLoop.cpp">
-      <Filter>src\base\uv</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\base\uv\SignalCtrl.cpp">
-      <Filter>src\base\uv</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\base\uv\TcpAccepter.cpp">
-      <Filter>src\base\uv</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\base\uv\TcpClient.cpp">
-      <Filter>src\base\uv</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\base\uv\TcpConnection.cpp">
-      <Filter>src\base\uv</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\base\uv\TcpServer.cpp">
-      <Filter>src\base\uv</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\base\uv\TimerWheel.cpp">
-      <Filter>src\base\uv</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\src\examples\main.cpp">
       <Filter>src\examples</Filter>
     </ClCompile>
@@ -130,6 +112,27 @@
     </ClCompile>
     <ClCompile Include="..\..\..\src\orca\MailBoxThread.cpp">
       <Filter>src\orca</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\base\libuv_cpp11\uv\EventLoop.cpp">
+      <Filter>src\base\uv</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\base\libuv_cpp11\uv\SignalCtrl.cpp">
+      <Filter>src\base\uv</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\base\libuv_cpp11\uv\TcpAccepter.cpp">
+      <Filter>src\base\uv</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\base\libuv_cpp11\uv\TcpClient.cpp">
+      <Filter>src\base\uv</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\base\libuv_cpp11\uv\TcpConnection.cpp">
+      <Filter>src\base\uv</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\base\libuv_cpp11\uv\TcpServer.cpp">
+      <Filter>src\base\uv</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\base\libuv_cpp11\uv\TimerWheel.cpp">
+      <Filter>src\base\uv</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

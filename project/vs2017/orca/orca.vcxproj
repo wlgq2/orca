@@ -20,17 +20,18 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\src\base\AsyncLog.h" />
-    <ClInclude Include="..\..\..\src\base\uv\Async.h" />
-    <ClInclude Include="..\..\..\src\base\uv\EventLoop.h" />
-    <ClInclude Include="..\..\..\src\base\uv\LogInterface.h" />
-    <ClInclude Include="..\..\..\src\base\uv\SignalCtrl.h" />
-    <ClInclude Include="..\..\..\src\base\uv\SocketAddr.h" />
-    <ClInclude Include="..\..\..\src\base\uv\TcpAccepter.h" />
-    <ClInclude Include="..\..\..\src\base\uv\TcpClient.h" />
-    <ClInclude Include="..\..\..\src\base\uv\TcpConnection.h" />
-    <ClInclude Include="..\..\..\src\base\uv\TcpServer.h" />
-    <ClInclude Include="..\..\..\src\base\uv\Timer.h" />
-    <ClInclude Include="..\..\..\src\base\uv\TimerWheel.h" />
+    <ClInclude Include="..\..\..\src\base\libuv_cpp11\uv\Async.h" />
+    <ClInclude Include="..\..\..\src\base\libuv_cpp11\uv\EventLoop.h" />
+    <ClInclude Include="..\..\..\src\base\libuv_cpp11\uv\LogInterface.h" />
+    <ClInclude Include="..\..\..\src\base\libuv_cpp11\uv\SignalCtrl.h" />
+    <ClInclude Include="..\..\..\src\base\libuv_cpp11\uv\SocketAddr.h" />
+    <ClInclude Include="..\..\..\src\base\libuv_cpp11\uv\TcpAccepter.h" />
+    <ClInclude Include="..\..\..\src\base\libuv_cpp11\uv\TcpClient.h" />
+    <ClInclude Include="..\..\..\src\base\libuv_cpp11\uv\TcpConnection.h" />
+    <ClInclude Include="..\..\..\src\base\libuv_cpp11\uv\TcpServer.h" />
+    <ClInclude Include="..\..\..\src\base\libuv_cpp11\uv\Timer.h" />
+    <ClInclude Include="..\..\..\src\base\libuv_cpp11\uv\TimerWheel.h" />
+    <ClInclude Include="..\..\..\src\base\libuv_cpp11\uv\uv11.h" />
     <ClInclude Include="..\..\..\src\orca\Actor.h" />
     <ClInclude Include="..\..\..\src\orca\Address.h" />
     <ClInclude Include="..\..\..\src\orca\Define.h" />
@@ -43,13 +44,13 @@
     <ClInclude Include="..\..\..\src\orca\ThreadPool.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\src\base\uv\EventLoop.cpp" />
-    <ClCompile Include="..\..\..\src\base\uv\SignalCtrl.cpp" />
-    <ClCompile Include="..\..\..\src\base\uv\TcpAccepter.cpp" />
-    <ClCompile Include="..\..\..\src\base\uv\TcpClient.cpp" />
-    <ClCompile Include="..\..\..\src\base\uv\TcpConnection.cpp" />
-    <ClCompile Include="..\..\..\src\base\uv\TcpServer.cpp" />
-    <ClCompile Include="..\..\..\src\base\uv\TimerWheel.cpp" />
+    <ClCompile Include="..\..\..\src\base\libuv_cpp11\uv\EventLoop.cpp" />
+    <ClCompile Include="..\..\..\src\base\libuv_cpp11\uv\SignalCtrl.cpp" />
+    <ClCompile Include="..\..\..\src\base\libuv_cpp11\uv\TcpAccepter.cpp" />
+    <ClCompile Include="..\..\..\src\base\libuv_cpp11\uv\TcpClient.cpp" />
+    <ClCompile Include="..\..\..\src\base\libuv_cpp11\uv\TcpConnection.cpp" />
+    <ClCompile Include="..\..\..\src\base\libuv_cpp11\uv\TcpServer.cpp" />
+    <ClCompile Include="..\..\..\src\base\libuv_cpp11\uv\TimerWheel.cpp" />
     <ClCompile Include="..\..\..\src\examples\main.cpp" />
     <ClCompile Include="..\..\..\src\orca\Actor.cpp" />
     <ClCompile Include="..\..\..\src\orca\Framework.cpp" />
@@ -126,7 +127,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>..\..\..\lib\libuv\include;..\..\..\src\base;..\..\..\src;..\..\..\lib\spdlog\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <AdditionalDependencies>ws2_32.lib;Psapi.lib;userenv.lib;Iphlpapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -153,7 +154,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>..\..\..\lib\libuv\include;..\..\..\src\base;..\..\..\src;..\..\..\lib\spdlog\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>

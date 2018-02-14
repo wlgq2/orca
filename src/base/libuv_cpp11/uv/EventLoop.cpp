@@ -8,8 +8,8 @@
    Description: 
 */
 
-#include "uv/EventLoop.h"
-#include "uv/TcpConnection.h"
+#include "EventLoop.h"
+#include "TcpConnection.h"
 
 using namespace uv;
 
@@ -31,6 +31,7 @@ EventLoop::~EventLoop()
 {
     if (loop_ != uv_default_loop())
     {
+        uv_loop_close(loop_);
         delete loop_;
     }
 }
