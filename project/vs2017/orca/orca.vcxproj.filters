@@ -93,6 +93,9 @@
     <ClInclude Include="..\..\..\src\base\libuv_cpp11\uv\uv11.h">
       <Filter>src\base\uv</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\src\orca\Assert.h">
+      <Filter>src\orca</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\src\examples\main.cpp">

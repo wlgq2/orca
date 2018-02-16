@@ -1,6 +1,7 @@
 #include <iostream>
 
 #include <orca/Framework.h>
+#include <orca/Assert.h>
 #include <future>
 #include <base/libuv_cpp11/uv/uv11.h>
 #include "base/AsyncLog.h"

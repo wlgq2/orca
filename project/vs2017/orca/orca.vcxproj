@@ -34,6 +34,7 @@
     <ClInclude Include="..\..\..\src\base\libuv_cpp11\uv\uv11.h" />
     <ClInclude Include="..\..\..\src\orca\Actor.h" />
     <ClInclude Include="..\..\..\src\orca\Address.h" />
+    <ClInclude Include="..\..\..\src\orca\Assert.h" />
     <ClInclude Include="..\..\..\src\orca\Define.h" />
     <ClInclude Include="..\..\..\src\orca\Framework.h" />
     <ClInclude Include="..\..\..\src\orca\MailBoxThread.h" />
