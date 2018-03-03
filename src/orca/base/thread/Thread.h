@@ -10,6 +10,8 @@
 namespace  orca
 { 
 
+namespace base
+{ 
 class Thread
 {
 public:
@@ -49,6 +51,6 @@ private:
 
     void entryPoint();
 };
-
+}
 }
 #endif

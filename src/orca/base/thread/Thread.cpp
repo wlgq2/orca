@@ -1,8 +1,8 @@
-#include <orca/Thread.h>
+#include "Thread.h"
 
 
 using namespace std;
-using namespace orca;
+using namespace orca::base;
 
 Thread::Thread()
     :Thread(nullptr)

@@ -7,135 +7,153 @@
     <Filter Include="src">
       <UniqueIdentifier>{035bf3d7-dc4d-4a25-9cdf-a5ae0f784dde}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\base">
-      <UniqueIdentifier>{982adc93-c645-41ff-8666-5c291b36e531}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\base\uv">
-      <UniqueIdentifier>{b66ba66d-7fa1-4a0c-b4d2-befde5f8536f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="lib\libuv">
       <UniqueIdentifier>{6b05ad2f-ebc6-4614-b9af-c6a1b48be781}</UniqueIdentifier>
     </Filter>
+    <Filter Include="example">
+      <UniqueIdentifier>{0c0fac2a-b07c-464a-9585-8422d07c2543}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\orca">
-      <UniqueIdentifier>{f0d4caa8-80c4-49ef-b6af-d2b652f5ca45}</UniqueIdentifier>
+      <UniqueIdentifier>{01ca31d3-8fc8-41db-80e7-6b5858b95c61}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\examples">
-      <UniqueIdentifier>{052a3d20-4c6e-4adb-8141-7e0b0c7f3b23}</UniqueIdentifier>
+    <Filter Include="src\orca\base">
+      <UniqueIdentifier>{da154a90-7a50-48d6-9c5e-a055022fc618}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\orca\core">
+      <UniqueIdentifier>{65a385a1-c6b0-46aa-b6b0-09f3541b3a7d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\orca\base\thread">
+      <UniqueIdentifier>{60c79cb1-bb16-4f22-8863-21bf54b1c271}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\orca\base\uv">
+      <UniqueIdentifier>{4556db52-da3e-4b25-8e8a-fb65c5c67eed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\orca\base\log">
+      <UniqueIdentifier>{489bc261-a1d4-4fc4-87f4-1de259e51462}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\src\orca\MessageTraits.h">
+    <ClInclude Include="..\..\..\src\orca\core\Actor.h">
+      <Filter>src\orca\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\orca\core\Address.h">
+      <Filter>src\orca\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\orca\core\Assert.h">
+      <Filter>src\orca\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\orca\core\Define.h">
+      <Filter>src\orca\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\orca\core\Framework.h">
+      <Filter>src\orca\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\orca\core\Mailbox.h">
+      <Filter>src\orca\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\orca\core\MailboxCenter.h">
+      <Filter>src\orca\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\orca\core\MailboxPage.h">
+      <Filter>src\orca\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\orca\core\MailBoxThread.h">
+      <Filter>src\orca\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\orca\core\MessagePack.h">
+      <Filter>src\orca\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\orca\core\MessageTraits.h">
+      <Filter>src\orca\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\orca\orca.h">
       <Filter>src\orca</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\src\orca\Actor.h">
-      <Filter>src\orca</Filter>
+    <ClInclude Include="..\..\..\src\orca\base\libuv_cpp11\uv\Async.h">
+      <Filter>src\orca\base\uv</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\src\orca\Address.h">
-      <Filter>src\orca</Filter>
+    <ClInclude Include="..\..\..\src\orca\base\libuv_cpp11\uv\EventLoop.h">
+      <Filter>src\orca\base\uv</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\src\orca\Define.h">
-      <Filter>src\orca</Filter>
+    <ClInclude Include="..\..\..\src\orca\base\libuv_cpp11\uv\LogInterface.h">
+      <Filter>src\orca\base\uv</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\src\orca\Framework.h">
-      <Filter>src\orca</Filter>
+    <ClInclude Include="..\..\..\src\orca\base\libuv_cpp11\uv\SignalCtrl.h">
+      <Filter>src\orca\base\uv</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\src\orca\Orca.h">
-      <Filter>src\orca</Filter>
+    <ClInclude Include="..\..\..\src\orca\base\libuv_cpp11\uv\SocketAddr.h">
+      <Filter>src\orca\base\uv</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\src\orca\Thread.h">
-      <Filter>src\orca</Filter>
+    <ClInclude Include="..\..\..\src\orca\base\libuv_cpp11\uv\TcpAccepter.h">
+      <Filter>src\orca\base\uv</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\src\orca\ThreadPool.h">
-      <Filter>src\orca</Filter>
+    <ClInclude Include="..\..\..\src\orca\base\libuv_cpp11\uv\TcpClient.h">
+      <Filter>src\orca\base\uv</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\src\orca\MessagePack.h">
-      <Filter>src\orca</Filter>
+    <ClInclude Include="..\..\..\src\orca\base\libuv_cpp11\uv\TcpConnection.h">
+      <Filter>src\orca\base\uv</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\src\orca\MailBoxThread.h">
-      <Filter>src\orca</Filter>
+    <ClInclude Include="..\..\..\src\orca\base\libuv_cpp11\uv\TcpServer.h">
+      <Filter>src\orca\base\uv</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\src\base\AsyncLog.h">
-      <Filter>src\base</Filter>
+    <ClInclude Include="..\..\..\src\orca\base\libuv_cpp11\uv\Timer.h">
+      <Filter>src\orca\base\uv</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\src\base\libuv_cpp11\uv\Async.h">
-      <Filter>src\base\uv</Filter>
+    <ClInclude Include="..\..\..\src\orca\base\libuv_cpp11\uv\TimerWheel.h">
+      <Filter>src\orca\base\uv</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\src\base\libuv_cpp11\uv\EventLoop.h">
-      <Filter>src\base\uv</Filter>
+    <ClInclude Include="..\..\..\src\orca\base\libuv_cpp11\uv\uv11.h">
+      <Filter>src\orca\base\uv</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\src\base\libuv_cpp11\uv\LogInterface.h">
-      <Filter>src\base\uv</Filter>
+    <ClInclude Include="..\..\..\src\orca\base\thread\Thread.h">
+      <Filter>src\orca\base\thread</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\src\base\libuv_cpp11\uv\SignalCtrl.h">
-      <Filter>src\base\uv</Filter>
+    <ClInclude Include="..\..\..\src\orca\base\thread\ThreadPool.h">
+      <Filter>src\orca\base\thread</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\src\base\libuv_cpp11\uv\SocketAddr.h">
-      <Filter>src\base\uv</Filter>
+    <ClInclude Include="..\..\..\src\orca\base\log\AsyncLog.h">
+      <Filter>src\orca\base\log</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\src\base\libuv_cpp11\uv\TcpAccepter.h">
-      <Filter>src\base\uv</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\base\libuv_cpp11\uv\TcpClient.h">
-      <Filter>src\base\uv</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\base\libuv_cpp11\uv\TcpConnection.h">
-      <Filter>src\base\uv</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\base\libuv_cpp11\uv\TcpServer.h">
-      <Filter>src\base\uv</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\base\libuv_cpp11\uv\Timer.h">
-      <Filter>src\base\uv</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\base\libuv_cpp11\uv\TimerWheel.h">
-      <Filter>src\base\uv</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\base\libuv_cpp11\uv\uv11.h">
-      <Filter>src\base\uv</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\orca\Assert.h">
-      <Filter>src\orca</Filter>
+    <ClInclude Include="..\..\..\src\orca\base\log\log.h">
+      <Filter>src\orca\base\log</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\src\examples\main.cpp">
-      <Filter>src\examples</Filter>
+    <ClCompile Include="..\..\..\examples\main.cpp">
+      <Filter>example</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\orca\Actor.cpp">
-      <Filter>src\orca</Filter>
+    <ClCompile Include="..\..\..\src\orca\core\MailBoxThread.cpp">
+      <Filter>src\orca\core</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\orca\Framework.cpp">
-      <Filter>src\orca</Filter>
+    <ClCompile Include="..\..\..\src\orca\base\libuv_cpp11\uv\EventLoop.cpp">
+      <Filter>src\orca\base\uv</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\orca\Thread.cpp">
-      <Filter>src\orca</Filter>
+    <ClCompile Include="..\..\..\src\orca\base\libuv_cpp11\uv\SignalCtrl.cpp">
+      <Filter>src\orca\base\uv</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\orca\ThreadPool.cpp">
-      <Filter>src\orca</Filter>
+    <ClCompile Include="..\..\..\src\orca\base\libuv_cpp11\uv\TcpAccepter.cpp">
+      <Filter>src\orca\base\uv</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\orca\MailBoxThread.cpp">
-      <Filter>src\orca</Filter>
+    <ClCompile Include="..\..\..\src\orca\base\libuv_cpp11\uv\TcpClient.cpp">
+      <Filter>src\orca\base\uv</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\base\libuv_cpp11\uv\EventLoop.cpp">
-      <Filter>src\base\uv</Filter>
+    <ClCompile Include="..\..\..\src\orca\base\libuv_cpp11\uv\TcpConnection.cpp">
+      <Filter>src\orca\base\uv</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\base\libuv_cpp11\uv\SignalCtrl.cpp">
-      <Filter>src\base\uv</Filter>
+    <ClCompile Include="..\..\..\src\orca\base\libuv_cpp11\uv\TcpServer.cpp">
+      <Filter>src\orca\base\uv</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\base\libuv_cpp11\uv\TcpAccepter.cpp">
-      <Filter>src\base\uv</Filter>
+    <ClCompile Include="..\..\..\src\orca\base\libuv_cpp11\uv\TimerWheel.cpp">
+      <Filter>src\orca\base\uv</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\base\libuv_cpp11\uv\TcpClient.cpp">
-      <Filter>src\base\uv</Filter>
+    <ClCompile Include="..\..\..\src\orca\base\thread\Thread.cpp">
+      <Filter>src\orca\base\thread</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\base\libuv_cpp11\uv\TcpConnection.cpp">
-      <Filter>src\base\uv</Filter>
+    <ClCompile Include="..\..\..\src\orca\base\log\AsyncLog.cpp">
+      <Filter>src\orca\base\log</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\base\libuv_cpp11\uv\TcpServer.cpp">
-      <Filter>src\base\uv</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\base\libuv_cpp11\uv\TimerWheel.cpp">
-      <Filter>src\base\uv</Filter>
+    <ClCompile Include="..\..\..\src\orca\base\log\log.cpp">
+      <Filter>src\orca\base\log</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

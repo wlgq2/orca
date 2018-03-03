@@ -1,10 +1,8 @@
 #include <iostream>
 
-#include <orca/Framework.h>
-#include <orca/Assert.h>
+#include <orca/orca.h>
 #include <future>
-#include <base/libuv_cpp11/uv/uv11.h>
-#include "base/AsyncLog.h"
+#include <orca/base/libuv_cpp11/uv/uv11.h>
 
 using namespace  std;
 
@@ -37,10 +35,8 @@ REGISTER_MESSAGE_TYPE(MyMessage);
 
 int main(int argc, char** args)
 {
-    //log
-    AsyncLog log;
-    uv::Log::Instance()->registerInterface(&log);
-
+    orca::log::init("test.txt",1024);
+    orca::log::error("test");
     orca::MessagePack message;
     message.create("my message type");
 
@@ -48,7 +44,7 @@ int main(int argc, char** args)
 
     orca::Framework framework;
 
-    orca::core::Actor<> a(&framework);
+    //orca::core::Actor<> a(&framework);
 
     orca::Actor actor(&framework);
     actor.registerHandler([](const orca::MessagePack&, const orca::Address&)
@@ -67,4 +63,5 @@ int main(int argc, char** args)
 
     });
     async.get();
+    
 }

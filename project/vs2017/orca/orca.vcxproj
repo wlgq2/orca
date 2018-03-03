@@ -19,45 +19,48 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\src\base\AsyncLog.h" />
-    <ClInclude Include="..\..\..\src\base\libuv_cpp11\uv\Async.h" />
-    <ClInclude Include="..\..\..\src\base\libuv_cpp11\uv\EventLoop.h" />
-    <ClInclude Include="..\..\..\src\base\libuv_cpp11\uv\LogInterface.h" />
-    <ClInclude Include="..\..\..\src\base\libuv_cpp11\uv\SignalCtrl.h" />
-    <ClInclude Include="..\..\..\src\base\libuv_cpp11\uv\SocketAddr.h" />
-    <ClInclude Include="..\..\..\src\base\libuv_cpp11\uv\TcpAccepter.h" />
-    <ClInclude Include="..\..\..\src\base\libuv_cpp11\uv\TcpClient.h" />
-    <ClInclude Include="..\..\..\src\base\libuv_cpp11\uv\TcpConnection.h" />
-    <ClInclude Include="..\..\..\src\base\libuv_cpp11\uv\TcpServer.h" />
-    <ClInclude Include="..\..\..\src\base\libuv_cpp11\uv\Timer.h" />
-    <ClInclude Include="..\..\..\src\base\libuv_cpp11\uv\TimerWheel.h" />
-    <ClInclude Include="..\..\..\src\base\libuv_cpp11\uv\uv11.h" />
-    <ClInclude Include="..\..\..\src\orca\Actor.h" />
-    <ClInclude Include="..\..\..\src\orca\Address.h" />
-    <ClInclude Include="..\..\..\src\orca\Assert.h" />
-    <ClInclude Include="..\..\..\src\orca\Define.h" />
-    <ClInclude Include="..\..\..\src\orca\Framework.h" />
-    <ClInclude Include="..\..\..\src\orca\MailBoxThread.h" />
-    <ClInclude Include="..\..\..\src\orca\MessagePack.h" />
-    <ClInclude Include="..\..\..\src\orca\MessageTraits.h" />
-    <ClInclude Include="..\..\..\src\orca\Orca.h" />
-    <ClInclude Include="..\..\..\src\orca\Thread.h" />
-    <ClInclude Include="..\..\..\src\orca\ThreadPool.h" />
+    <ClInclude Include="..\..\..\src\orca\base\libuv_cpp11\uv\Async.h" />
+    <ClInclude Include="..\..\..\src\orca\base\libuv_cpp11\uv\EventLoop.h" />
+    <ClInclude Include="..\..\..\src\orca\base\libuv_cpp11\uv\LogInterface.h" />
+    <ClInclude Include="..\..\..\src\orca\base\libuv_cpp11\uv\SignalCtrl.h" />
+    <ClInclude Include="..\..\..\src\orca\base\libuv_cpp11\uv\SocketAddr.h" />
+    <ClInclude Include="..\..\..\src\orca\base\libuv_cpp11\uv\TcpAccepter.h" />
+    <ClInclude Include="..\..\..\src\orca\base\libuv_cpp11\uv\TcpClient.h" />
+    <ClInclude Include="..\..\..\src\orca\base\libuv_cpp11\uv\TcpConnection.h" />
+    <ClInclude Include="..\..\..\src\orca\base\libuv_cpp11\uv\TcpServer.h" />
+    <ClInclude Include="..\..\..\src\orca\base\libuv_cpp11\uv\Timer.h" />
+    <ClInclude Include="..\..\..\src\orca\base\libuv_cpp11\uv\TimerWheel.h" />
+    <ClInclude Include="..\..\..\src\orca\base\libuv_cpp11\uv\uv11.h" />
+    <ClInclude Include="..\..\..\src\orca\base\log\AsyncLog.h" />
+    <ClInclude Include="..\..\..\src\orca\base\log\log.h" />
+    <ClInclude Include="..\..\..\src\orca\base\thread\Thread.h" />
+    <ClInclude Include="..\..\..\src\orca\base\thread\ThreadPool.h" />
+    <ClInclude Include="..\..\..\src\orca\core\Actor.h" />
+    <ClInclude Include="..\..\..\src\orca\core\Address.h" />
+    <ClInclude Include="..\..\..\src\orca\core\Assert.h" />
+    <ClInclude Include="..\..\..\src\orca\core\Define.h" />
+    <ClInclude Include="..\..\..\src\orca\core\Framework.h" />
+    <ClInclude Include="..\..\..\src\orca\core\Mailbox.h" />
+    <ClInclude Include="..\..\..\src\orca\core\MailboxCenter.h" />
+    <ClInclude Include="..\..\..\src\orca\core\MailboxPage.h" />
+    <ClInclude Include="..\..\..\src\orca\core\MailBoxThread.h" />
+    <ClInclude Include="..\..\..\src\orca\core\MessagePack.h" />
+    <ClInclude Include="..\..\..\src\orca\core\MessageTraits.h" />
+    <ClInclude Include="..\..\..\src\orca\orca.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\src\base\libuv_cpp11\uv\EventLoop.cpp" />
-    <ClCompile Include="..\..\..\src\base\libuv_cpp11\uv\SignalCtrl.cpp" />
-    <ClCompile Include="..\..\..\src\base\libuv_cpp11\uv\TcpAccepter.cpp" />
-    <ClCompile Include="..\..\..\src\base\libuv_cpp11\uv\TcpClient.cpp" />
-    <ClCompile Include="..\..\..\src\base\libuv_cpp11\uv\TcpConnection.cpp" />
-    <ClCompile Include="..\..\..\src\base\libuv_cpp11\uv\TcpServer.cpp" />
-    <ClCompile Include="..\..\..\src\base\libuv_cpp11\uv\TimerWheel.cpp" />
-    <ClCompile Include="..\..\..\src\examples\main.cpp" />
-    <ClCompile Include="..\..\..\src\orca\Actor.cpp" />
-    <ClCompile Include="..\..\..\src\orca\Framework.cpp" />
-    <ClCompile Include="..\..\..\src\orca\MailBoxThread.cpp" />
-    <ClCompile Include="..\..\..\src\orca\Thread.cpp" />
-    <ClCompile Include="..\..\..\src\orca\ThreadPool.cpp" />
+    <ClCompile Include="..\..\..\examples\main.cpp" />
+    <ClCompile Include="..\..\..\src\orca\base\libuv_cpp11\uv\EventLoop.cpp" />
+    <ClCompile Include="..\..\..\src\orca\base\libuv_cpp11\uv\SignalCtrl.cpp" />
+    <ClCompile Include="..\..\..\src\orca\base\libuv_cpp11\uv\TcpAccepter.cpp" />
+    <ClCompile Include="..\..\..\src\orca\base\libuv_cpp11\uv\TcpClient.cpp" />
+    <ClCompile Include="..\..\..\src\orca\base\libuv_cpp11\uv\TcpConnection.cpp" />
+    <ClCompile Include="..\..\..\src\orca\base\libuv_cpp11\uv\TcpServer.cpp" />
+    <ClCompile Include="..\..\..\src\orca\base\libuv_cpp11\uv\TimerWheel.cpp" />
+    <ClCompile Include="..\..\..\src\orca\base\log\AsyncLog.cpp" />
+    <ClCompile Include="..\..\..\src\orca\base\log\log.cpp" />
+    <ClCompile Include="..\..\..\src\orca\base\thread\Thread.cpp" />
+    <ClCompile Include="..\..\..\src\orca\core\MailBoxThread.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="..\..\..\lib\libuv\lib\vc2017\Release.x64\libuv.lib" />

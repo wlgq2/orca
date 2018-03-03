@@ -4,8 +4,8 @@
 #include <memory>
 #include <string>
 
-#include <orca/MessageTraits.h>
-#include <orca/Define.h>
+#include "MessageTraits.h"
+#include "Define.h"
 
 namespace orca
 {

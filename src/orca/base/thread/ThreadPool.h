@@ -1,7 +1,7 @@
 #ifndef    ORCA_THREAD_POOL_H
 #define    ORCA_THREAD_POOL_H
 
-#include   <orca/Thread.h>
+#include   "Thread.h"
 #include   <vector>
 #include   <iostream>
 
@@ -10,6 +10,8 @@
 namespace orca
 {
 
+namespace base
+{ 
 template<typename QueueType,typename ProcessorType>
 class ThreadPool
 {
@@ -88,6 +90,7 @@ void ThreadPool<QueueType, ProcessorType>::start(unsigned int cnt)
     }
 }
 
+}
 }
 #endif // !   ORCA_THREAD_POOL
 

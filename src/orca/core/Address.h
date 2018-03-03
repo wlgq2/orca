@@ -8,25 +8,11 @@ namespace orca
 namespace core
 { 
 
-struct Index
+struct Address
 {
     unsigned int framework;
-    unsigned int actor;
-};
-
-class Address
-{
-public:
-    Address()
-    {
-    }
-
-    ~Address(){}
-
-private:
-    std::string name_;
-    struct Index index_;
-
+    unsigned int page;
+    unsigned int index;
 };
 }
 }

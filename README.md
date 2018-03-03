@@ -1,2 +1,2 @@
 # orca
-A C++11 actor framework.
+A actor framework base on c++11/14.
