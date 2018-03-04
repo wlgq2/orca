@@ -68,7 +68,7 @@ void MailboxPage<MailboxType>::recycleMailbox(int index)
     if (index < ORCA_MAILBOX_PAGE_SIZE)
     {
         idleIndexs_.insert(index);
-        mailboxs_[idleIndexs_] = nullptr;
+        mailboxs_[index] = nullptr;
     }
 }
 

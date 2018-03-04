@@ -24,6 +24,7 @@ class Actor
 public:
     using ActorHandle = std::function<void(const MessagePack<MessageType>&,const Address&)>;
     Actor(orca::core::Framework<MessageType>* framework, std::string name = std::string(""));
+    ~Actor();
     std::string& Name();
 
     void setAddr(Address& addr);
@@ -34,6 +35,7 @@ public:
 
 private:
     std::string name_;
+    Framework<MessageType>* framework_;
     Address addr_;
     ActorHandle handle_;
 
@@ -42,10 +44,17 @@ private:
 template <typename MessageType>
 Actor<MessageType>::Actor(orca::core::Framework<MessageType>* framework, std::string name)
     :name_(name),
+    framework_(framework),
     handle_(nullptr)
 {
     //addr_.framework = name_;
-    framework->registerActor(this);
+    framework_->registerActor(this);
+}
+
+template<typename MessageType>
+inline Actor<MessageType>::~Actor()
+{
+    framework_->recycleActor(this);
 }
 
 template<typename MessageType>

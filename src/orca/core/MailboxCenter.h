@@ -75,7 +75,7 @@ void MailboxCenter<MailboxType>::recycle(Address& addr)
 {
     if (mailboxs_.size() > addr.page)
     {
-        mailboxs_[addr.page]->
+        mailboxs_[addr.page]->recycleMailbox(addr.index);
     }
 }
 
