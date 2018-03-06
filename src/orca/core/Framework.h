@@ -44,6 +44,7 @@ private:
 template<typename MessageType>
 inline void Framework<MessageType>::registerActor(ActorType * actor)
 {
+    std::unique_lock<std::mutex> lock(mailboxCenter_.Mutex());
     auto rst = mailboxCenter_.applyAdderss(actor);
     ORCA_ASSERT_MSG(rst >= 0, "mailboxs overflow");
 }
@@ -51,7 +52,8 @@ inline void Framework<MessageType>::registerActor(ActorType * actor)
 template<typename MessageType>
 void Framework<MessageType>::recycleActor(ActorType * actor)
 {
-    mailboxCenter_.recycle(actor->Addr());
+    std::unique_lock<std::mutex> lock(mailboxCenter_.Mutex());
+    mailboxCenter_.recycle(actor);
 }
 
 }

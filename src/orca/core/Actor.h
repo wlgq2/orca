@@ -29,7 +29,7 @@ public:
 
     void setAddr(Address& addr);
     void setAddr(int page, int index);
-    Address& Addr();
+    Address& getAddress();
     void registerHandler(ActorHandle handler);
     void Handle();
 
@@ -77,7 +77,7 @@ void Actor<MessageType>::setAddr(int page, int index)
 }
 
 template <typename MessageType>
-Address& Actor<MessageType>::Addr()
+Address& Actor<MessageType>::getAddress()
 {
     return addr_;
 }

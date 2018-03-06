@@ -19,7 +19,7 @@ namespace orca
 class Assert
 {
 public:
-    static void IsFail(bool nomal, const char* const file, const unsigned int line, const char* const message = nullptr)
+    static void IsFail(bool nomal, const char* const file, const unsigned int line, const std::string message = "")
     {
         if (!nomal)
         {
@@ -27,10 +27,10 @@ public:
         }
     }
 
-    static void Fail(const char* const file, const unsigned int line, const char* const message = nullptr)
+    static void Fail(const char* const file, const unsigned int line, const std::string message  = "")
     {
         std::cerr<<"fail in :"<<file<<" at "<<line<<" lines.";
-        if (message)
+        if ("" != message)
         {
             std::cerr<<"\n:" << message;
         }
