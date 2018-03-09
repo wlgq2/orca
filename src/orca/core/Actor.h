@@ -31,7 +31,7 @@ public:
     void setAddr(int page, int index);
     Address& getAddress();
     void registerHandler(ActorHandle handler);
-    void Handle();
+    void handle(const MessagePack<MessageType>&, const Address&);
 
 private:
     std::string name_;
@@ -48,6 +48,7 @@ Actor<MessageType>::Actor(orca::core::Framework<MessageType>* framework, std::st
     handle_(nullptr)
 {
     //addr_.framework = name_;
+    
     framework_->registerActor(this);
 }
 
@@ -89,11 +90,11 @@ void Actor<MessageType>::registerHandler(ActorHandle handler)
 }
 
 template <typename MessageType>
-void Actor<MessageType>::Handle()
+void Actor<MessageType>::handle(const MessagePack<MessageType>& message, const Address& addr)
 {
     if (handle_)
     {
-
+        handle_(message, addr);
     }
 }
 }

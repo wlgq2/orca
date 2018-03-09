@@ -2,7 +2,10 @@
 #define  MAILBOX_H
 
 #include <memory> 
-#include "Actor.h"
+#include <functional>
+
+#include "MessagePack.h"
+#include "Address.h"
 
 namespace orca
 {
@@ -14,25 +17,26 @@ template  <typename MessageType>
 class Mailbox
 {
 public:
-    Mailbox(Actor<MessageType>* actor);
-    int handle();
+    using MailboxHandler = std::function<void(const MessagePack<MessageType>&, const Address&)>;
+    Mailbox(MailboxHandler handler);
+    int handle(const MessagePack<MessageType>& message, const Address& addr);
 private:
-    Actor<MessageType>* actor_;
+    MailboxHandler handler_;
 };
 
 template  <typename MessageType>
-Mailbox<MessageType>::Mailbox(Actor<MessageType>* actor)
-    :actor_(actor)
+Mailbox<MessageType>::Mailbox(MailboxHandler handler)
+    :handler_(handler)
 {
 
 }
 
 template  <typename MessageType>
-int Mailbox<MessageType>::handle()
+int Mailbox<MessageType>::handle(const MessagePack<MessageType>& message, const Address& addr)
 {
-    if (actor_)
+    if (handler_)
     {
-
+        handler_(message,addr);
     }
 }
 

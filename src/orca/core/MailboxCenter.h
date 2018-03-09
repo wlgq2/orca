@@ -4,7 +4,9 @@
 #include <vector>
 #include <memory>
 #include <mutex>
+#include <functional>
 
+#include   "../base/queue/BlockQueue.h"
 #include "MailboxPage.h"
 #include "Address.h"
 #include "Assert.h"
@@ -13,6 +15,12 @@ namespace orca
 { 
 namespace core
 {
+template<typename MessageType>
+struct Mail
+{
+    Address addr;
+    std::shared_ptr<MessageType> message;
+};
 
 template <typename MailboxType>
 class MailboxCenter
@@ -23,18 +31,20 @@ public:
     using MailboxPagePtr = std::shared_ptr<MailboxPage<MailboxType>>;
 
     template<typename ActorType>
-    int applyAdderss(ActorType*);
+    int applyAdderss(ActorType*actor);
+
     template<typename ActorType>
     void recycle(ActorType* actor);
 
+private:
     bool applyMailboxName(std::string& name, Address& addr);
     bool recycleMailboxName(std::string& name);
 
-    std::mutex& Mutex();
+    
 private:
     std::mutex mutex_;
     std::vector<MailboxPagePtr> mailboxs_;
-    std::map<std::string, Address>  mailboxIndex_;
+    std::map<std::string, Address>  mailboxAddrs_;
 
     static const int MaxPageCnt;
 };
@@ -45,7 +55,7 @@ const int MailboxCenter<MailboxType>::MaxPageCnt = 128;
 template<typename MailboxType>
 MailboxCenter<MailboxType>::MailboxCenter()
 {
-    mailboxIndex_.clear();
+    mailboxAddrs_.clear();
     for (auto i = 0; i < MaxPageCnt; i++)
     {
         mailboxs_.push_back(nullptr);
@@ -62,13 +72,14 @@ template<typename MailboxType>
 template<typename ActorType>
 int MailboxCenter<MailboxType>::applyAdderss(ActorType* actor)
 {
+    std::unique_lock<std::mutex> lock(mutex_);
     for (int i = 0; i < MaxPageCnt; i++)
     {
         if (nullptr == mailboxs_[i])
         {
             mailboxs_[i] = std::make_shared<MailboxPage<MailboxType>>();
         }
-        auto index = mailboxs_[i]->allocateMailbox(actor);
+        auto index = mailboxs_[i]->allocateMailbox(std::bind(&ActorType::handle, actor, std::placeholders::_1, std::placeholders::_2));
         if (index >= 0)
         {
             actor->setAddr(i, index);
@@ -89,6 +100,7 @@ template<typename MailboxType>
 template<typename ActorType>
 void MailboxCenter<MailboxType>::recycle(ActorType* actor)
 {
+    std::unique_lock<std::mutex> lock(mutex_);
     if (mailboxs_.size() > actor->getAddress().page)
     {
         mailboxs_[actor->getAddress().page]->recycleMailbox(actor->getAddress().index);
@@ -102,29 +114,23 @@ void MailboxCenter<MailboxType>::recycle(ActorType* actor)
 template<typename MailboxType>
 bool MailboxCenter<MailboxType>::applyMailboxName(std::string& name,Address& addr)
 {
-    auto it = mailboxIndex_.find(name);
-    if(it != mailboxIndex_.end())
+    auto it = mailboxAddrs_.find(name);
+    if(it != mailboxAddrs_.end())
         return false;
-    mailboxIndex_[name] = addr;
+    mailboxAddrs_[name] = addr;
     return true;
 }
 
 template<typename MailboxType>
 bool MailboxCenter<MailboxType>::recycleMailboxName(std::string& name)
 {
-    auto it = mailboxIndex_.find(name);
-    if (it != mailboxIndex_.end())
+    auto it = mailboxAddrs_.find(name);
+    if (it != mailboxAddrs_.end())
     {
-        mailboxIndex_.erase(it);
+        mailboxAddrs_.erase(it);
         return true;
     }
     return false;
-}
-
-template<typename MailboxType>
-std::mutex & MailboxCenter<MailboxType>::Mutex()
-{
-    return mutex_;
 }
 
 }
