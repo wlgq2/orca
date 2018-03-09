@@ -33,6 +33,7 @@
     <ClInclude Include="..\..\..\src\orca\base\libuv_cpp11\uv\uv11.h" />
     <ClInclude Include="..\..\..\src\orca\base\log\AsyncLog.h" />
     <ClInclude Include="..\..\..\src\orca\base\log\log.h" />
+    <ClInclude Include="..\..\..\src\orca\base\queue\BlockQueue.h" />
     <ClInclude Include="..\..\..\src\orca\base\thread\Thread.h" />
     <ClInclude Include="..\..\..\src\orca\base\thread\ThreadPool.h" />
     <ClInclude Include="..\..\..\src\orca\core\Actor.h" />

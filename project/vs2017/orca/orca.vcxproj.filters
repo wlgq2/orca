@@ -31,6 +31,9 @@
     <Filter Include="src\orca\base\log">
       <UniqueIdentifier>{489bc261-a1d4-4fc4-87f4-1de259e51462}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\orca\base\queue">
+      <UniqueIdentifier>{2bedeb2a-ec6d-4698-94a5-6cd5193a08ab}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\src\orca\core\Actor.h">
@@ -116,6 +119,9 @@
     </ClInclude>
     <ClInclude Include="..\..\..\src\orca\base\log\log.h">
       <Filter>src\orca\base\log</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\orca\base\queue\BlockQueue.h">
+      <Filter>src\orca\base\queue</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

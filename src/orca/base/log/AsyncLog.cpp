@@ -1,3 +1,6 @@
+#include     <ratio>
+#include     <chrono>
+
 #include "AsyncLog.h"
 
 using namespace orca::log;
@@ -13,12 +16,23 @@ void AsyncLog::setLevel(Level level)
     spdlog::set_level(static_cast<spdlog::level::level_enum>(level));
 }
 
-void AsyncLog::initLogFile(std::string name, size_t size, int cycleMs)
+void AsyncLog::initLogFile(std::string name, size_t filesize, size_t fileCnt, size_t cache, int cycleMs)
 {
-    spdlog::set_async_mode(size, spdlog::async_overflow_policy::block_retry, nullptr, std::chrono::milliseconds(cycleMs));
+    spdlog::set_async_mode(cache, spdlog::async_overflow_policy::block_retry, nullptr, std::chrono::milliseconds(cycleMs));
+
+    auto now = std::chrono::system_clock::now();
+    time_t time = std::chrono::system_clock::to_time_t(now);
+    std::tm tm = *std::localtime(&time);
+    std::string filename(name);
+    filename += std::to_string(tm.tm_year + 1900) + ".";
+    filename += std::to_string(tm.tm_mon) + ".";
+    filename += std::to_string(tm.tm_mday) + " ";
+    filename += std::to_string(tm.tm_hour) + "-";
+    filename += std::to_string(tm.tm_min) + "-";
+    filename += std::to_string(tm.tm_sec) + " ";
     try
     {
-        async_ = spdlog::daily_logger_st(name, "logs/" + name);
+        async_ = spdlog::rotating_logger_mt(name, "logs/" + filename, filesize, fileCnt);
     }
     catch (...)
     {

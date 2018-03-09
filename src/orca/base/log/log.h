@@ -10,7 +10,7 @@ namespace log
 
 void setLevel(Level level);
 
-void init(std::string file, size_t size, int cycleMs = 1);
+void init(std::string file, size_t filesize, size_t fileCnt, size_t cache, int cycleMs = 1);
 
 void info(const std::string& message);
 void info(const std::string&& message);

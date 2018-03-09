@@ -5,9 +5,9 @@ void orca::log::setLevel(Level level)
     AsyncLog::Instance()->setLevel(level);
 }
 
-void orca::log::init(std::string file, size_t size, int cycleMs)
+void orca::log::init(std::string file, size_t filesize, size_t fileCnt, size_t cache, int cycleMs)
 {
-    AsyncLog::Instance()->initLogFile(file, size, cycleMs);
+    AsyncLog::Instance()->initLogFile(file, filesize,fileCnt,cache, cycleMs);
 }
 
 void orca::log::info(const std::string& message)

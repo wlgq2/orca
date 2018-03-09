@@ -35,7 +35,7 @@ REGISTER_MESSAGE_TYPE(MyMessage);
 
 int main(int argc, char** args)
 {
-    orca::log::init("test.txt",1024);
+    orca::log::init("test.txt",1024*1024*100,1024,1024);
     orca::log::error("test");
     orca::MessagePack message;
     message.create("my message type");

@@ -29,7 +29,7 @@ public:
 
     void setLevel(Level level);
 
-    void initLogFile(std::string name, size_t size,int cycleMs);
+    void initLogFile(std::string name, size_t filesize , size_t fileCnt,size_t cache,int cycleMs);
 
     void info(const std::string& message) override;
 
