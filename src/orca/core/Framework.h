@@ -38,8 +38,7 @@ private:
 
 
 private:
-    MailboxCenter<Mailbox<MessageType>> mailboxCenter_;
-    orca::base::BlockQueue<MessageType> mailCache_;
+    MailboxCenter<Mailbox<MessageType>, orca::base::BlockQueue<MessageType>> mailboxCenter_;
 };
 
 template<typename MessageType>

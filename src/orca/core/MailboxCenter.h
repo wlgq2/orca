@@ -22,7 +22,7 @@ struct Mail
     std::shared_ptr<MessageType> message;
 };
 
-template <typename MailboxType>
+template <typename MailboxType,typename QueueType>
 class MailboxCenter
 {
 public:
@@ -46,14 +46,15 @@ private:
     std::vector<MailboxPagePtr> mailboxs_;
     std::map<std::string, Address>  mailboxAddrs_;
 
+    QueueType mailCache_;
     static const int MaxPageCnt;
 };
 
-template <typename MailboxType>
-const int MailboxCenter<MailboxType>::MaxPageCnt = 128;
+template <typename MailboxType, typename QueueType>
+const int MailboxCenter<MailboxType, QueueType>::MaxPageCnt = 128;
 
-template<typename MailboxType>
-MailboxCenter<MailboxType>::MailboxCenter()
+template <typename MailboxType, typename QueueType>
+MailboxCenter<MailboxType, QueueType>::MailboxCenter()
 {
     mailboxAddrs_.clear();
     for (auto i = 0; i < MaxPageCnt; i++)
@@ -62,15 +63,15 @@ MailboxCenter<MailboxType>::MailboxCenter()
     }
 }
 
-template<typename MailboxType>
-MailboxCenter<MailboxType>::~MailboxCenter()
+template <typename MailboxType, typename QueueType>
+MailboxCenter<MailboxType, QueueType>::~MailboxCenter()
 {
 
 }
 
-template<typename MailboxType>
+template <typename MailboxType,typename QueueType>
 template<typename ActorType>
-int MailboxCenter<MailboxType>::applyAdderss(ActorType* actor)
+int MailboxCenter<MailboxType, QueueType>::applyAdderss(ActorType* actor)
 {
     std::unique_lock<std::mutex> lock(mutex_);
     for (int i = 0; i < MaxPageCnt; i++)
@@ -96,9 +97,9 @@ int MailboxCenter<MailboxType>::applyAdderss(ActorType* actor)
 
 
 
-template<typename MailboxType>
+template <typename MailboxType, typename QueueType>
 template<typename ActorType>
-void MailboxCenter<MailboxType>::recycle(ActorType* actor)
+void MailboxCenter<MailboxType, QueueType>::recycle(ActorType* actor)
 {
     std::unique_lock<std::mutex> lock(mutex_);
     if (mailboxs_.size() > actor->getAddress().page)
@@ -111,8 +112,8 @@ void MailboxCenter<MailboxType>::recycle(ActorType* actor)
     }
 }
 
-template<typename MailboxType>
-bool MailboxCenter<MailboxType>::applyMailboxName(std::string& name,Address& addr)
+template <typename MailboxType, typename QueueType>
+bool MailboxCenter<MailboxType, QueueType>::applyMailboxName(std::string& name,Address& addr)
 {
     auto it = mailboxAddrs_.find(name);
     if(it != mailboxAddrs_.end())
@@ -121,8 +122,8 @@ bool MailboxCenter<MailboxType>::applyMailboxName(std::string& name,Address& add
     return true;
 }
 
-template<typename MailboxType>
-bool MailboxCenter<MailboxType>::recycleMailboxName(std::string& name)
+template <typename MailboxType, typename QueueType>
+bool MailboxCenter<MailboxType, QueueType>::recycleMailboxName(std::string& name)
 {
     auto it = mailboxAddrs_.find(name);
     if (it != mailboxAddrs_.end())
