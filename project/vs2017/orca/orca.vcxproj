@@ -31,8 +31,7 @@
     <ClInclude Include="..\..\..\src\orca\base\libuv_cpp11\uv\Timer.h" />
     <ClInclude Include="..\..\..\src\orca\base\libuv_cpp11\uv\TimerWheel.h" />
     <ClInclude Include="..\..\..\src\orca\base\libuv_cpp11\uv\uv11.h" />
-    <ClInclude Include="..\..\..\src\orca\base\log\AsyncLog.h" />
-    <ClInclude Include="..\..\..\src\orca\base\log\log.h" />
+    <ClInclude Include="..\..\..\src\orca\base\log\Log.h" />
     <ClInclude Include="..\..\..\src\orca\base\queue\BlockQueue.h" />
     <ClInclude Include="..\..\..\src\orca\base\thread\Thread.h" />
     <ClInclude Include="..\..\..\src\orca\base\thread\ThreadPool.h" />
@@ -59,8 +58,7 @@
     <ClCompile Include="..\..\..\src\orca\base\libuv_cpp11\uv\TcpConnection.cpp" />
     <ClCompile Include="..\..\..\src\orca\base\libuv_cpp11\uv\TcpServer.cpp" />
     <ClCompile Include="..\..\..\src\orca\base\libuv_cpp11\uv\TimerWheel.cpp" />
-    <ClCompile Include="..\..\..\src\orca\base\log\AsyncLog.cpp" />
-    <ClCompile Include="..\..\..\src\orca\base\log\log.cpp" />
+    <ClCompile Include="..\..\..\src\orca\base\log\Log.cpp" />
     <ClCompile Include="..\..\..\src\orca\base\thread\Thread.cpp" />
     <ClCompile Include="..\..\..\src\orca\base\thread\ThreadPool.cpp" />
     <ClCompile Include="..\..\..\src\orca\core\MailBoxThread.cpp" />
@@ -133,7 +131,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>..\..\..\lib\libuv\include;..\..\..\src\base;..\..\..\src;..\..\..\lib\spdlog\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\lib\libuv\include;..\..\..\src\base;..\..\..\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
@@ -160,7 +158,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>..\..\..\lib\libuv\include;..\..\..\src\base;..\..\..\src;..\..\..\lib\spdlog\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\lib\libuv\include;..\..\..\src\base;..\..\..\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>

@@ -1,30 +1,42 @@
-#ifndef     ORCA_LOG_H
-#define     ORCA_LOG_H
+#ifndef  ORCA_ASYNC_LOG_H
+#define  ORCA_ASYNC_LOG_H
 
-#include    "AsyncLog.h"
+
+#include     <string>
+#include     "../libuv_cpp11/uv/uv11.h"
 
 namespace orca
 {
 namespace log
 {
 
-void setLevel(Level level);
+enum Level
+{
+    Trace = 0,
+    Debug = 1,
+    Info = 2,
+    Warn = 3,
+    Error = 4,
+    Critical = 5,
+    Off = 6
+};
 
-void init(std::string file, size_t filesize, size_t fileCnt, size_t cache, int cycleMs = 1);
+class Log :public uv::LogInterface
+{
+public:
+    static Log* Instance();
 
-void info(const std::string& message);
-void info(const std::string&& message);
+    void info(const std::string& message) override;
 
-void error(const std::string& message);
-void error(const std::string&& message);
+    void error(const std::string& message) override;
 
-void warn(const std::string& message);
-void warn(const std::string&& message);
+    void warn(const std::string& message) override;
 
-void debug(const std::string& message);
-void debug(const std::string&& message);
+    void debug(const std::string& message) override;
+private:
+    Log();
+};
 
 }
 }
-#endif // ! ORCA_LOG_H
-
+#endif
