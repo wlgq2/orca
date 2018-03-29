@@ -31,8 +31,9 @@ public:
     void setAddr(int page, int index);
     Address& getAddress();
     void registerHandler(ActorHandle handler);
-    void handle(const MessagePack<MessageType>&, const Address&);
+    void handle(const MessagePack<MessageType>&,Address&);
 
+    void send(const MessagePack<MessageType>& message,Address& destination);
 private:
     std::string name_;
     Framework<MessageType>* framework_;
@@ -90,13 +91,20 @@ void Actor<MessageType>::registerHandler(ActorHandle handler)
 }
 
 template <typename MessageType>
-void Actor<MessageType>::handle(const MessagePack<MessageType>& message, const Address& addr)
+void Actor<MessageType>::handle(const MessagePack<MessageType>& message,Address& addr)
 {
     if (handle_)
     {
         handle_(message, addr);
     }
 }
+
+template<typename MessageType>
+inline void Actor<MessageType>::send(const MessagePack<MessageType>& message,Address& destination)
+{
+    framework_->send(message,addr_, destination);
+}
+
 }
 }
 #endif // !   ORCA_ACTOR_H

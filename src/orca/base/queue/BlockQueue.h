@@ -38,7 +38,7 @@ template<typename Type>
 inline Type BlockQueue<Type>::pop()
 {
     std::unique_lock<std::mutex> lock(mutex_);
-    condition_.wait(lock, [this]() {return !queue_.empty()});
+    condition_.wait(lock, [this]() {return !queue_.empty(); });
     auto rst = queue_.front();
     queue_.pop();
     return rst;

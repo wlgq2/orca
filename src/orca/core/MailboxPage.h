@@ -1,5 +1,5 @@
-#ifndef  MAILBOX_PAGE_H
-#define  MAILBOX_PAGE_H
+#ifndef  ORCA_MAILBOX_PAGE_H
+#define  ORCA_MAILBOX_PAGE_H
 
 #include <map>
 #include <set>

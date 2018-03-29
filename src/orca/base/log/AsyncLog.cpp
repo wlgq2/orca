@@ -25,11 +25,11 @@ void AsyncLog::initLogFile(std::string name, size_t filesize, size_t fileCnt, si
     std::tm tm = *std::localtime(&time);
     std::string filename(name);
     filename += std::to_string(tm.tm_year + 1900) + ".";
-    filename += std::to_string(tm.tm_mon) + ".";
-    filename += std::to_string(tm.tm_mday) + " ";
+    filename += std::to_string(tm.tm_mon+1) + ".";
+    filename += std::to_string(tm.tm_mday) + "_";
     filename += std::to_string(tm.tm_hour) + "-";
     filename += std::to_string(tm.tm_min) + "-";
-    filename += std::to_string(tm.tm_sec) + " ";
+    filename += std::to_string(tm.tm_sec) + "_";
     try
     {
         async_ = spdlog::rotating_logger_mt(name, "logs/" + filename, filesize, fileCnt);

@@ -1,4 +1,6 @@
 #include <iostream>
+#include <memory>
+#include <vector>
 
 #include <orca/orca.h>
 #include <future>
@@ -46,22 +48,14 @@ int main(int argc, char** args)
 
     //orca::core::Actor<> a(&framework);
 
-    orca::Actor actor(&framework);
-    actor.registerHandler([](const orca::MessagePack&, const orca::Address&)
+    orca::Actor send(&framework);
+    orca::Actor recieve(&framework);
+    recieve.registerHandler([](const orca::MessagePack& pack, const orca::Address& addr)
     {
+        std::cout << pack.get()->size()<<":" << (char*)(pack.get()->enter()) << std::endl;
     });
+    send.send(message, recieve.getAddress());
 
-    auto async = std::async( []( )
-    {
-        uv::EventLoop loop(uv::EventLoop::NewLoop);
-        uv::Timer<void*> timer(&loop, 1000, 1000 ,[](uv::Timer<void*>*, void*)
-        {
+    framework.loop();
 
-        },nullptr);
-        timer.start();
-        loop.run();
-
-    });
-    async.get();
-    
 }

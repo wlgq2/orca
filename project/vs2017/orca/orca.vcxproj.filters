@@ -123,6 +123,9 @@
     <ClInclude Include="..\..\..\src\orca\base\queue\BlockQueue.h">
       <Filter>src\orca\base\queue</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\src\orca\core\Mail.h">
+      <Filter>src\orca\core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\examples\main.cpp">
@@ -160,6 +163,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\src\orca\base\log\log.cpp">
       <Filter>src\orca\base\log</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\orca\base\thread\ThreadPool.cpp">
+      <Filter>src\orca\base\thread</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

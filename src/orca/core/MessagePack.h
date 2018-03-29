@@ -20,7 +20,10 @@ public:
         :messagePtr_(ptr)
     {
     }
-
+    MessagePack(std::shared_ptr<MessageType> ptr)
+        :messagePtr_(ptr)
+    {
+    }
     template<class... _Types >
     std::shared_ptr<MessageType>& create(_Types&&... _Args)
     {
@@ -28,7 +31,7 @@ public:
         return get();
     }
 
-    std::shared_ptr<MessageType>& get()
+    std::shared_ptr<MessageType> get() const
     {
         return messagePtr_;
     }

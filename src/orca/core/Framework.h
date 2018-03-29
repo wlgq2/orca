@@ -18,35 +18,39 @@ class Framework
 public:
     using ActorType = Actor<MessageType>;
     using MessagePtr = std::shared_ptr<MessageType>;
-    using MailType = Mail<std::shared_ptr<MessageType>>;
+    using MailType = Mail<MessageType>;
 
-    Framework()
-    {
-        //pool_.registerPorcess(std::bind(&Framework::process,this));
-        //pool_.start(2);
-    }
+    Framework();
 
-    void process()
-    {
-        while (true)
-        {
-            mailboxCenter_.delivery();
-            //orca::base::Thread::SleepMSeconds(10000);
-        }
-    }
-    
+    void process();
 
     void registerActor(ActorType* actor);
     void recycleActor(ActorType* actor);
+    
+    void send(const MessagePack<MessageType>& message,Address& from,Address& destination);
 
-    void send(std::shared_ptr<MessageType> message, Address& from, Address& destination);
+    void loop();
 private:
-    //ThreadPool<std::queue<int>,std::function<void()>> pool_;
+    orca::base::ThreadPool threadPool_;
 
 
 private:
     MailboxCenter<Mailbox<MessageType>, orca::base::BlockQueue<MailType>> mailboxCenter_;
 };
+
+
+
+template<typename MessageType>
+Framework<MessageType>::Framework()
+{
+    threadPool_.registerPorcess(std::bind(&Framework::process, this));
+}
+
+template<typename MessageType>
+void Framework<MessageType>::process()
+{
+    mailboxCenter_.delivery();
+}
 
 template<typename MessageType>
 inline void Framework<MessageType>::registerActor(ActorType * actor)
@@ -62,11 +66,17 @@ void Framework<MessageType>::recycleActor(ActorType * actor)
 }
 
 template<typename MessageType>
-void Framework<MessageType>::send(std::shared_ptr<MessageType> message, Address & from, Address & destination)
+void Framework<MessageType>::send(const MessagePack<MessageType>& message,Address& from,Address& destination)
 {
-    mailboxCenter_.sendMessage(message,from,destination);
+    mailboxCenter_.sendMessage(message.get(),from,destination);
 }
 
+template<typename MessageType>
+void Framework<MessageType>::loop()
+{
+    threadPool_.start(2);
+    threadPool_.join();
+}
 }
 }
 #endif // ! ORCA_FRAMEWORK_H

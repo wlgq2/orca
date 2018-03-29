@@ -1,5 +1,5 @@
-#ifndef    MAILBOX_CENTER
-#define    MAILBOX_CENTER
+#ifndef    ORCA_MAILBOX_CENTER
+#define    ORCA_MAILBOX_CENTER
 
 #include <vector>
 #include <memory>
@@ -7,21 +7,17 @@
 #include <functional>
 
 #include   "../base/queue/BlockQueue.h"
+#include "Mail.h"
 #include "MailboxPage.h"
 #include "Address.h"
 #include "Assert.h"
+
 
 namespace orca
 { 
 namespace core
 {
-template<typename MessageType>
-struct Mail
-{
-    Address from;
-    Address destination;
-    MessageType message;
-};
+
 
 template <typename MailboxType,typename QueueType>
 class MailboxCenter
@@ -38,13 +34,14 @@ public:
     void recycle(ActorType* actor);
 
     template<typename MessageType>
-    void sendMessage(MessageType message, Address& from, Address& destination);
+    void sendMessage(std::shared_ptr<MessageType> message,Address& from,Address& destination);
 
-    void delivery();
+    
+    int delivery();
 private:
     bool applyMailboxName(std::string& name, Address& addr);
     bool recycleMailboxName(std::string& name);
-
+    std::shared_ptr<MailboxType> getMailbox(const Address& addr);
     
 private:
     std::mutex mailboxMutex_;
@@ -120,24 +117,18 @@ void MailboxCenter<MailboxType, QueueType>::recycle(ActorType* actor)
 
 template<typename MailboxType, typename QueueType>
 template<typename MessageType>
-void MailboxCenter<MailboxType, QueueType>::sendMessage(MessageType message, Address& from, Address& destination)
+void MailboxCenter<MailboxType, QueueType>::sendMessage(std::shared_ptr<MessageType> message,Address& from,Address& destination)
 {
-    Mail<MessageType> message = { from,destination,message };
-    mailCache_.push(message);
-    //std::unique_lock lock(messageMutex_)
+    Mail<MessageType> mail = { from,destination,message };
+    mailCache_.push(mail);
 }
 
 template<typename MailboxType, typename QueueType>
-void MailboxCenter<MailboxType, QueueType>::delivery()
+int MailboxCenter<MailboxType, QueueType>::delivery()
 {
     auto mail = mailCache_.pop();
-    {
-        std::unique_lock<std::mutex> lock(mailboxMutex_);
-        //获取处理函数
-        //
-
-    }
-    //std::unique_lock lock(messageMutex_)
+    auto mailbox = getMailbox(mail.destination);
+    return mailbox->delivery(mail);
 }
 
 template <typename MailboxType, typename QueueType>
@@ -160,6 +151,18 @@ bool MailboxCenter<MailboxType, QueueType>::recycleMailboxName(std::string& name
         return true;
     }
     return false;
+}
+
+template<typename MailboxType, typename QueueType>
+std::shared_ptr<MailboxType> MailboxCenter<MailboxType, QueueType>::getMailbox(const Address& addr)
+{
+    std::unique_lock<std::mutex> lock(mailboxMutex_);
+    //if(addr.framework)
+    if (addr.page<mailboxs_.size())
+    {
+        return mailboxs_[addr.page]->getMailbox(addr.index);
+    }
+    return nullptr;
 }
 
 }
