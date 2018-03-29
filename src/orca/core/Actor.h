@@ -22,7 +22,7 @@ template <typename MessageType>
 class Actor
 {
 public:
-    using ActorHandle = std::function<void(const MessagePack<MessageType>&,const Address&)>;
+    using ActorHandle = std::function<void(const MessagePack<MessageType>&, Address&)>;
     Actor(orca::core::Framework<MessageType>* framework, std::string name = std::string(""));
     ~Actor();
     std::string& Name();

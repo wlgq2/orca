@@ -18,7 +18,7 @@ public:
     }
     ~MyMessage()
     {
-        std::cout << "release" << std::endl;
+        //std::cout << "release" << std::endl;
     }
     const unsigned long size()
     {
@@ -37,22 +37,24 @@ REGISTER_MESSAGE_TYPE(MyMessage);
 
 int main(int argc, char** args)
 {
-    orca::MessagePack message;
-    message.create("my message type");
-
-    cout << (char*)message.enter() <<" :"<< message.size() << endl;
-
     orca::Framework framework;
 
-    //orca::core::Actor<> a(&framework);
-
-    orca::Actor send(&framework);
-    orca::Actor recieve(&framework);
-    recieve.registerHandler([](const orca::MessagePack& pack, const orca::Address& addr)
+    orca::MessagePack message;
+    message.create("a message from actor1");
+    orca::Actor actor1(&framework);
+    orca::Actor actor2(&framework);
+    actor1.registerHandler([&actor2](const orca::MessagePack& pack, orca::Address& from)
     {
-        std::cout << pack.get()->size()<<":" << (char*)(pack.get()->enter()) << std::endl;
+        std::cout <<"actor1 recieve£º"<< pack.get()->size() << ":" << (char*)(pack.get()->enter()) << std::endl;
     });
-    send.send(message, recieve.getAddress());
+    actor2.registerHandler([&actor2](const orca::MessagePack& pack,orca::Address& from)
+    {
+        std::cout << "actor2 recieve£º" << pack.get()->size()<<":" << (char*)(pack.get()->enter()) << std::endl;
+        orca::MessagePack message;
+        message.create("a message form acotr2");
+        actor2.send(message, from);
+    });
+    actor1.send(message, actor2.getAddress());
 
     framework.loop();
 

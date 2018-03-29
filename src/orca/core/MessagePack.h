@@ -28,7 +28,7 @@ public:
     std::shared_ptr<MessageType>& create(_Types&&... _Args)
     {
         messagePtr_ = std::make_shared<MessageType>(_STD forward<_Types>(_Args)...);
-        return get();
+        return messagePtr_;
     }
 
     std::shared_ptr<MessageType> get() const
