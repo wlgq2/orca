@@ -14,8 +14,12 @@ template <typename Type>
 class BlockQueue
 {
 public:
-    bool push(Type ele);
-    Type pop();
+    void push(Type& ele);
+    
+    template<class... _Types >
+    void push(_Types&&... _Args);
+    
+    void pop(Type& ele);
     bool empty();
     void clear();
 private:
@@ -26,22 +30,20 @@ private:
 
 
 template<typename Type>
-inline bool BlockQueue<Type>::push(Type ele)
+inline void BlockQueue<Type>::push(Type& ele)
 {
     std::unique_lock<std::mutex> lock(mutex_);
     queue_.push(ele);
     condition_.notify_all();
-    return true;
 }
 
 template<typename Type>
-inline Type BlockQueue<Type>::pop()
+inline void BlockQueue<Type>::pop(Type& ele)
 {
     std::unique_lock<std::mutex> lock(mutex_);
     condition_.wait(lock, [this]() {return !queue_.empty(); });
-    auto rst = queue_.front();
+    ele = queue_.front();
     queue_.pop();
-    return rst;
 }
 
 template<typename Type>
@@ -58,6 +60,17 @@ inline void BlockQueue<Type>::clear()
     std::queue<Type> empty;
     queue_.swap(empty);
 }
+
+
+template<typename Type>
+template<class ..._Types>
+inline void BlockQueue<Type>::push(_Types && ..._Args)
+{
+    std::unique_lock<std::mutex> lock(mutex_);
+    queue_.push({ _STD forward<_Types>(_Args)... });
+    condition_.notify_all();
+}
+
 }
 }
 #endif // ! ORCA_QUEUE_H

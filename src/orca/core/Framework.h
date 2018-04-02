@@ -19,6 +19,7 @@ public:
     using ActorType = Actor<MessageType>;
     using MessagePtr = std::shared_ptr<MessageType>;
     using MailType = Mail<MessageType>;
+    using MailboxType = Mailbox<MessageType>;
 
     Framework();
 
@@ -35,7 +36,7 @@ private:
 
 
 private:
-    MailboxCenter<Mailbox<MessageType>, orca::base::BlockQueue<MailType>> mailboxCenter_;
+    MailboxCenter<MailboxType, MailType> mailboxCenter_;
 };
 
 
@@ -66,7 +67,7 @@ void Framework<MessageType>::recycleActor(ActorType * actor)
 }
 
 template<typename MessageType>
-void Framework<MessageType>::send(const MessagePack<MessageType>& message,Address& from,Address& destination)
+inline void Framework<MessageType>::send(const MessagePack<MessageType>& message,Address& from,Address& destination)
 {
     mailboxCenter_.sendMessage(message.get(),from,destination);
 }
@@ -74,7 +75,7 @@ void Framework<MessageType>::send(const MessagePack<MessageType>& message,Addres
 template<typename MessageType>
 void Framework<MessageType>::loop()
 {
-    threadPool_.start(2);
+    threadPool_.start(1);
     threadPool_.join();
 }
 }

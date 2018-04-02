@@ -20,7 +20,7 @@ public:
         :messagePtr_(ptr)
     {
     }
-    MessagePack(std::shared_ptr<MessageType> ptr)
+    MessagePack(std::shared_ptr<MessageType>& ptr)
         :messagePtr_(ptr)
     {
     }
@@ -44,6 +44,10 @@ public:
     const unsigned long size()
     {
         return messagePtr_->size();
+    }
+    void set(std::shared_ptr<MessageType>& ptr)
+    {
+        messagePtr_ = ptr;
     }
 private:
     std::shared_ptr<MessageType> messagePtr_;

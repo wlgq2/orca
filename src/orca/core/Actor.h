@@ -34,6 +34,7 @@ public:
     void handle(const MessagePack<MessageType>&,Address&);
 
     void send(const MessagePack<MessageType>& message,Address& destination);
+    Framework<MessageType>* framework();
 private:
     std::string name_;
     Framework<MessageType>* framework_;
@@ -103,6 +104,12 @@ template<typename MessageType>
 inline void Actor<MessageType>::send(const MessagePack<MessageType>& message,Address& destination)
 {
     framework_->send(message,addr_, destination);
+}
+
+template<typename MessageType>
+inline Framework<MessageType>* Actor<MessageType>::framework()
+{
+    return framework_;
 }
 
 }

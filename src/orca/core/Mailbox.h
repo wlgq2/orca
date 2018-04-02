@@ -34,7 +34,7 @@ Mailbox<MessageType>::Mailbox(MailboxHandler handler)
 }
 
 template  <typename MessageType>
-int Mailbox<MessageType>::delivery(MessagePack<MessageType>& message, Address& addr)
+inline int Mailbox<MessageType>::delivery(MessagePack<MessageType>& message, Address& addr)
 {
     if (handler_)
     {
