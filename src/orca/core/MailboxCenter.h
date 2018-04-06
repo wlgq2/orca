@@ -7,6 +7,8 @@
 #include <functional>
 
 #include   "../base/queue/BlockQueue.h"
+#include "../base/SpinLock/SpinLock.h"
+#include "Define.h"
 #include "Mail.h"
 #include "MailboxPage.h"
 #include "Address.h"
@@ -23,6 +25,7 @@ template <typename MailboxType,typename MailType>
 class MailboxCenter
 {
 public:
+
     MailboxCenter();
     ~MailboxCenter();
     using MailboxPagePtr = std::shared_ptr<MailboxPage<MailboxType>>;
@@ -44,13 +47,11 @@ private:
     std::shared_ptr<MailboxType> getMailbox(const Address& addr);
     
 private:
-    std::mutex mailboxMutex_;
-    //std::mutex messageMutex_;
+    orca::base::CommonLockType lock_;
     std::vector<MailboxPagePtr> mailboxs_;
     std::map<std::string, Address>  mailboxAddrs_;
 
-    //orca::base::BlockQueue<MailType> mailCache_;
-    base::BlockQueue<MailType> mailCache_;
+    base::BlockQueue<MailType, orca::base::CommonLockType> mailCache_;
     static const int MaxPageCnt;
 };
 
@@ -78,7 +79,7 @@ template <typename MailboxType,typename MailType>
 template<typename ActorType>
 int MailboxCenter<MailboxType, MailType>::applyAdderss(ActorType* actor)
 {
-    std::unique_lock<std::mutex> lock(mailboxMutex_);
+    std::unique_lock<orca::base::CommonLockType> lock(lock_);
     for (int i = 0; i < MaxPageCnt; i++)
     {
         if (nullptr == mailboxs_[i])
@@ -106,7 +107,7 @@ template <typename MailboxType, typename MailType>
 template<typename ActorType>
 void MailboxCenter<MailboxType, MailType>::recycle(ActorType* actor)
 {
-    std::unique_lock<std::mutex> lock(mailboxMutex_);
+    std::unique_lock<orca::base::CommonLockType> lock(lock_);
     if (mailboxs_.size() > actor->getAddress().page)
     {
         mailboxs_[actor->getAddress().page]->recycleMailbox(actor->getAddress().index);
@@ -160,7 +161,7 @@ bool MailboxCenter<MailboxType, MailType>::recycleMailboxName(std::string& name)
 template<typename MailboxType, typename MailType>
 inline std::shared_ptr<MailboxType> MailboxCenter<MailboxType, MailType>::getMailbox(const Address& addr)
 {
-    std::unique_lock<std::mutex> lock(mailboxMutex_);
+    std::unique_lock<orca::base::CommonLockType> lock(lock_);
     //if(addr.framework)
     if (addr.page<mailboxs_.size())
     {

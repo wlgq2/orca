@@ -34,6 +34,12 @@
     <Filter Include="src\orca\base\queue">
       <UniqueIdentifier>{2bedeb2a-ec6d-4698-94a5-6cd5193a08ab}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\orca\base\SpinLock">
+      <UniqueIdentifier>{6f88a7df-fecf-471e-8c14-0239bfaf9616}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\orca\base\Condition">
+      <UniqueIdentifier>{ef8d0ed6-702b-4a84-a499-a5d1469d79e2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\src\orca\core\Actor.h">
@@ -123,6 +129,12 @@
     <ClInclude Include="..\..\..\src\orca\base\log\Log.h">
       <Filter>src\orca\base\log</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\src\orca\base\SpinLock\SpinLock.h">
+      <Filter>src\orca\base\SpinLock</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\orca\base\condition\Condition.h">
+      <Filter>src\orca\base\Condition</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\examples\main.cpp">
@@ -160,6 +172,12 @@
     </ClCompile>
     <ClCompile Include="..\..\..\src\orca\base\log\Log.cpp">
       <Filter>src\orca\base\log</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\orca\base\SpinLock\SpinLock.cpp">
+      <Filter>src\orca\base\SpinLock</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\orca\base\condition\Condition.cpp">
+      <Filter>src\orca\base\Condition</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

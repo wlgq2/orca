@@ -1,19 +1,22 @@
 #ifndef  ORCA_QUEUE_H
 #define  ORCA_QUEUE_H
 
-#include <mutex>
-#include <condition_variable>
-#include <queue>
+#include  <iostream>
+#include  <queue>
+#include  <atomic>
+
+#include  "../condition/Condition.h"
 
 namespace orca
 { 
 namespace base
 {
 
-template <typename Type>
+template <typename Type,typename LockType>
 class BlockQueue
 {
 public:
+    BlockQueue();
     void push(Type& ele);
     
     template<class... _Types >
@@ -23,52 +26,85 @@ public:
     bool empty();
     void clear();
 private:
-    std::mutex mutex_;
-    std::condition_variable condition_;
+    LockType lock_;
+    Condition condition_;
+    std::atomic<bool> waited_;
     std::queue<Type> queue_;
 };
 
 
-template<typename Type>
-inline void BlockQueue<Type>::push(Type& ele)
+template<typename Type, typename LockType>
+inline BlockQueue<Type, LockType>::BlockQueue()
+    :waited_(false)
 {
-    std::unique_lock<std::mutex> lock(mutex_);
-    queue_.push(ele);
-    condition_.notify_all();
 }
 
-template<typename Type>
-inline void BlockQueue<Type>::pop(Type& ele)
+template<typename Type, typename LockType>
+inline void BlockQueue<Type, LockType>::push(Type& ele)
 {
-    std::unique_lock<std::mutex> lock(mutex_);
-    condition_.wait(lock, [this]() {return !queue_.empty(); });
+    {
+        std::unique_lock<LockType> lock(lock_);
+        queue_.push(ele);
+    }
+    if (waited_)
+    {
+        condition_.notifyAll();
+    }
+}
+
+template<typename Type, typename LockType>
+inline void BlockQueue<Type, LockType>::pop(Type& ele)
+{
+    {
+        std::unique_lock<LockType> lock(lock_);
+        if (!queue_.empty())
+        {
+            ele = queue_.front();
+            queue_.pop();
+            return;
+        }
+    }
+    //只有在需要阻塞时才使用互斥锁,否则只适用自旋锁。
+    condition_.wait([this]() 
+    {
+        waited_ = empty();
+        return !waited_;
+    });
+    std::unique_lock<LockType> lock(lock_);
     ele = queue_.front();
     queue_.pop();
 }
 
-template<typename Type>
-inline bool BlockQueue<Type>::empty()
+template<typename Type, typename LockType>
+inline bool BlockQueue<Type, LockType>::empty()
 {
-    std::unique_lock<std::mutex> lock(mutex_);
+    std::unique_lock<LockType> lock(lock_);
     return queue_.empty();
 }
 
-template<typename Type>
-inline void BlockQueue<Type>::clear()
+template<typename Type, typename LockType>
+inline void BlockQueue<Type, LockType>::clear()
 {
-    std::unique_lock<std::mutex> lock(mutex_);
+    std::unique_lock<LockType> lock(lock_);
     std::queue<Type> empty;
     queue_.swap(empty);
 }
 
 
-template<typename Type>
+template<typename Type, typename LockType>
 template<class ..._Types>
-inline void BlockQueue<Type>::push(_Types && ..._Args)
+inline void BlockQueue<Type, LockType>::push(_Types && ..._Args)
 {
-    std::unique_lock<std::mutex> lock(mutex_);
-    queue_.push({ _STD forward<_Types>(_Args)... });
-    condition_.notify_all();
+    {
+        std::unique_lock<LockType> lock(lock_);
+        queue_.push({ _STD forward<_Types>(_Args)... });
+    }
+    if (waited_)
+    {
+        condition_.notifyAll();
+    }
+
+    
 }
 
 }

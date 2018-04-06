@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\src\orca\base\condition\Condition.h" />
     <ClInclude Include="..\..\..\src\orca\base\libuv_cpp11\uv\Async.h" />
     <ClInclude Include="..\..\..\src\orca\base\libuv_cpp11\uv\EventLoop.h" />
     <ClInclude Include="..\..\..\src\orca\base\libuv_cpp11\uv\LogInterface.h" />
@@ -33,6 +34,7 @@
     <ClInclude Include="..\..\..\src\orca\base\libuv_cpp11\uv\uv11.h" />
     <ClInclude Include="..\..\..\src\orca\base\log\Log.h" />
     <ClInclude Include="..\..\..\src\orca\base\queue\BlockQueue.h" />
+    <ClInclude Include="..\..\..\src\orca\base\SpinLock\SpinLock.h" />
     <ClInclude Include="..\..\..\src\orca\base\thread\Thread.h" />
     <ClInclude Include="..\..\..\src\orca\base\thread\ThreadPool.h" />
     <ClInclude Include="..\..\..\src\orca\core\Actor.h" />
@@ -51,6 +53,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\examples\main.cpp" />
+    <ClCompile Include="..\..\..\src\orca\base\condition\Condition.cpp" />
     <ClCompile Include="..\..\..\src\orca\base\libuv_cpp11\uv\EventLoop.cpp" />
     <ClCompile Include="..\..\..\src\orca\base\libuv_cpp11\uv\SignalCtrl.cpp" />
     <ClCompile Include="..\..\..\src\orca\base\libuv_cpp11\uv\TcpAccepter.cpp" />
@@ -59,6 +62,7 @@
     <ClCompile Include="..\..\..\src\orca\base\libuv_cpp11\uv\TcpServer.cpp" />
     <ClCompile Include="..\..\..\src\orca\base\libuv_cpp11\uv\TimerWheel.cpp" />
     <ClCompile Include="..\..\..\src\orca\base\log\Log.cpp" />
+    <ClCompile Include="..\..\..\src\orca\base\SpinLock\SpinLock.cpp" />
     <ClCompile Include="..\..\..\src\orca\base\thread\Thread.cpp" />
     <ClCompile Include="..\..\..\src\orca\base\thread\ThreadPool.cpp" />
     <ClCompile Include="..\..\..\src\orca\core\MailBoxThread.cpp" />
