@@ -35,8 +35,7 @@ using CommodLockType = std::mutex;
 #define REGISTER_MESSAGE_TYPE(type)                                       \
 namespace orca                                                            \
 {                                                                         \
-using MESSAGE_TYPE = type;                                                \
-using MessagePack = orca::core::MessagePack<>;                            \
+using MessagePack = orca::core::MessagePack<type>;                        \
 using Actor = orca::core::Actor<type>;                                    \
 using Framework = orca::core::Framework<type>;                            \
 using Address = orca::core::Address;                                      \

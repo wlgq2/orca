@@ -20,7 +20,7 @@ public:
     void push(Type& ele);
     
     template<class... _Types >
-    void push(_Types&&... _Args);
+    void push(_Types&... _Args);
     
     void pop(Type& ele);
     bool empty();
@@ -55,26 +55,26 @@ inline void BlockQueue<Type, LockType>::push(Type& ele)
 template<typename Type, typename LockType>
 inline void BlockQueue<Type, LockType>::pop(Type& ele)
 {
+    do
     {
-        std::unique_lock<LockType> lock(lock_);
-        if (!queue_.empty())
         {
-            ele = queue_.front();
-            queue_.pop();
-            return;
+            std::unique_lock<LockType> lock(lock_);
+            if (!queue_.empty())
+            {
+                ele = queue_.front();
+                queue_.pop();
+                return;
+            }
         }
-    }
-    //只有在需要阻塞时才使用互斥锁,否则只适用自旋锁。
-    condition_.wait([this]() 
-    {
-        waited_ = empty();
-        return !waited_;
-    });
-    std::unique_lock<LockType> lock(lock_);
-    ele = queue_.front();
-    queue_.pop();
-}
+        //只有在需要阻塞时才使用互斥锁,否则只适用自旋锁。
+        condition_.wait([this]()
+        {
+            waited_ = empty();
+            return !waited_;
+        });
 
+    } while (true);
+}
 template<typename Type, typename LockType>
 inline bool BlockQueue<Type, LockType>::empty()
 {
@@ -93,17 +93,18 @@ inline void BlockQueue<Type, LockType>::clear()
 
 template<typename Type, typename LockType>
 template<class ..._Types>
-inline void BlockQueue<Type, LockType>::push(_Types && ..._Args)
+inline void BlockQueue<Type, LockType>::push(_Types & ..._Args)
 {
+
     {
         std::unique_lock<LockType> lock(lock_);
         queue_.push({ _STD forward<_Types>(_Args)... });
     }
+    //只有在阻塞时才使用互斥锁。
     if (waited_)
     {
         condition_.notifyAll();
     }
-
     
 }
 

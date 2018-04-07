@@ -12,7 +12,7 @@ namespace orca
 namespace core
 { 
 
-template <typename MessageType = MESSAGE_TYPE>
+template <typename MessageType>
 class MessagePack
 {
 public:

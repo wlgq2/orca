@@ -132,7 +132,7 @@ int MailboxCenter<MailboxType, MailType>::delivery()
 {
     MailType mail;
     mailCache_.pop(mail);
-    std::shared_ptr<MailboxType>& mailbox = getMailbox(mail.destination);
+    auto mailbox = getMailbox(mail.destination);
     return mailbox->delivery(mail);
 }
 
