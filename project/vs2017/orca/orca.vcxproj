@@ -21,9 +21,13 @@
   <ItemGroup>
     <ClInclude Include="..\..\..\src\orca\base\condition\Condition.h" />
     <ClInclude Include="..\..\..\src\orca\base\libuv_cpp11\uv\Async.h" />
+    <ClInclude Include="..\..\..\src\orca\base\libuv_cpp11\uv\CycleBuffer.h" />
     <ClInclude Include="..\..\..\src\orca\base\libuv_cpp11\uv\EventLoop.h" />
+    <ClInclude Include="..\..\..\src\orca\base\libuv_cpp11\uv\ListBuffer.h" />
     <ClInclude Include="..\..\..\src\orca\base\libuv_cpp11\uv\LogInterface.h" />
-    <ClInclude Include="..\..\..\src\orca\base\libuv_cpp11\uv\SignalCtrl.h" />
+    <ClInclude Include="..\..\..\src\orca\base\libuv_cpp11\uv\Packet.h" />
+    <ClInclude Include="..\..\..\src\orca\base\libuv_cpp11\uv\PacketBuffer.h" />
+    <ClInclude Include="..\..\..\src\orca\base\libuv_cpp11\uv\Signal.h" />
     <ClInclude Include="..\..\..\src\orca\base\libuv_cpp11\uv\SocketAddr.h" />
     <ClInclude Include="..\..\..\src\orca\base\libuv_cpp11\uv\TcpAccepter.h" />
     <ClInclude Include="..\..\..\src\orca\base\libuv_cpp11\uv\TcpClient.h" />
@@ -54,8 +58,11 @@
   <ItemGroup>
     <ClCompile Include="..\..\..\examples\main.cpp" />
     <ClCompile Include="..\..\..\src\orca\base\condition\Condition.cpp" />
+    <ClCompile Include="..\..\..\src\orca\base\libuv_cpp11\uv\CycleBuffer.cpp" />
     <ClCompile Include="..\..\..\src\orca\base\libuv_cpp11\uv\EventLoop.cpp" />
-    <ClCompile Include="..\..\..\src\orca\base\libuv_cpp11\uv\SignalCtrl.cpp" />
+    <ClCompile Include="..\..\..\src\orca\base\libuv_cpp11\uv\ListBuffer.cpp" />
+    <ClCompile Include="..\..\..\src\orca\base\libuv_cpp11\uv\Packet.cpp" />
+    <ClCompile Include="..\..\..\src\orca\base\libuv_cpp11\uv\Signal.cpp" />
     <ClCompile Include="..\..\..\src\orca\base\libuv_cpp11\uv\TcpAccepter.cpp" />
     <ClCompile Include="..\..\..\src\orca\base\libuv_cpp11\uv\TcpClient.cpp" />
     <ClCompile Include="..\..\..\src\orca\base\libuv_cpp11\uv\TcpConnection.cpp" />

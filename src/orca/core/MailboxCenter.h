@@ -26,7 +26,7 @@ class MailboxCenter
 {
 public:
 
-    MailboxCenter();
+    MailboxCenter(uint64_t id);
     ~MailboxCenter();
     using MailboxPagePtr = std::shared_ptr<MailboxPage<MailboxType>>;
 
@@ -47,6 +47,7 @@ private:
     std::shared_ptr<MailboxType> getMailbox(const Address& addr);
     
 private:
+    uint64_t id_;
     orca::base::CommonLockType lock_;
     std::vector<MailboxPagePtr> mailboxs_;
     std::map<std::string, Address>  mailboxAddrs_;
@@ -59,7 +60,8 @@ template <typename MailboxType, typename MailType>
 const int MailboxCenter<MailboxType, MailType>::MaxPageCnt = 128;
 
 template <typename MailboxType, typename MailType>
-MailboxCenter<MailboxType, MailType>::MailboxCenter()
+MailboxCenter<MailboxType, MailType>::MailboxCenter(uint64_t id)
+    :id_(id)
 {
     mailboxAddrs_.clear();
     for (auto i = 0; i < MaxPageCnt; i++)
@@ -89,7 +91,7 @@ int MailboxCenter<MailboxType, MailType>::applyAdderss(ActorType* actor)
         auto index = mailboxs_[i]->allocateMailbox(std::bind(&ActorType::handle, actor, std::placeholders::_1, std::placeholders::_2));
         if (index >= 0)
         {
-            actor->setAddr(i, index);
+            actor->setAddr(id_,i, index);
             if ("" != actor->Name())
             {
                 auto rst = applyMailboxName(actor->Name(), actor->getAddress());

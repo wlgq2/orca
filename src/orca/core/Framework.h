@@ -1,3 +1,13 @@
+/*
+Copyright 2017, object_he@yeah.net  All rights reserved.
+
+Author: object_he@yeah.net
+
+Last modified: 2018-4-7
+
+Description:
+*/
+
 #ifndef    ORCA_FRAMEWORK_H
 #define    ORCA_FRAMEWORK_H
 
@@ -21,7 +31,7 @@ public:
     using MailType = Mail<MessageType>;
     using MailboxType = Mailbox<MessageType>;
 
-    Framework();
+    Framework(uint64_t id =0);
 
     void process();
 
@@ -30,10 +40,11 @@ public:
     
     void send(const MessagePack<MessageType>& message,Address& from,Address& destination);
 
+    uint64_t getID();
     void loop();
 private:
     orca::base::ThreadPool threadPool_;
-
+    const uint64_t uniqueID_;
 
 private:
     MailboxCenter<MailboxType, MailType> mailboxCenter_;
@@ -42,7 +53,9 @@ private:
 
 
 template<typename MessageType>
-Framework<MessageType>::Framework()
+Framework<MessageType>::Framework(uint64_t id)
+    :uniqueID_(id),
+    mailboxCenter_(id)
 {
     threadPool_.registerPorcess(std::bind(&Framework::process, this));
 }
@@ -54,7 +67,7 @@ void Framework<MessageType>::process()
 }
 
 template<typename MessageType>
-inline void Framework<MessageType>::registerActor(ActorType * actor)
+inline void Framework<MessageType>::registerActor(ActorType* actor)
 {
     auto rst = mailboxCenter_.applyAdderss(actor);
     ORCA_ASSERT_MSG(rst >= 0, "mailboxs overflow");
@@ -70,6 +83,13 @@ template<typename MessageType>
 inline void Framework<MessageType>::send(const MessagePack<MessageType>& message,Address& from,Address& destination)
 {
     mailboxCenter_.sendMessage(message.get(),from,destination);
+}
+
+
+template<typename MessageType>
+inline uint64_t Framework<MessageType>::getID()
+{
+    return uniqueID_;
 }
 
 template<typename MessageType>

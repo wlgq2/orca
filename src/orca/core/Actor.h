@@ -1,3 +1,12 @@
+/*
+Copyright 2017, object_he@yeah.net  All rights reserved.
+
+Author: object_he@yeah.net
+
+Last modified: 2018-4-7
+
+Description:
+*/
 #ifndef    ORCA_ACTOR_H
 #define    ORCA_ACTOR_H
 
@@ -28,12 +37,14 @@ public:
     std::string& Name();
 
     void setAddr(Address& addr);
-    void setAddr(int page, int index);
+    void setAddr(uint64_t framework,int page, int index);
     Address& getAddress();
     void registerHandler(ActorHandle handler);
     void handle(const MessagePack<MessageType>&,Address&);
 
     void send(const MessagePack<MessageType>& message,Address& destination);
+    void send(const MessagePack<MessageType>& message, std::string& name);
+    void send(const MessagePack<MessageType>& message, std::string&& name);
     Framework<MessageType>* framework();
 private:
     std::string name_;
@@ -73,8 +84,9 @@ void Actor<MessageType>::setAddr(Address& addr)
 }
 
 template <typename MessageType>
-void Actor<MessageType>::setAddr(int page, int index)
+void Actor<MessageType>::setAddr(uint64_t framework, int page, int index)
 {
+    addr_.framework = framework;
     addr_.page = page;
     addr_.index = index;
 }
@@ -104,6 +116,16 @@ template<typename MessageType>
 inline void Actor<MessageType>::send(const MessagePack<MessageType>& message,Address& destination)
 {
     framework_->send(message,addr_, destination);
+}
+
+template<typename MessageType>
+inline void Actor<MessageType>::send(const MessagePack<MessageType>& message, std::string& name)
+{
+}
+
+template<typename MessageType>
+inline void Actor<MessageType>::send(const MessagePack<MessageType>& message, std::string&& name)
+{
 }
 
 template<typename MessageType>
