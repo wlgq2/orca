@@ -45,6 +45,8 @@
     <ClInclude Include="..\..\..\src\orca\core\Address.h" />
     <ClInclude Include="..\..\..\src\orca\core\Assert.h" />
     <ClInclude Include="..\..\..\src\orca\core\Define.h" />
+    <ClInclude Include="..\..\..\src\orca\core\EndPoint.h" />
+    <ClInclude Include="..\..\..\src\orca\core\ErrorHandle.h" />
     <ClInclude Include="..\..\..\src\orca\core\Framework.h" />
     <ClInclude Include="..\..\..\src\orca\core\Mail.h" />
     <ClInclude Include="..\..\..\src\orca\core\Mailbox.h" />
@@ -72,6 +74,7 @@
     <ClCompile Include="..\..\..\src\orca\base\SpinLock\SpinLock.cpp" />
     <ClCompile Include="..\..\..\src\orca\base\thread\Thread.cpp" />
     <ClCompile Include="..\..\..\src\orca\base\thread\ThreadPool.cpp" />
+    <ClCompile Include="..\..\..\src\orca\core\EndPoint.cpp" />
     <ClCompile Include="..\..\..\src\orca\core\MailBoxThread.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -143,7 +146,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>..\..\..\lib\libuv\include;..\..\..\src\base;..\..\..\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <AdditionalDependencies>ws2_32.lib;Psapi.lib;userenv.lib;Iphlpapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -170,7 +173,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>..\..\..\lib\libuv\include;..\..\..\src\base;..\..\..\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>

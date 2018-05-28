@@ -83,7 +83,7 @@ std::thread::id Thread::CurrentThreadId()
     return std::this_thread::get_id();
 }
 
-void Thread::Yield()
+void Thread::YieldCurrentThread()
 {
     std::this_thread::yield();
 }

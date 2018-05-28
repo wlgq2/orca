@@ -147,6 +147,12 @@
     <ClInclude Include="..\..\..\src\orca\base\libuv_cpp11\uv\uv11.h">
       <Filter>src\orca\base\uv</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\src\orca\core\EndPoint.h">
+      <Filter>src\orca\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\orca\core\ErrorHandle.h">
+      <Filter>src\orca\core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\examples\main.cpp">
@@ -199,6 +205,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\src\orca\base\libuv_cpp11\uv\TimerWheel.cpp">
       <Filter>src\orca\base\uv</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\orca\core\EndPoint.cpp">
+      <Filter>src\orca\core</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

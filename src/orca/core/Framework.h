@@ -13,6 +13,8 @@ Description:
 
 #include   <memory>
 #include   "../base/thread/ThreadPool.h"
+#include   "EndPoint.h"
+
 #include   "Actor.h"
 #include   "Mailbox.h"
 #include   "MailboxCenter.h"
@@ -31,7 +33,7 @@ public:
     using MailType = Mail<MessageType>;
     using MailboxType = Mailbox<MessageType>;
 
-    Framework(uint64_t id =0);
+    Framework(EndPoint* endpoint = nullptr, uint64_t id =0);
 
     void process();
 
@@ -39,6 +41,7 @@ public:
     void recycleActor(ActorType* actor);
     
     void send(const MessagePack<MessageType>& message,Address& from,Address& destination);
+    void send(const MessagePack<MessageType>& message, Address& from,std::string& name);
 
     uint64_t getID();
     void loop();
@@ -48,14 +51,18 @@ private:
 
 private:
     MailboxCenter<MailboxType, MailType> mailboxCenter_;
+    EndPoint* endPoint_;
+
+
 };
 
 
 
 template<typename MessageType>
-Framework<MessageType>::Framework(uint64_t id)
+Framework<MessageType>::Framework(EndPoint* endpoint, uint64_t id)
     :uniqueID_(id),
-    mailboxCenter_(id)
+    mailboxCenter_(id),
+    endPoint_(endpoint)
 {
     threadPool_.registerPorcess(std::bind(&Framework::process, this));
 }
@@ -85,6 +92,12 @@ inline void Framework<MessageType>::send(const MessagePack<MessageType>& message
     mailboxCenter_.sendMessage(message.get(),from,destination);
 }
 
+template<typename MessageType>
+inline void Framework<MessageType>::send(const MessagePack<MessageType>& message, Address& from, std::string& name)
+{
+    mailboxCenter_.sendMessage(message.get(), from, name);
+}
+
 
 template<typename MessageType>
 inline uint64_t Framework<MessageType>::getID()
@@ -96,6 +109,8 @@ template<typename MessageType>
 void Framework<MessageType>::loop()
 {
     threadPool_.start(1);
+    if (endPoint_)
+        endPoint_->run();
     threadPool_.join();
 }
 }

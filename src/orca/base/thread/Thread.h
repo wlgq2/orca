@@ -35,7 +35,7 @@ public:
 
     void registerProcess(std::function<void()> func);
 
-    static void Yield();
+    static void YieldCurrentThread();
     static std::thread::id CurrentThreadId();
     static void SleepMSeconds(unsigned long ms);
 

@@ -38,11 +38,13 @@ public:
 
     template<typename MessageType>
     void sendMessage(std::shared_ptr<MessageType>& message,Address& from,Address& destination);
-
+    template<typename MessageType>
+    void sendMessage(std::shared_ptr<MessageType>& message, Address& from, std::string& name);
     
     int delivery();
 private:
     bool applyMailboxName(std::string& name, Address& addr);
+    bool getMailBoxAddr(std::string& name, Address& addr);
     bool recycleMailboxName(std::string& name);
     std::shared_ptr<MailboxType> getMailbox(const Address& addr);
     
@@ -130,6 +132,21 @@ inline void MailboxCenter<MailboxType, MailType>::sendMessage(std::shared_ptr<Me
 }
 
 template<typename MailboxType, typename MailType>
+template<typename MessageType>
+inline void MailboxCenter<MailboxType, MailType>::sendMessage(std::shared_ptr<MessageType>& message, Address& from, std::string& name)
+{
+    Address destination;
+    if (getMailBoxAddr(name, destination))
+    {
+        mailCache_.push(from, destination, message);
+    }
+    else
+    {
+        //´íÎó´¦Àí
+    }
+}
+
+template<typename MailboxType, typename MailType>
 int MailboxCenter<MailboxType, MailType>::delivery()
 {
     MailType mail;
@@ -145,6 +162,16 @@ bool MailboxCenter<MailboxType, MailType>::applyMailboxName(std::string& name,Ad
     if(it != mailboxAddrs_.end())
         return false;
     mailboxAddrs_[name] = addr;
+    return true;
+}
+
+template<typename MailboxType, typename MailType>
+inline bool MailboxCenter<MailboxType, MailType>::getMailBoxAddr(std::string& name, Address& addr)
+{
+    auto it = mailboxAddrs_.find(name);
+    if (it == mailboxAddrs_.end())
+        return false;
+    addr = it->second;
     return true;
 }
 
