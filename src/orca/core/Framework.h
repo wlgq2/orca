@@ -45,6 +45,9 @@ public:
 
     uint64_t getID();
     void loop();
+
+public:
+    static void RegisterErrorHandle(ErrorHandle::ErrorHandleFunction callback);
 private:
     orca::base::ThreadPool threadPool_;
     const uint64_t uniqueID_;
@@ -112,6 +115,11 @@ void Framework<MessageType>::loop()
     if (endPoint_)
         endPoint_->run();
     threadPool_.join();
+}
+template<typename MessageType>
+inline void Framework<MessageType>::RegisterErrorHandle(ErrorHandle::ErrorHandleFunction callback)
+{
+    ErrorHandle::Instance()->bind(callback);
 }
 }
 }

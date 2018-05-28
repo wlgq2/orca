@@ -142,7 +142,7 @@ inline void MailboxCenter<MailboxType, MailType>::sendMessage(std::shared_ptr<Me
     }
     else
     {
-        //´íÎó´¦Àí
+        ErrorHandle::Instance()->error(ErrorHandle::NoFindActorName, std::string("no find actor ")+name);
     }
 }
 
@@ -159,8 +159,11 @@ template <typename MailboxType, typename MailType>
 bool MailboxCenter<MailboxType, MailType>::applyMailboxName(std::string& name,Address& addr)
 {
     auto it = mailboxAddrs_.find(name);
-    if(it != mailboxAddrs_.end())
+    if (it != mailboxAddrs_.end())
+    {
+        ErrorHandle::Instance()->error(ErrorHandle::ReDefineActorName,std::string("redefined actor name:")+name);
         return false;
+    }
     mailboxAddrs_[name] = addr;
     return true;
 }

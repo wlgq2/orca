@@ -16,12 +16,16 @@ class ErrorHandle
 public:
     enum ErrorId
     {
-
+        UndefinedError  = -1024,
+        NoFindActorName = -1023,
+        NoFindActorAddr = -1022,
+        UVWriteFail = -1021,
+        ReDefineActorName = -1020
     };
-    using ErrorHandleFunction = std::function<void(int, std::string)>;
+    using ErrorHandleFunction = std::function<void(ErrorId, std::string&)>;
 
 public:
-    ErrorHandle* Instance()
+    static ErrorHandle* Instance()
     {
         static ErrorHandle errorHandle;
         return &errorHandle;
@@ -31,12 +35,16 @@ public:
     {
         handle_ = func;
     }
-    void error(ErrorId id, std::string info)
+    void error(ErrorId id, std::string& info)
     {
         if (handle_)
             handle_(id, info);
         else
-            std::cerr << id<<":" << info;
+            std::cerr << "error id "<<id << ":" << info << std::endl;
+    }
+    void error(ErrorId id, std::string&& info)
+    {
+        error(id, info);
     }
 private:
     ErrorHandleFunction handle_;

@@ -5,6 +5,7 @@
 #include <orca/orca.h>
 #include <future>
 #include <orca/base/libuv_cpp11/uv/uv11.h>
+#include <atomic>
 
 using namespace  std;
 
@@ -24,38 +25,76 @@ public:
     {
         return Size;
     }
+
     const void* enter()
     {
         return static_cast<const void*>(message);
     }
 private:
-    static const unsigned long Size = 512;
+    static const unsigned long Size = 2048;
     char message[Size];
 };
-
+                                                    
 REGISTER_MESSAGE_TYPE(MyMessage);
+std::atomic<uint64_t> cnt;
+
+struct test
+{
+    int x;
+    int y;
+};
+class Actor1 :public orca::Actor
+{
+public:
+    Actor1(orca::Framework* framework,std::string name = "")
+        :Actor(framework, name)
+    {
+        registerHandler(std::bind(&Actor1::process,this,std::placeholders::_1,std::placeholders::_2));
+    }
+    void process(const orca::MessagePack& pack, orca::Address& from)
+    {
+        std::cout << (char*)(pack.get()->enter()) << std::endl;
+        cnt++;
+        //Sleep(1);
+        //send(pack, from);
+    }
+};
 
 int main(int argc, char** args)
 {
+    std::shared_ptr<int> dfd;
+    std::cout << sizeof(dfd) << std::endl;
+    orca::Framework::RegisterErrorHandle([](orca::ErrorHandle::ErrorId id, std::string& info)
+    {
+        std::cout << "error " << id << ":" << info << std::endl;
+    });
     orca::Framework framework;
 
     orca::MessagePack message;
     message.create("a message from actor1");
-    orca::Actor actor1(&framework);
-    orca::Actor actor2(&framework);
-    actor1.registerHandler([&actor2](const orca::MessagePack& pack, orca::Address& from)
-    {
-        std::cout <<"actor1 recieve£º"<< pack.get()->size() << ":" << (char*)(pack.get()->enter()) << std::endl;
-    });
-    actor2.registerHandler([&actor2](const orca::MessagePack& pack,orca::Address& from)
-    {
-        std::cout << "actor2 recieve£º" << pack.get()->size()<<":" << (char*)(pack.get()->enter()) << std::endl;
-        orca::MessagePack message;
-        message.create("a message form acotr2");
-        actor2.send(message, from);
-    });
-    actor1.send(message, actor2.getAddress());
+    Actor1 actor(&framework);
+    Actor1 actor2(&framework,"actor03");
 
+    //actor.send(message, actor2.getAddress());
+    actor.send(message, "actor02");
+    //actor.send(message, actor.getAddress());
+    //actor.send(message, actor.getAddress());
+    //actor.send(message, actor.getAddress());
+    //actor.send(message, actor.getAddress());
+    auto async = std::async([&actor,&message]()
+    {
+        while (true)
+        {
+            Sleep(1000);
+            if (cnt == 0)
+            {
+                //exit(0);
+            }
+            //actor.send(message, actor.getAddress());
+            std::cout << cnt << std::endl;
+            cnt = 0;
+        }
+    });
     framework.loop();
 
 }

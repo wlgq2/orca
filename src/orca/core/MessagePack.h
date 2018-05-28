@@ -6,6 +6,7 @@
 
 #include "MessageTraits.h"
 #include "Define.h"
+#include "ErrorHandle.h"
 
 namespace orca
 {
