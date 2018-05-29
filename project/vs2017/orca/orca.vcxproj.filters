@@ -40,6 +40,9 @@
     <Filter Include="src\orca\base\Condition">
       <UniqueIdentifier>{ef8d0ed6-702b-4a84-a499-a5d1469d79e2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\orca\core\net">
+      <UniqueIdentifier>{0f1fc2d8-0d3a-4e67-890b-4557bf3d76b6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\src\orca\core\Actor.h">
@@ -147,11 +150,17 @@
     <ClInclude Include="..\..\..\src\orca\base\libuv_cpp11\uv\uv11.h">
       <Filter>src\orca\base\uv</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\src\orca\core\EndPoint.h">
-      <Filter>src\orca\core</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\src\orca\core\ErrorHandle.h">
       <Filter>src\orca\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\orca\core\net\ActorClient.h">
+      <Filter>src\orca\core\net</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\orca\core\net\ActorServer.h">
+      <Filter>src\orca\core\net</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\orca\core\net\EndPoint.h">
+      <Filter>src\orca\core\net</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -206,8 +215,14 @@
     <ClCompile Include="..\..\..\src\orca\base\libuv_cpp11\uv\TimerWheel.cpp">
       <Filter>src\orca\base\uv</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\orca\core\EndPoint.cpp">
-      <Filter>src\orca\core</Filter>
+    <ClCompile Include="..\..\..\src\orca\core\net\ActorClient.cpp">
+      <Filter>src\orca\core\net</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\orca\core\net\ActorServer.cpp">
+      <Filter>src\orca\core\net</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\orca\core\net\EndPoint.cpp">
+      <Filter>src\orca\core\net</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

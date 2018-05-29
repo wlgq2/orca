@@ -16,11 +16,14 @@ class ErrorHandle
 public:
     enum ErrorId
     {
+        UVWriteFail = -2048,
+        UVConnectFail,
+        UVDisconnectFromServer,
+
         UndefinedError  = -1024,
-        NoFindActorName = -1023,
-        NoFindActorAddr = -1022,
-        UVWriteFail = -1021,
-        ReDefineActorName = -1020
+        NoFindActorName,
+        NoFindActorAddr,
+        ReDefineActorName,
     };
     using ErrorHandleFunction = std::function<void(ErrorId, std::string&)>;
 

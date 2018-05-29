@@ -2,8 +2,8 @@
 #define  ORCA_CORE_ENDPOINT_H
 
 #include <string>
-#include "../base/libuv_cpp11/uv/uv11.h"
-#include "../base/thread/Thread.h"
+#include "../../base/libuv_cpp11/uv/uv11.h"
+#include "../../base/thread/Thread.h"
 
 namespace orca
 {

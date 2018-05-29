@@ -45,7 +45,6 @@
     <ClInclude Include="..\..\..\src\orca\core\Address.h" />
     <ClInclude Include="..\..\..\src\orca\core\Assert.h" />
     <ClInclude Include="..\..\..\src\orca\core\Define.h" />
-    <ClInclude Include="..\..\..\src\orca\core\EndPoint.h" />
     <ClInclude Include="..\..\..\src\orca\core\ErrorHandle.h" />
     <ClInclude Include="..\..\..\src\orca\core\Framework.h" />
     <ClInclude Include="..\..\..\src\orca\core\Mail.h" />
@@ -55,6 +54,9 @@
     <ClInclude Include="..\..\..\src\orca\core\MailBoxThread.h" />
     <ClInclude Include="..\..\..\src\orca\core\MessagePack.h" />
     <ClInclude Include="..\..\..\src\orca\core\MessageTraits.h" />
+    <ClInclude Include="..\..\..\src\orca\core\net\ActorClient.h" />
+    <ClInclude Include="..\..\..\src\orca\core\net\ActorServer.h" />
+    <ClInclude Include="..\..\..\src\orca\core\net\EndPoint.h" />
     <ClInclude Include="..\..\..\src\orca\orca.h" />
   </ItemGroup>
   <ItemGroup>
@@ -74,8 +76,10 @@
     <ClCompile Include="..\..\..\src\orca\base\SpinLock\SpinLock.cpp" />
     <ClCompile Include="..\..\..\src\orca\base\thread\Thread.cpp" />
     <ClCompile Include="..\..\..\src\orca\base\thread\ThreadPool.cpp" />
-    <ClCompile Include="..\..\..\src\orca\core\EndPoint.cpp" />
     <ClCompile Include="..\..\..\src\orca\core\MailBoxThread.cpp" />
+    <ClCompile Include="..\..\..\src\orca\core\net\ActorClient.cpp" />
+    <ClCompile Include="..\..\..\src\orca\core\net\ActorServer.cpp" />
+    <ClCompile Include="..\..\..\src\orca\core\net\EndPoint.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="..\..\..\lib\libuv\lib\vc2017\Release.x64\libuv.lib" />
