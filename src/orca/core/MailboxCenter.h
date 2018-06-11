@@ -26,7 +26,7 @@ class MailboxCenter
 {
 public:
 
-    MailboxCenter(uint64_t id);
+    MailboxCenter(uint32_t id);
     ~MailboxCenter();
     using MailboxPagePtr = std::shared_ptr<MailboxPage<MailboxType>>;
 
@@ -49,7 +49,7 @@ private:
     std::shared_ptr<MailboxType> getMailbox(const Address& addr);
     
 private:
-    uint64_t id_;
+    uint32_t id_;
     orca::base::CommonLockType lock_;
     std::vector<MailboxPagePtr> mailboxs_;
     std::map<std::string, Address>  mailboxAddrs_;
@@ -62,7 +62,7 @@ template <typename MailboxType, typename MailType>
 const int MailboxCenter<MailboxType, MailType>::MaxPageCnt = 128;
 
 template <typename MailboxType, typename MailType>
-MailboxCenter<MailboxType, MailType>::MailboxCenter(uint64_t id)
+MailboxCenter<MailboxType, MailType>::MailboxCenter(uint32_t id)
     :id_(id)
 {
     mailboxAddrs_.clear();
@@ -142,7 +142,7 @@ inline void MailboxCenter<MailboxType, MailType>::sendMessage(std::shared_ptr<Me
     }
     else
     {
-        ErrorHandle::Instance()->error(ErrorHandle::NoFindActorName, std::string("no find actor ")+name);
+        base::ErrorHandle::Instance()->error(base::ErrorInfo::NoFindActorName, std::string("no find actor ")+name);
     }
 }
 
@@ -161,7 +161,7 @@ bool MailboxCenter<MailboxType, MailType>::applyMailboxName(std::string& name,Ad
     auto it = mailboxAddrs_.find(name);
     if (it != mailboxAddrs_.end())
     {
-        ErrorHandle::Instance()->error(ErrorHandle::ReDefineActorName,std::string("redefined actor name:")+name);
+        base::ErrorHandle::Instance()->error(base::ErrorInfo::ReDefineActorName,std::string("redefined actor name:")+name);
         return false;
     }
     mailboxAddrs_[name] = addr;

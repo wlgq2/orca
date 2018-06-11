@@ -10,9 +10,9 @@ namespace core
 
 struct Address
 {
-    unsigned int framework;
-    unsigned int page;
-    unsigned int index;
+    uint32_t framework;
+    uint32_t page;
+    uint32_t index;
 };
 }
 }

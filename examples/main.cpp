@@ -64,19 +64,22 @@ int main(int argc, char** args)
 {
     std::shared_ptr<int> dfd;
     std::cout << sizeof(dfd) << std::endl;
-    orca::Framework::RegisterErrorHandle([](orca::ErrorHandle::ErrorId id, std::string& info)
+    orca::EndPoint endpoint("0.0.0.0", 10002);
+    endpoint.appendRemoteEndPoint("127.0.0.1", 10001);
+
+    orca::Framework::RegisterErrorHandle([](orca::base::ErrorInfo errorInfo)
     {
-        std::cout << "error " << id << ":" << info << std::endl;
+        std::cout << "error " << errorInfo.getErrorId() << ":" << errorInfo.getErrorInfo()<< std::endl;
     });
-    orca::Framework framework;
+    orca::Framework framework(&endpoint,1);
 
     orca::MessagePack message;
     message.create("a message from actor1");
     Actor1 actor(&framework);
-    Actor1 actor2(&framework,"actor03");
+    Actor1 actor2(&framework,"actor02");
 
     //actor.send(message, actor2.getAddress());
-    actor.send(message, "actor02");
+    actor.send(message, "actor03");
     //actor.send(message, actor.getAddress());
     //actor.send(message, actor.getAddress());
     //actor.send(message, actor.getAddress());

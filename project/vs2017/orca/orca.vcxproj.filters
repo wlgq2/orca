@@ -43,6 +43,9 @@
     <Filter Include="src\orca\core\net">
       <UniqueIdentifier>{0f1fc2d8-0d3a-4e67-890b-4557bf3d76b6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\orca\base\error">
+      <UniqueIdentifier>{fb1b183a-4cae-4b0c-868b-4017169b88d7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\src\orca\core\Actor.h">
@@ -150,9 +153,6 @@
     <ClInclude Include="..\..\..\src\orca\base\libuv_cpp11\uv\uv11.h">
       <Filter>src\orca\base\uv</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\src\orca\core\ErrorHandle.h">
-      <Filter>src\orca\core</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\src\orca\core\net\ActorClient.h">
       <Filter>src\orca\core\net</Filter>
     </ClInclude>
@@ -161,6 +161,12 @@
     </ClInclude>
     <ClInclude Include="..\..\..\src\orca\core\net\EndPoint.h">
       <Filter>src\orca\core\net</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\orca\base\error\ErrorHandle.h">
+      <Filter>src\orca\base\error</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\orca\base\error\ErrorInfo.h">
+      <Filter>src\orca\base\error</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -223,6 +229,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\src\orca\core\net\EndPoint.cpp">
       <Filter>src\orca\core\net</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\orca\base\error\ErrorInfo.cpp">
+      <Filter>src\orca\base\error</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

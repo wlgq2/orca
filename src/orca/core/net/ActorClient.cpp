@@ -1,5 +1,5 @@
 #include "ActorClient.h"
-#include "../ErrorHandle.h"
+#include "../../base/error/ErrorHandle.h"
 
 using namespace orca::core;
 using namespace std;
@@ -23,14 +23,14 @@ void orca::core::ActorClient::onConnect(bool isSuccessed)
 {
     if (!isSuccessed)
     {
-        ErrorHandle::Instance()->error(ErrorHandle::UVConnectFail,std::string("connect server fail:")+addr_.toStr());
+        base::ErrorHandle::Instance()->error(base::ErrorInfo::UVConnectFail,std::string("connect server fail:")+addr_.toStr());
         reconnect();
     }
 }
 
 void orca::core::ActorClient::onDisconnect()
 {
-    ErrorHandle::Instance()->error(ErrorHandle::UVDisconnectFromServer, std::string("disconnect from server:") + addr_.toStr());
+    base::ErrorHandle::Instance()->error(base::ErrorInfo::UVDisconnectFromServer, std::string("disconnect from server:") + addr_.toStr());
     reconnect();
 }
 
@@ -40,7 +40,11 @@ void orca::core::ActorClient::reconnect()
         [this](uv::Timer<void*>* timer, void*)
     {
         this->connect();
-        timer->close([timer]() {delete timer; });
+        timer->close([timer]() 
+        {
+            delete timer; 
+        });
     },
        nullptr );
+    timer->start();
 }

@@ -37,7 +37,7 @@ public:
     std::string& Name();
 
     void setAddr(Address& addr);
-    void setAddr(uint64_t framework,int page, int index);
+    void setAddr(uint32_t framework,int page, int index);
     Address& getAddress();
     void registerHandler(ActorHandle handler);
     void handle(const MessagePack<MessageType>&,Address&);
@@ -85,7 +85,7 @@ void Actor<MessageType>::setAddr(Address& addr)
 }
 
 template <typename MessageType>
-void Actor<MessageType>::setAddr(uint64_t framework, int page, int index)
+void Actor<MessageType>::setAddr(uint32_t framework, int page, int index)
 {
     addr_.framework = framework;
     addr_.page = page;

@@ -33,7 +33,7 @@ public:
     using MailType = Mail<MessageType>;
     using MailboxType = Mailbox<MessageType>;
 
-    Framework(EndPoint* endpoint = nullptr, uint64_t id =0);
+    Framework(EndPoint* endpoint = nullptr, uint32_t id =0);
 
     void process();
 
@@ -47,7 +47,7 @@ public:
     void loop();
 
 public:
-    static void RegisterErrorHandle(ErrorHandle::ErrorHandleFunction callback);
+    static void RegisterErrorHandle(base::ErrorHandle::ErrorHandleFunction callback);
 private:
     orca::base::ThreadPool threadPool_;
     const uint64_t uniqueID_;
@@ -62,7 +62,7 @@ private:
 
 
 template<typename MessageType>
-Framework<MessageType>::Framework(EndPoint* endpoint, uint64_t id)
+Framework<MessageType>::Framework(EndPoint* endpoint, uint32_t id)
     :uniqueID_(id),
     mailboxCenter_(id),
     endPoint_(endpoint)
@@ -117,9 +117,9 @@ void Framework<MessageType>::loop()
     threadPool_.join();
 }
 template<typename MessageType>
-inline void Framework<MessageType>::RegisterErrorHandle(ErrorHandle::ErrorHandleFunction callback)
+inline void Framework<MessageType>::RegisterErrorHandle(base::ErrorHandle::ErrorHandleFunction callback)
 {
-    ErrorHandle::Instance()->bind(callback);
+    base::ErrorHandle::Instance()->bind(callback);
 }
 }
 }
