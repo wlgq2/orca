@@ -10,11 +10,12 @@ using namespace std;
 const int ActorClient::ReconectTimeMS = 1500;
 const int ActorClient::HeartbeatTimeSec = 30;
 
-ActorClient::ActorClient(uv::EventLoop* loop,uv::SocketAddr& addr)
+ActorClient::ActorClient(uv::EventLoop* loop,uv::SocketAddr& addr,uint32_t id)
     :uv::TcpClient(loop),
     addr_(addr),
     isConenected_(false),
-    frameworkId_(-1)
+    localId_(id),
+    remoteId_(-1)
 {
     timer_ = new uv::Timer<void*>(loop, 1000, 1000, std::bind(&ActorClient::heartbeat, this, std::placeholders::_1, std::placeholders::_2), nullptr);
     setConnectCallback(std::bind(&ActorClient::onConnect,this,std::placeholders::_1));
@@ -56,14 +57,14 @@ void orca::core::ActorClient::onDisconnect()
 
 void orca::core::ActorClient::onMessage(const char* data, ssize_t size)
 {
-    appendToBuffer(data, size);
+    appendToBuffer(data, (int)size);
     uv::Packet packet;
     while (0 == readFromBuffer(packet))
     {
         if (Protocol::RespFrameworkId == packet.reserve_)
         {
             uint32_t id = *((uint32_t*)packet.getData());
-            frameworkId_ = id;
+            remoteId_ = id;
         }
     }
 }
@@ -87,7 +88,7 @@ void orca::core::ActorClient::heartbeat(uv::Timer<void*>*, void*)
 {
     if (isConenected_)
     {
-        if (++cnt_ > HeartbeatTimeSec);
+        if (++cnt_ > HeartbeatTimeSec)
         {
             cnt_ = 0;
             //send heartbeat.
@@ -97,14 +98,21 @@ void orca::core::ActorClient::heartbeat(uv::Timer<void*>*, void*)
             packet.fill(&null, sizeof(char));
             write(packet.Buffer(), packet.BufferSize());
         }
-        if (frameworkId_ < 0)
+        if (remoteId_ < 0)
         {
             //req remote framework id.
             uv::Packet packet;
-            uint32_t null = 0x00;
+            uint32_t id = localId_;
             packet.reserve_ = Protocol::ReqFrameworkId;
-            packet.fill((const char*)(&null), sizeof(uint32_t));
-            write(packet.Buffer(), packet.BufferSize());
+            packet.fill((const char*)(&id), sizeof(uint32_t));
+            write(packet.Buffer(), packet.BufferSize(),
+                [this](uv::WriteInfo info)
+            {
+                if (0 != info.status)
+                {
+                    base::ErrorHandle::Instance()->error(base::ErrorInfo::UVWriteFail, uv::EventLoop::GetErrorMessage(info.status));
+                }
+            });
         }
     }
 }

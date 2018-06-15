@@ -12,10 +12,11 @@ using namespace  std;
 class MyMessage
 {
 public:
-    MyMessage(const char* str)
+    MyMessage(char* str,int size)
     {
-        memset(message, 0x00, Size);
-        memcpy(message, str, strlen(str));
+        if (size > Size)
+            size = Size;
+        memcpy(message, str, size);
     }
     ~MyMessage()
     {
@@ -35,7 +36,8 @@ private:
     char message[Size];
 };
                                                     
-REGISTER_MESSAGE_TYPE(MyMessage);
+//REGISTER_MESSAGE_TYPE(MyMessage);
+REGISTER_MESSAGE_TYPE(std::string);
 std::atomic<uint64_t> cnt;
 
 struct test
@@ -51,9 +53,9 @@ public:
     {
         registerHandler(std::bind(&Actor1::process,this,std::placeholders::_1,std::placeholders::_2));
     }
-    void process(const orca::MessagePack& pack, orca::Address& from)
+    void process(orca::MessagePack& pack, orca::Address& from)
     {
-        std::cout << (char*)(pack.get()->enter()) << std::endl;
+        std::cout << (char*)(pack.enter()) << endl;
         cnt++;
         //Sleep(1);
         //send(pack, from);
@@ -62,24 +64,23 @@ public:
 
 int main(int argc, char** args)
 {
-    std::shared_ptr<int> dfd;
-    std::cout << sizeof(dfd) << std::endl;
-    orca::EndPoint endpoint("0.0.0.0", 10002);
-    endpoint.appendRemoteEndPoint("127.0.0.1", 10001);
-
     orca::Framework::RegisterErrorHandle([](orca::base::ErrorInfo errorInfo)
     {
         std::cout << "error " << errorInfo.getErrorId() << ":" << errorInfo.getErrorInfo()<< std::endl;
     });
-    orca::Framework framework(&endpoint,1);
+    orca::core::EndPointAddress netaddr = { "0.0.0.0", 10001 ,orca::core::EndPointAddress::Ipv4 };
+    orca::Framework framework(&netaddr, 233);
+    framework.appendRemoteEndPoint("127.0.0.1", 10002);
 
+    char str[] = "a message from actor1";
     orca::MessagePack message;
-    message.create("a message from actor1");
+    message.create(str,sizeof(str));
+    std::cout << (char*)message.enter() << endl;
     Actor1 actor(&framework);
     Actor1 actor2(&framework,"actor02");
 
     //actor.send(message, actor2.getAddress());
-    actor.send(message, "actor03");
+    actor.send(message, "actor02");
     //actor.send(message, actor.getAddress());
     //actor.send(message, actor.getAddress());
     //actor.send(message, actor.getAddress());
@@ -94,7 +95,7 @@ int main(int argc, char** args)
                 //exit(0);
             }
             //actor.send(message, actor.getAddress());
-            std::cout << cnt << std::endl;
+            //std::cout << cnt << std::endl;
             cnt = 0;
         }
     });

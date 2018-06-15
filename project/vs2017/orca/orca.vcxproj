@@ -58,6 +58,7 @@
     <ClInclude Include="..\..\..\src\orca\core\net\ActorClient.h" />
     <ClInclude Include="..\..\..\src\orca\core\net\ActorServer.h" />
     <ClInclude Include="..\..\..\src\orca\core\net\EndPoint.h" />
+    <ClInclude Include="..\..\..\src\orca\core\net\Protocol.h" />
     <ClInclude Include="..\..\..\src\orca\orca.h" />
   </ItemGroup>
   <ItemGroup>

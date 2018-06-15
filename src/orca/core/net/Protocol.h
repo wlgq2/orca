@@ -1,6 +1,7 @@
 #ifndef  CORE_PROCOTOL_H
 #define  CORE_PROCOTOL_H
 
+
 namespace orca
 { 
 namespace core
@@ -15,6 +16,7 @@ public:
         ActorMessage,
         HeartBeatMessage
     };
+
 };
 }
 }

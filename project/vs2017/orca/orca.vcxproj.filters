@@ -168,6 +168,9 @@
     <ClInclude Include="..\..\..\src\orca\base\error\ErrorInfo.h">
       <Filter>src\orca\base\error</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\src\orca\core\net\Protocol.h">
+      <Filter>src\orca\core\net</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\examples\main.cpp">

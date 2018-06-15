@@ -22,7 +22,7 @@ void orca::core::EndPoint::run()
 void orca::core::EndPoint::appendRemoteEndPoint(EndPointAddress& addr)
 {
     uv::SocketAddr socketAddr(addr.ip,addr.port,static_cast<uv::SocketAddr::IPV>(addr.ipv));
-    ActorClientPtr client = std::make_shared<ActorClient>(&loop_, socketAddr);
+    ActorClientPtr client = std::make_shared<ActorClient>(&loop_, socketAddr,id_);
     endPoints_.push_back(client);
 }
 

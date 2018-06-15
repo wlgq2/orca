@@ -12,7 +12,7 @@ namespace core
 class ActorClient : public uv::TcpClient
 {
 public:
-    ActorClient(uv::EventLoop* loop,uv::SocketAddr& addr);
+    ActorClient(uv::EventLoop* loop,uv::SocketAddr& addr, uint32_t id);
     ~ActorClient();
 
     void connect();
@@ -26,7 +26,8 @@ private:
     uv::SocketAddr addr_;
     bool isConenected_;
     uv::Timer<void*>* timer_;
-    int frameworkId_;
+    uint32_t localId_;
+    int remoteId_;
     int cnt_;
 
 private:
