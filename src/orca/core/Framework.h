@@ -33,7 +33,8 @@ public:
     using MailType = Mail<MessageType>;
     using MailboxType = Mailbox<MessageType>;
 
-    Framework(EndPoint* endpoint = nullptr, uint32_t id =0);
+    Framework(EndPointAddress* endPointAddr, uint32_t id);
+    Framework();
 
     void process();
 
@@ -41,8 +42,10 @@ public:
     void recycleActor(ActorType* actor);
     
     void send(const MessagePack<MessageType>& message,Address& from,Address& destination);
-    void send(const MessagePack<MessageType>& message, Address& from,std::string& name);
+    void send(const MessagePack<MessageType>& message, Address& from,std::string& name,uint32_t framework);
 
+    void appendRemoteEndPoint(struct EndPointAddress& addr);
+    void appendRemoteEndPoint(std::string ip, uint16_t port, EndPointAddress::IPV ipv = EndPointAddress::Ipv4);
     uint64_t getID();
     void loop();
 
@@ -50,11 +53,11 @@ public:
     static void RegisterErrorHandle(base::ErrorHandle::ErrorHandleFunction callback);
 private:
     orca::base::ThreadPool threadPool_;
-    const uint64_t uniqueID_;
+    const uint32_t uniqueID_;
 
 private:
     MailboxCenter<MailboxType, MailType> mailboxCenter_;
-    EndPoint* endPoint_;
+    std::shared_ptr<EndPoint> endPoint_;
 
 
 };
@@ -62,12 +65,22 @@ private:
 
 
 template<typename MessageType>
-Framework<MessageType>::Framework(EndPoint* endpoint, uint32_t id)
+Framework<MessageType>::Framework(EndPointAddress* endPointAddr, uint32_t id)
     :uniqueID_(id),
     mailboxCenter_(id),
-    endPoint_(endpoint)
+    endPoint_(nullptr)
 {
+    if (nullptr != endPointAddr)
+    {
+        endPoint_ = std::make_shared<EndPoint>(*endPointAddr, uniqueID_);
+    }
     threadPool_.registerPorcess(std::bind(&Framework::process, this));
+}
+
+template<typename MessageType>
+Framework<MessageType>::Framework()
+    :Framework(nullptr,0)
+{
 }
 
 template<typename MessageType>
@@ -96,9 +109,33 @@ inline void Framework<MessageType>::send(const MessagePack<MessageType>& message
 }
 
 template<typename MessageType>
-inline void Framework<MessageType>::send(const MessagePack<MessageType>& message, Address& from, std::string& name)
+inline void Framework<MessageType>::send(const MessagePack<MessageType>& message, Address& from, std::string& name, uint32_t framework)
 {
-    mailboxCenter_.sendMessage(message.get(), from, name);
+    //local message.
+    if (uniqueID_ == framework)
+    {
+        mailboxCenter_.sendMessage(message.get(), from, name);
+    }
+    else //romote message.
+    {
+        
+    }
+}
+
+template<typename MessageType>
+inline void Framework<MessageType>::appendRemoteEndPoint(EndPointAddress& addr)
+{
+    if (nullptr != endPoint_)
+    {
+        endPoint_->appendRemoteEndPoint(addr);
+    }
+}
+
+template<typename MessageType>
+inline void Framework<MessageType>::appendRemoteEndPoint(std::string ip, uint16_t port, EndPointAddress::IPV ipv)
+{
+    EndPointAddress addr = { ip,port,ipv };
+    appendRemoteEndPoint(addr);
 }
 
 

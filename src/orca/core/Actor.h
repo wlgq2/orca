@@ -31,7 +31,7 @@ template <typename MessageType>
 class Actor
 {
 public:
-    using ActorHandle = std::function<void(const MessagePack<MessageType>&, Address&)>;
+    using ActorHandle = std::function<void(MessagePack<MessageType>&, Address&)>;
     Actor(orca::core::Framework<MessageType>* framework, std::string name = std::string(""));
     ~Actor();
     std::string& Name();
@@ -40,12 +40,13 @@ public:
     void setAddr(uint32_t framework,int page, int index);
     Address& getAddress();
     void registerHandler(ActorHandle handler);
-    void handle(const MessagePack<MessageType>&,Address&);
+    void handle(MessagePack<MessageType>&,Address&);
 
     void send(const MessagePack<MessageType>& message,Address& destination);
+    void send(const MessagePack<MessageType>& message, std::string& name, uint32_t framework);
+    void send(const MessagePack<MessageType>& message, std::string&& name, uint32_t framework);
     void send(const MessagePack<MessageType>& message, std::string& name);
     void send(const MessagePack<MessageType>& message, std::string&& name);
-
     Framework<MessageType>* framework();
 private:
     std::string name_;
@@ -105,7 +106,7 @@ void Actor<MessageType>::registerHandler(ActorHandle handler)
 }
 
 template <typename MessageType>
-void Actor<MessageType>::handle(const MessagePack<MessageType>& message,Address& addr)
+void Actor<MessageType>::handle(MessagePack<MessageType>& message,Address& addr)
 {
     if (handle_)
     {
@@ -120,15 +121,27 @@ inline void Actor<MessageType>::send(const MessagePack<MessageType>& message,Add
 }
 
 template<typename MessageType>
+inline void Actor<MessageType>::send(const MessagePack<MessageType>& message, std::string & name, uint32_t framework)
+{
+    framework_->send(message, addr_, name, framework);
+}
+
+template<typename MessageType>
+inline void Actor<MessageType>::send(const MessagePack<MessageType>& message, std::string && name, uint32_t framework)
+{
+    framework_->send(message, addr_, name, framework);
+}
+
+template<typename MessageType>
 inline void Actor<MessageType>::send(const MessagePack<MessageType>& message, std::string& name)
 {
-    framework_->send(message, addr_, name);
+    send(message, name, addr_.framework);
 }
 
 template<typename MessageType>
 inline void Actor<MessageType>::send(const MessagePack<MessageType>& message, std::string&& name)
 {
-    framework_->send(message, addr_, name);
+    send(message, name, addr_.framework);
 }
 
 template<typename MessageType>

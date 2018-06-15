@@ -18,7 +18,7 @@ template  <typename MessageType>
 class Mailbox
 {
 public:
-    using MailboxHandler = std::function<void(const MessagePack<MessageType>&, Address&)>;
+    using MailboxHandler = std::function<void(MessagePack<MessageType>&, Address&)>;
     Mailbox(MailboxHandler handler);
     int delivery(MessagePack<MessageType>& message, Address& addr);
     int delivery(Mail<MessageType>& mail);

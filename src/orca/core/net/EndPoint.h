@@ -14,7 +14,7 @@ namespace orca
 namespace core
 {
 
-struct EndPointAddr
+struct EndPointAddress
 {
     enum IPV
     {
@@ -29,17 +29,17 @@ struct EndPointAddr
 class EndPoint
 {
 public:
-    EndPoint(std::string ip,uint16_t port, EndPointAddr::IPV ipv = EndPointAddr::Ipv4);
-
+    EndPoint(EndPointAddress& addr,uint32_t id);
     void run();
-    void appendRemoteEndPoint(struct EndPointAddr& addr);
-    void appendRemoteEndPoint(std::string ip, uint16_t port, EndPointAddr::IPV ipv = EndPointAddr::Ipv4);
+    void appendRemoteEndPoint(struct EndPointAddress& addr);
     void clear();
 
 private:
+    uint32_t id_;
     uv::EventLoop loop_;
     std::vector<ActorClientPtr> endPoints_;
     std::shared_ptr<ActorServer> server_;
+
 };
 }
 }
