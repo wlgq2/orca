@@ -15,7 +15,8 @@ ActorClient::ActorClient(uv::EventLoop* loop,uv::SocketAddr& addr,uint32_t id)
     addr_(addr),
     isConenected_(false),
     localId_(id),
-    remoteId_(-1)
+    remoteId_(-1),
+    onRegisterRemoteFramework_(nullptr)
 {
     timer_ = new uv::Timer<void*>(loop, 1000, 1000, std::bind(&ActorClient::heartbeat, this, std::placeholders::_1, std::placeholders::_2), nullptr);
     setConnectCallback(std::bind(&ActorClient::onConnect,this,std::placeholders::_1));
@@ -31,6 +32,11 @@ orca::core::ActorClient::~ActorClient()
     {
         delete ptr;
     });
+}
+
+void orca::core::ActorClient::setRegisterRemoteFrameworkCallback(OnRegisterRemoteFramework callback)
+{
+    onRegisterRemoteFramework_ = callback;
 }
 
 void orca::core::ActorClient::connect()
@@ -65,6 +71,8 @@ void orca::core::ActorClient::onMessage(const char* data, ssize_t size)
         {
             uint32_t id = *((uint32_t*)packet.getData());
             remoteId_ = id;
+            if (onRegisterRemoteFramework_)
+                onRegisterRemoteFramework_(remoteId_,shared_from_this());
         }
     }
 }

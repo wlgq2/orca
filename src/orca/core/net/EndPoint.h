@@ -34,10 +34,13 @@ public:
     void appendRemoteEndPoint(struct EndPointAddress& addr);
     void clear();
 
+    void registerActorClient(uint32_t id, ActorClientPtr client);
 private:
     uint32_t id_;
     uv::EventLoop loop_;
+    std::atomic<bool> remoteRegisterCompleted_;
     std::vector<ActorClientPtr> endPoints_;
+    std::map<uint32_t, ActorClientPtr> endPointMap_;
     std::shared_ptr<ActorServer> server_;
 
 };

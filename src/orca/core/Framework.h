@@ -105,7 +105,15 @@ void Framework<MessageType>::recycleActor(ActorType * actor)
 template<typename MessageType>
 inline void Framework<MessageType>::send(const MessagePack<MessageType>& message,Address& from,Address& destination)
 {
-    mailboxCenter_.sendMessage(message.get(),from,destination);
+    //local message.
+    if (destination.framework == uniqueID_)
+    {
+        mailboxCenter_.sendMessage(message.get(), from, destination);
+    }
+    else //romote message.
+    {
+
+    }
 }
 
 template<typename MessageType>

@@ -9,12 +9,15 @@ namespace orca
 
 namespace core
 {
-class ActorClient : public uv::TcpClient
+class ActorClient : public uv::TcpClient,public std::enable_shared_from_this<ActorClient>
 {
 public:
+    using OnRegisterRemoteFramework = std::function<void(uint32_t, std::shared_ptr<ActorClient>)>;
+
     ActorClient(uv::EventLoop* loop,uv::SocketAddr& addr, uint32_t id);
     ~ActorClient();
 
+    void setRegisterRemoteFrameworkCallback(OnRegisterRemoteFramework callback);
     void connect();
     void onConnect(bool isSuccessed);
     void onDisconnect();
@@ -22,6 +25,8 @@ public:
 
     static const int ReconectTimeMS;
     static const int HeartbeatTimeSec;
+
+    
 private:
     uv::SocketAddr addr_;
     bool isConenected_;
@@ -29,6 +34,7 @@ private:
     uint32_t localId_;
     int remoteId_;
     int cnt_;
+    OnRegisterRemoteFramework onRegisterRemoteFramework_;
 
 private:
     void reconnect();
