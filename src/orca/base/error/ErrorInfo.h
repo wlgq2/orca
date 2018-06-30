@@ -18,8 +18,12 @@ public:
 
         UndefinedError = -1024,
         NoFindActorName,
+        ActorNameTooLong,
         NoFindActorAddr,
         ReDefineActorName,
+        MessagePackNull,
+
+        RepeatedRemoteFrameworkID,
     };
     ErrorInfo(ErrorId id,std::string info);
 

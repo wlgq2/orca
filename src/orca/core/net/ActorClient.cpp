@@ -27,10 +27,10 @@ ActorClient::ActorClient(uv::EventLoop* loop,uv::SocketAddr& addr,uint32_t id)
 
 orca::core::ActorClient::~ActorClient()
 {
-    auto ptr = timer_;
-    timer_->close([ptr]()
+    timer_->close([](uv::Timer<void*>* timer)
     {
-        delete ptr;
+        //release timer in loop callback.
+        delete timer;
     });
 }
 
@@ -83,8 +83,9 @@ void orca::core::ActorClient::reconnect()
         [this](uv::Timer<void*>* timer, void*)
     {
         this->connect();
-        timer->close([timer]() 
+        timer->close([](uv::Timer<void*>* timer) 
         {
+            //release timer in loop callback.
             delete timer; 
         });
     },

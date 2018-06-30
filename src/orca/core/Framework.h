@@ -13,7 +13,7 @@ Description:
 
 #include   <memory>
 #include   "../base/thread/ThreadPool.h"
-#include   "net/EndPoint.h"
+#include   "EndPoint.h"
 
 #include   "Actor.h"
 #include   "Mailbox.h"
@@ -57,8 +57,9 @@ private:
 
 private:
     MailboxCenter<MailboxType, MailType> mailboxCenter_;
-    std::shared_ptr<EndPoint> endPoint_;
+    std::shared_ptr<EndPoint<MessageType>> endPoint_;
 
+    bool checkMessage(const MessagePack<MessageType>& message);
 
 };
 
@@ -72,7 +73,7 @@ Framework<MessageType>::Framework(EndPointAddress* endPointAddr, uint32_t id)
 {
     if (nullptr != endPointAddr)
     {
-        endPoint_ = std::make_shared<EndPoint>(*endPointAddr, uniqueID_);
+        endPoint_ = std::make_shared<EndPoint<MessageType>>(*endPointAddr, uniqueID_);
     }
     threadPool_.registerPorcess(std::bind(&Framework::process, this));
 }
@@ -105,6 +106,8 @@ void Framework<MessageType>::recycleActor(ActorType * actor)
 template<typename MessageType>
 inline void Framework<MessageType>::send(const MessagePack<MessageType>& message,Address& from,Address& destination)
 {
+    if (!checkMessage(message))
+        return;
     //local message.
     if (destination.framework == uniqueID_)
     {
@@ -112,13 +115,16 @@ inline void Framework<MessageType>::send(const MessagePack<MessageType>& message
     }
     else //romote message.
     {
-
+        if (endPoint_)
+            endPoint_->send(message.get(), from, destination);
     }
 }
 
 template<typename MessageType>
 inline void Framework<MessageType>::send(const MessagePack<MessageType>& message, Address& from, std::string& name, uint32_t framework)
 {
+    if (!checkMessage(message))
+        return;
     //local message.
     if (uniqueID_ == framework)
     {
@@ -126,7 +132,8 @@ inline void Framework<MessageType>::send(const MessagePack<MessageType>& message
     }
     else //romote message.
     {
-        
+        if (endPoint_)
+            endPoint_->send(message.get(), from, name,framework);
     }
 }
 
@@ -161,10 +168,22 @@ void Framework<MessageType>::loop()
         endPoint_->run();
     threadPool_.join();
 }
+
 template<typename MessageType>
 inline void Framework<MessageType>::RegisterErrorHandle(base::ErrorHandle::ErrorHandleFunction callback)
 {
     base::ErrorHandle::Instance()->bind(callback);
+}
+
+template<typename MessageType>
+inline bool Framework<MessageType>::checkMessage(const MessagePack<MessageType>& message)
+{
+    auto rst = (nullptr != message.get());
+    if (!rst)
+    {
+        base::ErrorHandle::Instance()->error(base::ErrorInfo::MessagePackNull, "send a null message");
+    }
+    return rst;
 }
 }
 }

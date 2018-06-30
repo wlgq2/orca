@@ -159,9 +159,6 @@
     <ClInclude Include="..\..\..\src\orca\core\net\ActorServer.h">
       <Filter>src\orca\core\net</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\src\orca\core\net\EndPoint.h">
-      <Filter>src\orca\core\net</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\src\orca\base\error\ErrorHandle.h">
       <Filter>src\orca\base\error</Filter>
     </ClInclude>
@@ -170,6 +167,12 @@
     </ClInclude>
     <ClInclude Include="..\..\..\src\orca\core\net\Protocol.h">
       <Filter>src\orca\core\net</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\orca\core\EndPoint.h">
+      <Filter>src\orca\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\orca\core\RemoteMail.h">
+      <Filter>src\orca\core</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -228,9 +231,6 @@
       <Filter>src\orca\core\net</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\orca\core\net\ActorServer.cpp">
-      <Filter>src\orca\core\net</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\orca\core\net\EndPoint.cpp">
       <Filter>src\orca\core\net</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\orca\base\error\ErrorInfo.cpp">
