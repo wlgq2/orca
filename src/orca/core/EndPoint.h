@@ -10,7 +10,7 @@
 #include "net/ActorServer.h"
 #include "RemoteMail.h"
 #include "../base/error/ErrorHandle.h"
-
+#include "Assert.h"
 namespace orca
 {
 
@@ -174,8 +174,53 @@ inline void EndPoint<MessageType>::appendMail(RemoteMailPtr mail)
 template<typename MessageType>
 inline void EndPoint<MessageType>::processMail()
 {
+    //only run in loop thread.
+    ORCA_ASSERT_MSG(loop_.isRunInLoopThread(),"remote message process can only run in uv loop thread.");
+    int size = sendCache_.size();
+    for (int i = 0; i < size; i++)
+    {
+        auto message = sendCache_.front();
+        sendCache_.pop();
+        uint32_t destination = message->getDestinationId();
+        auto it = endPointMap_.find(destination);
+        if (it != endPointMap_.end())
+        {
+            auto client = it->second;
+            auto size = message->size();
+            char* data = new char[size];
+            if (0 != message->pack(data, size))
+            {
+                orca::base::ErrorHandle::Instance()->error(base::ErrorInfo::PackMessageError, "pack remote message error.");
+                delete data;
+                continue;
+            }
 
-    //ÂÖÑ¯
+            client->write(data, size, 
+                [this](uv::WriteInfo& writeInfo)
+            {
+                char* data = writeInfo.buf;
+                delete data;
+
+                if (0 != writeInfo.status)
+                {
+                    orca::base::ErrorHandle::Instance()->error(base::ErrorInfo::UVWriteFail, std::string("uv write message fail:")+uv::EventLoop::GetErrorMessage(writeInfo.status));
+                }
+            });
+            
+        }
+        else
+        {
+            if (!remoteRegisterCompleted_)
+            {
+                sendCache_.push(message);
+            }
+            else
+            {
+                orca::base::ErrorHandle::Instance()->error(base::ErrorInfo::NoFindRemoteFramework, std::string("can not find remote framework:")+std::to_string(destination));
+            }
+        }
+
+    }
     //auto last
 }
 

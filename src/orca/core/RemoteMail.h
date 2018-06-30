@@ -26,6 +26,7 @@ public:
     };
     RemoteMail(struct Address& from, struct Address& to, std::shared_ptr<MessageType> message);
     RemoteMail(struct Address& from, uint32_t framework ,std::string& name, std::shared_ptr<MessageType> message);
+    uint32_t getDestinationId();
     int unpack(char* data, int size);
     int pack(char* data, int size);
     int size();
@@ -63,6 +64,13 @@ inline RemoteMail<MessageType>::RemoteMail(struct Address& from, uint32_t framew
 }
 
 template<typename MessageType>
+inline uint32_t RemoteMail<MessageType>::getDestinationId()
+{
+    uint32_t id = (indexMode_ == ByAddress) ? to_.framework : remoteActor_.frameworkId;
+    return id;
+}
+
+template<typename MessageType>
 inline int RemoteMail<MessageType>::unpack(char* data, int size)
 {
 
@@ -85,7 +93,7 @@ inline int RemoteMail<MessageType>::pack(char* data, int size)
     }
     else
     {
-        index += packString(name_, &data[index]);
+        index += packString(remoteActor_.actorName, &data[index]);
     }
     
     return 0;
@@ -110,14 +118,14 @@ inline int RemoteMail<MessageType>::packAddress(struct Address& addr, char* data
 template<typename MessageType>
 inline int RemoteMail<MessageType>::packString(std::string& name, char* data)
 {
-    int strSize = name_.size();
+    int strSize = remoteActor_.actorName.size();
     if (strSize > 255)
     {
-        base::ErrorHandle::Instance()->error(base::ErrorInfo::ActorNameTooLong, std::string("actor's name more than 512 bytes:") + name_);
+        base::ErrorHandle::Instance()->error(base::ErrorInfo::ActorNameTooLong, std::string("actor's name more than 512 bytes:") + remoteActor_.actorName);
         return -1;
     }
     data[0] = strSize;
-    const char* p = name_.c_str();
+    const char* p = remoteActor_.actorName.c_str();
     std::copy(p, p + strSize, &data[1]);
     return strSize+1;
 }
@@ -128,7 +136,7 @@ inline int RemoteMail<MessageType>::extendSize()
     int size = 0;
     if (indexMode_ == ByName)
     {
-        size = sizeof(char) +sizeof(from_) +sizeof(char) +name_.size() ;
+        size = sizeof(char) +sizeof(from_) +sizeof(char) + remoteActor_.actorName.size() ;
     }
     else
     {

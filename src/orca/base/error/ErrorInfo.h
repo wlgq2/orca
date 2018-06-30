@@ -22,6 +22,8 @@ public:
         NoFindActorAddr,
         ReDefineActorName,
         MessagePackNull,
+        PackMessageError,
+        NoFindRemoteFramework,
 
         RepeatedRemoteFrameworkID,
     };
