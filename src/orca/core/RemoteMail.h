@@ -24,12 +24,20 @@ public:
         ByAddress = 1,
         ByName
     };
+    RemoteMail();
     RemoteMail(struct Address& from, struct Address& to, std::shared_ptr<MessageType> message);
     RemoteMail(struct Address& from, uint32_t framework ,std::string& name, std::shared_ptr<MessageType> message);
     uint32_t getDestinationId();
-    int unpack(char* data, int size);
+    int unpack(const char* data, int size);
     int pack(char* data, int size);
     int size();
+    int getIndexMode();
+
+    struct Address& getFromAddress();
+    struct Address& getDestinationAddress();
+    std::string& getDestinationActor();
+    std::shared_ptr<MessageType> getMessage();
+
 private:
     IndexMode indexMode_;
     struct Address from_;
@@ -38,11 +46,18 @@ private:
     std::shared_ptr<MessageType> message_;
 
     int packAddress(struct Address& addr,char* data);
+    int unPackAddress(struct Address& addr, const char* data,int size);
     int packString(std::string& name, char* data);
+    int unPackString(std::string& name, const char* data,int size);
 
     int extendSize();
 };
 
+
+template<typename MessageType>
+inline RemoteMail<MessageType>::RemoteMail()
+{
+}
 
 template<typename MessageType>
 inline RemoteMail<MessageType>::RemoteMail(struct Address& from, struct Address& to, std::shared_ptr<MessageType> message)
@@ -71,8 +86,20 @@ inline uint32_t RemoteMail<MessageType>::getDestinationId()
 }
 
 template<typename MessageType>
-inline int RemoteMail<MessageType>::unpack(char* data, int size)
+inline int RemoteMail<MessageType>::unpack(const char* data, int size)
 {
+    auto index = 0;
+    indexMode_ = static_cast<IndexMode>(data[index++]);
+
+    index += unPackAddress(from_, &data[index], (size - index));
+    if (indexMode_ == ByAddress)
+    {
+        index += unPackAddress(to_, &data[index], (size - index));
+    }
+    else
+    {
+        index += unPackString(remoteActor_.actorName, &data[index], (size - index));
+    }
 
     return 0;
 }
@@ -105,6 +132,36 @@ inline int RemoteMail<MessageType>::size()
     return extendSize() + message_->size();
 }
 
+template<typename MessageType>
+inline int RemoteMail<MessageType>::getIndexMode()
+{
+    return indexMode_;
+}
+
+template<typename MessageType>
+inline Address& RemoteMail<MessageType>::getFromAddress()
+{
+    return from_;
+}
+
+template<typename MessageType>
+inline Address& RemoteMail<MessageType>::getDestinationAddress()
+{
+    return to_;
+}
+
+template<typename MessageType>
+inline std::string& RemoteMail<MessageType>::getDestinationActor()
+{
+    return remoteActor_.actorName;
+}
+
+template<typename MessageType>
+inline std::shared_ptr<MessageType> RemoteMail<MessageType>::getMessage()
+{
+    return message_;
+}
+
 
 template<typename MessageType>
 inline int RemoteMail<MessageType>::packAddress(struct Address& addr, char* data)
@@ -113,6 +170,19 @@ inline int RemoteMail<MessageType>::packAddress(struct Address& addr, char* data
     int addrsize = sizeof(from_);
     std::copy(p, p + addrsize, data);
     return addrsize;
+}
+
+template<typename MessageType>
+inline int RemoteMail<MessageType>::unPackAddress(struct Address& addr, const char * data, int size)
+{
+    int dataSize = sizeof(addr);
+    if (dataSize <= size)
+    {
+        char* p = (char*)(&addr);
+        std::copy(data, data + dataSize, p);
+        return 0;
+    }
+    return -1;
 }
 
 template<typename MessageType>
@@ -128,6 +198,20 @@ inline int RemoteMail<MessageType>::packString(std::string& name, char* data)
     const char* p = remoteActor_.actorName.c_str();
     std::copy(p, p + strSize, &data[1]);
     return strSize+1;
+}
+
+template<typename MessageType>
+inline int RemoteMail<MessageType>::unPackString(std::string& name, const char* data, int size)
+{
+    name.clear();
+    uint8_t strSize = data[0];
+    if (strSize + 1 < size)
+    {
+        data++;
+        std::copy(data, data + strSize, back_inserter(name));
+        return 0;
+    }
+    return -1;
 }
 
 template<typename MessageType>

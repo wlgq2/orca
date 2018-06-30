@@ -8,16 +8,17 @@ using namespace std;
 
 const int ActorServer::HeartTimeOutSecend = 120;
 
-ActorServer::ActorServer(uv::EventLoop* loop, uv::SocketAddr& addr, uint32_t id)
+ActorServer::ActorServer(uv::EventLoop* loop, uv::SocketAddr& addr, uint32_t id, OnActorMeessageCallback callback)
     :uv::TcpServer(loop,addr),
-    id_(id)
+    id_(id),
+    onActorMessageCallback_(callback)
 {
     setTimeout(HeartTimeOutSecend);
     setMessageCallback(std::bind(&ActorServer::onMessage,this,std::placeholders::_1,std::placeholders::_2,std::placeholders::_3));
 }
 
 
-void orca::core::ActorServer::onMessage(std::shared_ptr<uv::TcpConnection>connection , const char* data, ssize_t size)
+void orca::core::ActorServer::onMessage(std::shared_ptr<uv::TcpConnection>connection, const char* data, ssize_t size)
 {
     connection->appendToBuffer(data, (int)size);
     uv::Packet packet;
@@ -32,7 +33,8 @@ void orca::core::ActorServer::onMessage(std::shared_ptr<uv::TcpConnection>connec
             break;
         }
         case Protocol::ActorMessage:
-            break;
+            onActorMessage(packet.getData(), packet.DataSize());
+                break;
         default:
             break;
         }
@@ -56,4 +58,10 @@ void orca::core::ActorServer::onReqFrameworkId(uint32_t id, std::shared_ptr<uv::
     });
 
     endPoints_[id] = connection;
+}
+
+void orca::core::ActorServer::onActorMessage(const char* data, int size)
+{
+    if (onActorMessageCallback_)
+        onActorMessageCallback_(data, size);
 }

@@ -11,11 +11,11 @@ namespace orca
 
 namespace core
 {
-using OnActorMeessageCallback = std::function<void()>;
+using OnActorMeessageCallback = std::function<void(const char*, int)>;
 class ActorServer : public uv::TcpServer
 {
 public:
-    ActorServer(uv::EventLoop* loop,uv::SocketAddr& addr,uint32_t id);
+    ActorServer(uv::EventLoop* loop,uv::SocketAddr& addr,uint32_t id, OnActorMeessageCallback callback);
     void onMessage(std::shared_ptr<uv::TcpConnection>connection, const char* data, ssize_t size);
     static const int HeartTimeOutSecend;
 
@@ -24,8 +24,10 @@ private:
     std::map<int, std::weak_ptr<uv::TcpConnection>> endPoints_;
 
 private:
+    OnActorMeessageCallback onActorMessageCallback_;
+
     void onReqFrameworkId(uint32_t id,std::shared_ptr<uv::TcpConnection> connection);
-    //void onActorMessage();
+    void onActorMessage(const char* data, int size);
 };
 }
 }

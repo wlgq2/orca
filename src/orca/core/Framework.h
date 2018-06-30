@@ -43,6 +43,8 @@ public:
     
     void send(const MessagePack<MessageType>& message,Address& from,Address& destination);
     void send(const MessagePack<MessageType>& message, Address& from,std::string& name,uint32_t framework);
+    void onRemoteMessageByName(Address& from, std::string& name, std::shared_ptr<MessageType>& message);
+    void onRemoteMessageByAddress(Address& from, Address& name, std::shared_ptr<MessageType>& message);
 
     void appendRemoteEndPoint(struct EndPointAddress& addr);
     void appendRemoteEndPoint(std::string ip, uint16_t port, EndPointAddress::IPV ipv = EndPointAddress::Ipv4);
@@ -74,6 +76,8 @@ Framework<MessageType>::Framework(EndPointAddress* endPointAddr, uint32_t id)
     if (nullptr != endPointAddr)
     {
         endPoint_ = std::make_shared<EndPoint<MessageType>>(*endPointAddr, uniqueID_);
+        endPoint_->registerRemoteMessage(std::bind(&Framework<MessageType>::onRemoteMessageByName,this,std::placeholders::_1,std::placeholders::_2,std::placeholders::_3),
+            std::bind(&Framework<MessageType>::onRemoteMessageByAddress,this,std::placeholders::_1,std::placeholders::_2,std::placeholders::_3));
     }
     threadPool_.registerPorcess(std::bind(&Framework::process, this));
 }
@@ -135,6 +139,18 @@ inline void Framework<MessageType>::send(const MessagePack<MessageType>& message
         if (endPoint_)
             endPoint_->send(message.get(), from, name,framework);
     }
+}
+
+template<typename MessageType>
+inline void Framework<MessageType>::onRemoteMessageByName(Address & from, std::string & name, std::shared_ptr<MessageType>& message)
+{
+
+}
+
+template<typename MessageType>
+inline void Framework<MessageType>::onRemoteMessageByAddress(Address& from, Address& name, std::shared_ptr<MessageType>& message)
+{
+
 }
 
 template<typename MessageType>

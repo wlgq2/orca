@@ -33,7 +33,10 @@ template<typename MessageType>
 class EndPoint
 {
 public:
-    using RemoteMailPtr = std::shared_ptr<RemoteMail<MessageType>>;
+    using RemoteMailType = RemoteMail<MessageType>;
+    using RemoteMailPtr = std::shared_ptr<RemoteMailType>;
+    using OnActorMessageByName = std::function<void(Address&, std::string&, std::shared_ptr<MessageType>&)>;
+    using OnActorMessageByAddress = std::function<void(Address&, Address&, std::shared_ptr<MessageType>&)>;
 
     EndPoint(EndPointAddress& addr,uint32_t id);
     ~EndPoint();
@@ -41,7 +44,7 @@ public:
     void run();
     void appendRemoteEndPoint(struct EndPointAddress& addr);
     void clear();
-
+    void registerRemoteMessage(OnActorMessageByName callbackByName, OnActorMessageByAddress callbackByAddress);
     void registerActorClient(uint32_t id, ActorClientPtr client);
 
     void send(const std::shared_ptr<MessageType> message, Address& from, Address& destination);
@@ -58,8 +61,13 @@ private:
     uv::Timer<void*>* timer_;
     std::queue<RemoteMailPtr> sendCache_;
 
+    //void onActorMessageCallback_;
+    OnActorMessageByName onActorMessageByName_;
+    OnActorMessageByAddress onActorMessageByAddress_;
+
     void appendMail(RemoteMailPtr mail);
     void processMail();
+    void onActorMessage(const char* data, int size);
 };
 template<typename MessageType>
 const int EndPoint<MessageType>::MessageProcessPeriodMS = 10;
@@ -71,7 +79,8 @@ inline EndPoint<MessageType>::EndPoint(EndPointAddress & addr, uint32_t id)
     timer_(nullptr)
 {
     uv::SocketAddr uvaddr(addr.ip, addr.port, static_cast<uv::SocketAddr::IPV>(addr.ipv));
-    server_ = std::make_shared<ActorServer>(&loop_, uvaddr, id_);
+    server_ = std::make_shared<ActorServer>(&loop_, uvaddr, id_,
+        std::bind(&EndPoint<MessageType>::onActorMessage,this,std::placeholders::_1,std::placeholders::_2));
     timer_ = new uv::Timer<void*>(&loop_, MessageProcessPeriodMS, MessageProcessPeriodMS,
         [this](uv::Timer<void*>* ,void*)
     {
@@ -118,6 +127,13 @@ template<typename MessageType>
 inline void EndPoint<MessageType>::clear()
 {
     endPoints_.clear();
+}
+
+template<typename MessageType>
+inline void EndPoint<MessageType>::registerRemoteMessage(OnActorMessageByName callbackByName, OnActorMessageByAddress callbackByAddress)
+{
+    onActorMessageByName_ = callbackByName;
+    onActorMessageByAddress_ = callbackByAddress;
 }
 
 template<typename MessageType>
@@ -221,7 +237,28 @@ inline void EndPoint<MessageType>::processMail()
         }
 
     }
-    //auto last
+}
+
+template<typename MessageType>
+inline void EndPoint<MessageType>::onActorMessage(const char* data, int size)
+{
+    RemoteMailType mail;
+    mail.unpack(data, size);
+    if (RemoteMailType::ByAddress == mail.getIndexMode())
+    {
+        if (onActorMessageByAddress_)
+        {
+            onActorMessageByAddress_(mail.getFromAddress(), mail.getDestinationAddress(), mail.getMessage() );
+        }
+    }
+    else
+    {
+        if (onActorMessageByName_)
+        {
+            onActorMessageByName_(mail.getFromAddress(), mail.getDestinationActor(), mail.getMessage());
+        }
+    }
+
 }
 
 }
