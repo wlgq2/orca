@@ -142,15 +142,15 @@ inline void Framework<MessageType>::send(const MessagePack<MessageType>& message
 }
 
 template<typename MessageType>
-inline void Framework<MessageType>::onRemoteMessageByName(Address & from, std::string & name, std::shared_ptr<MessageType>& message)
+inline void Framework<MessageType>::onRemoteMessageByName(Address& from, std::string& name, std::shared_ptr<MessageType>& message)
 {
-
+    mailboxCenter_.onMessage(message, from, name);
 }
 
 template<typename MessageType>
-inline void Framework<MessageType>::onRemoteMessageByAddress(Address& from, Address& name, std::shared_ptr<MessageType>& message)
+inline void Framework<MessageType>::onRemoteMessageByAddress(Address& from, Address& to, std::shared_ptr<MessageType>& message)
 {
-
+    mailboxCenter_.onMessage(message, from, to);
 }
 
 template<typename MessageType>

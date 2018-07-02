@@ -41,6 +41,11 @@ public:
     template<typename MessageType>
     void sendMessage(std::shared_ptr<MessageType>& message, Address& from, std::string& name);
     
+    template<typename MessageType>
+    int onMessage(std::shared_ptr<MessageType>& message, Address& from, Address& destination);
+    template<typename MessageType>
+    int onMessage(std::shared_ptr<MessageType>& message, Address& from, std::string& name);
+
     int delivery();
 private:
     bool applyMailboxName(std::string& name, Address& addr);
@@ -143,6 +148,33 @@ inline void MailboxCenter<MailboxType, MailType>::sendMessage(std::shared_ptr<Me
     else
     {
         base::ErrorHandle::Instance()->error(base::ErrorInfo::NoFindActorName, std::string("no find actor ")+name);
+    }
+}
+
+template<typename MailboxType, typename MailType>
+template<typename MessageType>
+inline int MailboxCenter<MailboxType, MailType>::onMessage(std::shared_ptr<MessageType>& message, Address& from, Address& destination)
+{
+    auto mailbox = getMailbox(destination);
+    MailType mail = {from,destination,message};
+    return mailbox->delivery(mail);
+}
+
+template<typename MailboxType, typename MailType>
+template<typename MessageType>
+inline int MailboxCenter<MailboxType, MailType>::onMessage(std::shared_ptr<MessageType>& message, Address& from, std::string& name)
+{
+    Address destination;
+    //ÐèÒªÔÚloopÏß³ÌÖÐ
+    if (getMailBoxAddr(name, destination))
+    {
+        auto mailbox = getMailbox(destination);
+        MailType mail = { from,destination,message };
+        return mailbox->delivery(mail);
+    }
+    else
+    {
+        base::ErrorHandle::Instance()->error(base::ErrorInfo::NoFindActorName, std::string("no find actor ") + name);
     }
 }
 
