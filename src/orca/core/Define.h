@@ -39,6 +39,8 @@ using MessagePack = orca::core::MessagePack<type>;   \
 using Actor = orca::core::Actor<type>;               \
 using Framework = orca::core::Framework<type>;       \
 using Address = orca::core::Address;                 \
+using FrameworkConfig = orca::core::FrameworkConfig;   \
+using EndPointAddress = orca::core::EndPointAddress;  \
 }
 
 #endif // !  ORCA_DEFINE_H

@@ -24,6 +24,24 @@ namespace orca
 namespace core
 { 
 
+struct FrameworkConfig
+{
+    FrameworkConfig()
+    {
+        reset();
+    }
+    void reset()
+    {
+        id = 0;
+        threadCount = 1;
+        endPointAddress = nullptr;
+    }
+    uint32_t id;
+    uint32_t threadCount;
+    std::shared_ptr<struct EndPointAddress> endPointAddress;
+
+};
+
 template<typename MessageType>
 class Framework
 {
@@ -33,7 +51,7 @@ public:
     using MailType = Mail<MessageType>;
     using MailboxType = Mailbox<MessageType>;
 
-    Framework(EndPointAddress* endPointAddr, uint32_t id);
+    Framework(struct FrameworkConfig& config);
     Framework();
 
     void process();
@@ -68,14 +86,14 @@ private:
 
 
 template<typename MessageType>
-Framework<MessageType>::Framework(EndPointAddress* endPointAddr, uint32_t id)
-    :uniqueID_(id),
-    mailboxCenter_(id),
+Framework<MessageType>::Framework(struct FrameworkConfig& config)
+    :uniqueID_(config.id),
+    mailboxCenter_(config.id),
     endPoint_(nullptr)
 {
-    if (nullptr != endPointAddr)
+    if (nullptr != config.endPointAddress)
     {
-        endPoint_ = std::make_shared<EndPoint<MessageType>>(*endPointAddr, uniqueID_);
+        endPoint_ = std::make_shared<EndPoint<MessageType>>(*(config.endPointAddress), uniqueID_);
         endPoint_->registerRemoteMessage(std::bind(&Framework<MessageType>::onRemoteMessageByName,this,std::placeholders::_1,std::placeholders::_2,std::placeholders::_3),
             std::bind(&Framework<MessageType>::onRemoteMessageByAddress,this,std::placeholders::_1,std::placeholders::_2,std::placeholders::_3));
     }
@@ -84,8 +102,9 @@ Framework<MessageType>::Framework(EndPointAddress* endPointAddr, uint32_t id)
 
 template<typename MessageType>
 Framework<MessageType>::Framework()
-    :Framework(nullptr,0)
 {
+    FrameworkConfig config;
+    new (this)Framework(config);
 }
 
 template<typename MessageType>

@@ -68,8 +68,13 @@ int main(int argc, char** args)
     {
         std::cout << "error " << errorInfo.getErrorId() << ":" << errorInfo.getErrorInfo()<< std::endl;
     });
-    orca::core::EndPointAddress netaddr = { "0.0.0.0", 10001 ,orca::core::EndPointAddress::Ipv4 };
-    orca::Framework framework(&netaddr, 233);
+
+    orca::FrameworkConfig config;
+    config.endPointAddress = std::make_shared<orca::EndPointAddress>( "0.0.0.0",10001 ,orca::core::EndPointAddress::Ipv4 );
+    config.threadCount = 1;
+    config.id = 231;
+
+    orca::Framework framework(config);
     framework.appendRemoteEndPoint("127.0.0.1", 10002);
 
     char str[] = "a message from actor1";

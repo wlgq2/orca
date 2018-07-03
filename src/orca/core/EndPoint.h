@@ -24,6 +24,12 @@ struct EndPointAddress
         Ipv4 = 0,
         Ipv6
     };
+    EndPointAddress(std::string ip, uint16_t port, IPV ipv)
+    {
+        this->ip = ip;
+        this->port = port;
+        this->ipv = ipv;
+    }
     std::string ip;
     uint16_t port;
     IPV ipv;
