@@ -190,7 +190,6 @@ int MailboxCenter<MailboxType, MailType>::delivery()
 template <typename MailboxType, typename MailType>
 bool MailboxCenter<MailboxType, MailType>::applyMailboxName(std::string& name,Address& addr)
 {
-    std::unique_lock<orca::base::CommonLockType> lock(lock_);
     auto it = mailboxAddrs_.find(name);
     if (it != mailboxAddrs_.end())
     {
@@ -215,7 +214,6 @@ inline bool MailboxCenter<MailboxType, MailType>::getMailBoxAddr(std::string& na
 template <typename MailboxType, typename MailType>
 bool MailboxCenter<MailboxType, MailType>::recycleMailboxName(std::string& name)
 {
-    std::unique_lock<orca::base::CommonLockType> lock(lock_);
     auto it = mailboxAddrs_.find(name);
     if (it != mailboxAddrs_.end())
     {

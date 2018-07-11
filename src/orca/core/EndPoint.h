@@ -155,7 +155,7 @@ inline void EndPoint<MessageType>::registerActorClient(uint32_t id, ActorClientP
         else
         {
             auto it = endPointMap_.find(id);
-            if (it != endPointMap_.end())
+            if (it == endPointMap_.end())
             {
                 endPointMap_[id] = client;
                 if (endPointMap_.size() == endPoints_.size())
@@ -165,7 +165,7 @@ inline void EndPoint<MessageType>::registerActorClient(uint32_t id, ActorClientP
             }
             else
             {
-                base::ErrorHandle::Instance()->error(base::ErrorInfo::RepeatedRemoteFrameworkID, std::string("remote framework id repeated :") + std::to_string(id));
+                //base::ErrorHandle::Instance()->error(base::ErrorInfo::RepeatedRemoteFrameworkID, std::string("remote framework id repeated :") + std::to_string(id));
             }
         }
     });
@@ -175,12 +175,15 @@ template<typename MessageType>
 inline void EndPoint<MessageType>::send(const std::shared_ptr<MessageType> message, Address& from, Address& destination)
 {
     auto ptr = std::make_shared<RemoteMail<MessageType>>(from,destination,message);
+    appendMail(ptr);
 }
 
 template<typename MessageType>
 inline void EndPoint<MessageType>::send(const std::shared_ptr<MessageType> message, Address& from, std::string& name, uint32_t framework)
 {
     auto ptr = std::make_shared<RemoteMail<MessageType>>(from, framework, name, message);
+    appendMail(ptr);
+
 }
 
 template<typename MessageType>
