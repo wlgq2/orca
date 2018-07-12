@@ -11,6 +11,8 @@
 #include "RemoteMail.h"
 #include "../base/error/ErrorHandle.h"
 #include "Assert.h"
+#include "net/Protocol.h"
+
 namespace orca
 {
 
@@ -219,18 +221,19 @@ inline void EndPoint<MessageType>::processMail()
                 delete data;
                 continue;
             }
-
-            client->write(data, size, 
+            uv::Packet packet;
+            packet.reserve_ = Protocol::ActorMessage;
+            packet.fill(data, size);
+            
+            client->write(packet.Buffer(), packet.BufferSize(),
                 [this](uv::WriteInfo& writeInfo)
             {
-                char* data = writeInfo.buf;
-                delete data;
-
                 if (0 != writeInfo.status)
                 {
                     orca::base::ErrorHandle::Instance()->error(base::ErrorInfo::UVWriteFail, std::string("uv write message fail:")+uv::EventLoop::GetErrorMessage(writeInfo.status));
                 }
             });
+            delete data;
             
         }
         else
@@ -267,7 +270,7 @@ inline void EndPoint<MessageType>::onActorMessage(const char* data, int size)
             onActorMessageByName_(mail.getFromAddress(), mail.getDestinationActor(), mail.getMessage());
         }
     }
-
+    processMail();
 }
 
 }

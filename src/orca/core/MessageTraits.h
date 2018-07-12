@@ -11,7 +11,7 @@ namespace core
 template<typename T>
 struct MessageTraits
 {
-    static const void* Enter(T& object)
+    static const char* Enter(T& object)
     {
         return object.enter();
     }
@@ -20,9 +20,9 @@ struct MessageTraits
 template<>
 struct MessageTraits<std::string>
 {
-    static const void* Enter(std::string& object)
+    static const char* Enter(std::string& object)
     {
-        return static_cast<const void*>(object.c_str());
+        return (object.c_str());
     }
 };
 }

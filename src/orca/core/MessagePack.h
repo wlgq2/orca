@@ -37,7 +37,7 @@ public:
         return messagePtr_;
     }
 
-    const void* enter()
+    const char* enter()
     {
         auto ptr = MessageTraits<MessageType>::Enter(*messagePtr_);
         return ptr;

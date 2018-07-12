@@ -3,6 +3,7 @@
 
 #include <memory>
 #include "Address.h"
+#include "MessagePack.h"
 
 namespace orca
 { 
@@ -64,7 +65,7 @@ inline RemoteMail<MessageType>::RemoteMail(struct Address& from, struct Address&
     : indexMode_(ByAddress),
     from_(from),
     to_(to),
-    name_(""),
+    remoteActor_({ 0,"" }),
     message_(message)
 {
 }
@@ -100,7 +101,7 @@ inline int RemoteMail<MessageType>::unpack(const char* data, int size)
     {
         index += unPackString(remoteActor_.actorName, &data[index], (size - index));
     }
-
+    message_ = std::make_shared<MessageType>(&data[index], size - index);
     return 0;
 }
 
@@ -123,13 +124,20 @@ inline int RemoteMail<MessageType>::pack(char* data, int size)
         index += packString(remoteActor_.actorName, &data[index]);
     }
     
+    if (message_)
+    {
+        MessagePack<MessageType> messagepack(message_);
+        int dataSize = messagepack.size();
+        const char* ptr = (const char*)(messagepack.enter());
+        std::copy(ptr, ptr + dataSize, data+index);
+    }
     return 0;
 }
 
 template<typename MessageType>
 inline int RemoteMail<MessageType>::size()
 {
-    return extendSize() + message_->size();
+    return extendSize() + (int)message_->size();
 }
 
 template<typename MessageType>
@@ -180,7 +188,7 @@ inline int RemoteMail<MessageType>::unPackAddress(struct Address& addr, const ch
     {
         char* p = (char*)(&addr);
         std::copy(data, data + dataSize, p);
-        return 0;
+        return dataSize;
     }
     return -1;
 }
@@ -209,7 +217,7 @@ inline int RemoteMail<MessageType>::unPackString(std::string& name, const char* 
     {
         data++;
         std::copy(data, data + strSize, back_inserter(name));
-        return 0;
+        return strSize+1;
     }
     return -1;
 }
