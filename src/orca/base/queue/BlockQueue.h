@@ -8,7 +8,7 @@
 #include  "../condition/Condition.h"
 
 namespace orca
-{ 
+{
 namespace base
 {
 
@@ -18,10 +18,10 @@ class BlockQueue
 public:
     BlockQueue();
     void push(Type& ele);
-    
+
     template<class... _Types >
     void push(_Types&... _Args);
-    
+
     void pop(Type& ele);
     bool empty();
     void clear();
@@ -98,14 +98,14 @@ inline void BlockQueue<Type, LockType>::push(_Types & ..._Args)
 
     {
         std::unique_lock<LockType> lock(lock_);
-        queue_.push({ _STD forward<_Types>(_Args)... });
+        queue_.push({ std::forward<_Types>(_Args)... });
     }
     //只有在阻塞时才使用互斥锁。
     if (waited_)
     {
         condition_.notifyAll();
     }
-    
+
 }
 
 }

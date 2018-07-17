@@ -3,6 +3,7 @@
 
 #include <memory>
 #include <string>
+#include <utility>
 
 #include "MessageTraits.h"
 #include "Define.h"
@@ -11,7 +12,7 @@
 namespace orca
 {
 namespace core
-{ 
+{
 
 template <typename MessageType>
 class MessagePack
@@ -28,7 +29,7 @@ public:
     template<class... _Types >
     std::shared_ptr<MessageType>& create(_Types&&... _Args)
     {
-        messagePtr_ = std::make_shared<MessageType>(_STD forward<_Types>(_Args)...);
+        messagePtr_ = std::make_shared<MessageType>(std::forward<_Types>(_Args)...);
         return messagePtr_;
     }
 
@@ -55,5 +56,4 @@ private:
 };
 }
 }
-#endif 
-
+#endif

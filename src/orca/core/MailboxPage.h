@@ -25,10 +25,10 @@ public:
     void recycleMailbox(int index);
 
     MailboxTypePtr getMailbox(int index);
-    
+
 private:
     MailboxTypePtr mailboxs_[ORCA_MAILBOX_PAGE_SIZE];
-    
+
     std::set<int> idleIndexs_;
 };
 
@@ -58,7 +58,7 @@ int MailboxPage<MailboxType>::allocateMailbox(_Types&&... _Args)
     auto it = idleIndexs_.begin();
     int index = *it;
     idleIndexs_.erase(it);
-    mailboxs_[index] = std::make_shared<MailboxType>(_STD forward<_Types>(_Args)...);
+    mailboxs_[index] = std::make_shared<MailboxType>(std::forward<_Types>(_Args)...);
     return index;
 }
 

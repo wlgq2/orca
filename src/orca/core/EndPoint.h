@@ -43,8 +43,8 @@ class EndPoint
 public:
     using RemoteMailType = RemoteMail<MessageType>;
     using RemoteMailPtr = std::shared_ptr<RemoteMailType>;
-    using OnActorMessageByName = std::function<void(Address&, std::string&, std::shared_ptr<MessageType>&)>;
-    using OnActorMessageByAddress = std::function<void(Address&, Address&, std::shared_ptr<MessageType>&)>;
+    using OnActorMessageByName = std::function<void(Address&, std::string&, std::shared_ptr<MessageType>)>;
+    using OnActorMessageByAddress = std::function<void(Address&, Address&, std::shared_ptr<MessageType>)>;
 
     EndPoint(EndPointAddress& addr,uint32_t id);
     ~EndPoint();
@@ -192,7 +192,7 @@ template<typename MessageType>
 inline void EndPoint<MessageType>::appendMail(RemoteMailPtr mail)
 {
     //thread safe.
-    loop_.runInThisLoop([mail,this]() 
+    loop_.runInThisLoop([mail,this]()
     {
         sendCache_.push(mail);
     });
@@ -224,7 +224,7 @@ inline void EndPoint<MessageType>::processMail()
             uv::Packet packet;
             packet.reserve_ = Protocol::ActorMessage;
             packet.fill(data, size);
-            
+            delete data;
             client->write(packet.Buffer(), packet.BufferSize(),
                 [this](uv::WriteInfo& writeInfo)
             {
@@ -233,8 +233,8 @@ inline void EndPoint<MessageType>::processMail()
                     orca::base::ErrorHandle::Instance()->error(base::ErrorInfo::UVWriteFail, std::string("uv write message fail:")+uv::EventLoop::GetErrorMessage(writeInfo.status));
                 }
             });
-            delete data;
-            
+
+
         }
         else
         {

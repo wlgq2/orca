@@ -4,6 +4,8 @@
 
 #include <orca/orca.h>
 #include <future>
+#include <chrono>
+#include <thread>
 #include <orca/base/libuv_cpp11/uv/uv11.h>
 #include <atomic>
 
@@ -32,10 +34,10 @@ public:
         return static_cast<const void*>(message);
     }
 private:
-    static const unsigned long Size = 2048;
+    static const int Size = 2048;
     char message[Size];
 };
-                                                    
+
 //REGISTER_MESSAGE_TYPE(MyMessage);
 REGISTER_MESSAGE_TYPE(std::string);
 std::atomic<uint64_t> cnt;
@@ -90,11 +92,11 @@ int main(int argc, char** args)
     //actor.send(message, actor.getAddress());
     //actor.send(message, actor.getAddress());
     //actor.send(message, actor.getAddress());
-    auto async = std::async([&actor,&message]()
+   std::thread t1([&actor,&message]()
     {
         while (true)
         {
-            Sleep(1000);
+            std::this_thread::sleep_for(std::chrono::seconds(1));
             if (cnt == 0)
             {
                 //exit(0);

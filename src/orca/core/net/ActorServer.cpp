@@ -34,7 +34,7 @@ void orca::core::ActorServer::onMessage(std::shared_ptr<uv::TcpConnection>connec
         }
         case Protocol::ActorMessage:
             onActorMessage(packet.getData(), packet.DataSize());
-                break;
+            break;
         default:
             break;
         }

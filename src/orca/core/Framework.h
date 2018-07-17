@@ -22,7 +22,7 @@ Description:
 namespace orca
 {
 namespace core
-{ 
+{
 
 struct FrameworkConfig
 {
@@ -58,11 +58,11 @@ public:
 
     void registerActor(ActorType* actor);
     void recycleActor(ActorType* actor);
-    
+
     void send(const MessagePack<MessageType>& message,Address& from,Address& destination);
     void send(const MessagePack<MessageType>& message, Address& from,std::string& name,uint32_t framework);
-    void onRemoteMessageByName(Address& from, std::string& name, std::shared_ptr<MessageType>& message);
-    void onRemoteMessageByAddress(Address& from, Address& name, std::shared_ptr<MessageType>& message);
+    void onRemoteMessageByName(Address& from, std::string& name, std::shared_ptr<MessageType> message);
+    void onRemoteMessageByAddress(Address& from, Address& name, std::shared_ptr<MessageType> message);
 
     void appendRemoteEndPoint(struct EndPointAddress& addr);
     void appendRemoteEndPoint(std::string ip, uint16_t port, EndPointAddress::IPV ipv = EndPointAddress::Ipv4);
@@ -161,13 +161,13 @@ inline void Framework<MessageType>::send(const MessagePack<MessageType>& message
 }
 
 template<typename MessageType>
-inline void Framework<MessageType>::onRemoteMessageByName(Address& from, std::string& name, std::shared_ptr<MessageType>& message)
+inline void Framework<MessageType>::onRemoteMessageByName(Address& from, std::string& name, std::shared_ptr<MessageType> message)
 {
     mailboxCenter_.onMessage(message, from, name);
 }
 
 template<typename MessageType>
-inline void Framework<MessageType>::onRemoteMessageByAddress(Address& from, Address& to, std::shared_ptr<MessageType>& message)
+inline void Framework<MessageType>::onRemoteMessageByAddress(Address& from, Address& to, std::shared_ptr<MessageType> message)
 {
     mailboxCenter_.onMessage(message, from, to);
 }
