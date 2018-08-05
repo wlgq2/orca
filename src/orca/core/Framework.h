@@ -72,8 +72,9 @@ public:
 public:
     static void RegisterErrorHandle(base::ErrorHandle::ErrorHandleFunction callback);
 private:
-    orca::base::ThreadPool threadPool_;
     const uint32_t uniqueID_;
+    uint32_t threadCount_;
+    orca::base::ThreadPool threadPool_;
 
 private:
     MailboxCenter<MailboxType, MailType> mailboxCenter_;
@@ -88,6 +89,7 @@ private:
 template<typename MessageType>
 Framework<MessageType>::Framework(struct FrameworkConfig& config)
     :uniqueID_(config.id),
+    threadCount_(config.threadCount),
     mailboxCenter_(config.id),
     endPoint_(nullptr)
 {
@@ -102,9 +104,12 @@ Framework<MessageType>::Framework(struct FrameworkConfig& config)
 
 template<typename MessageType>
 Framework<MessageType>::Framework()
+    :uniqueID_(0),
+    threadCount_(1),
+    mailboxCenter_(0),
+    endPoint_(nullptr)
 {
-    FrameworkConfig config;
-    new (this)Framework(config);
+    threadPool_.registerPorcess(std::bind(&Framework::process, this));
 }
 
 template<typename MessageType>
@@ -198,7 +203,7 @@ inline uint64_t Framework<MessageType>::getID()
 template<typename MessageType>
 void Framework<MessageType>::loop()
 {
-    threadPool_.start(1);
+    threadPool_.start(threadCount_);
     if (endPoint_)
         endPoint_->run();
     threadPool_.join();
