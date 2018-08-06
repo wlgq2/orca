@@ -175,9 +175,6 @@
     </Library>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\examples\helloworld\helloworld.cpp.cpp">
-      <Filter>example</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\src\orca\core\MailBoxThread.cpp">
       <Filter>src\orca\core</Filter>
     </ClCompile>
@@ -231,6 +228,12 @@
     </ClCompile>
     <ClCompile Include="..\..\..\src\orca\base\condition\Condition.cpp">
       <Filter>src\orca\base\condition</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\examples\messageTypeRegister\MessageType.h">
+      <Filter>example</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\examples\messageTypeRegister\main.cpp">
+      <Filter>example</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

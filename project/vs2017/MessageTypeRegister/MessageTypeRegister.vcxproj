@@ -20,7 +20,7 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
-    <ProjectGuid>{F48247E6-F77D-452A-9B2F-DE8A14082C5A}</ProjectGuid>
+    <ProjectGuid>{C9FC9B41-614B-4F69-98BC-FA3F96D64634}</ProjectGuid>
     <RootNamespace>helloworld</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
@@ -177,7 +177,8 @@
     <Library Include="..\..\..\lib\libuv\lib\vc2017\Release.x64\libuv.lib" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\examples\helloworld\helloworld.cpp.cpp" />
+    <ClCompile Include="..\..\..\examples\messageTypeRegister\main.cpp" />
+    <ClCompile Include="..\..\..\examples\messageTypeRegister\MessageType.h" />
     <ClCompile Include="..\..\..\src\orca\base\condition\Condition.cpp" />
     <ClCompile Include="..\..\..\src\orca\base\error\ErrorInfo.cpp" />
     <ClCompile Include="..\..\..\src\orca\base\libuv_cpp11\uv\CycleBuffer.cpp" />

@@ -20,9 +20,10 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
-    <ProjectGuid>{F48247E6-F77D-452A-9B2F-DE8A14082C5A}</ProjectGuid>
+    <ProjectGuid>{6F177171-15F8-495B-9190-94C8AF22CA9D}</ProjectGuid>
     <RootNamespace>helloworld</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
+    <ProjectName>SendByName</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -177,7 +178,7 @@
     <Library Include="..\..\..\lib\libuv\lib\vc2017\Release.x64\libuv.lib" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\examples\helloworld\helloworld.cpp.cpp" />
+    <ClCompile Include="..\..\..\examples\sendByName\SendByName.cpp" />
     <ClCompile Include="..\..\..\src\orca\base\condition\Condition.cpp" />
     <ClCompile Include="..\..\..\src\orca\base\error\ErrorInfo.cpp" />
     <ClCompile Include="..\..\..\src\orca\base\libuv_cpp11\uv\CycleBuffer.cpp" />
