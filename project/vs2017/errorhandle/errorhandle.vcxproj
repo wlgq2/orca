@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>15.0</VCProjectVersion>
+    <ProjectGuid>{38917F0F-6E28-4B03-AAE2-5AD9347CF1D1}</ProjectGuid>
+    <RootNamespace>helloworld</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup />
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>../../../src;../../../lib/libuv/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_SCL_SECURE_NO_WARNINGS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>../../../src;../../../lib/libuv/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_SCL_SECURE_NO_WARNINGS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>ws2_32.lib;Psapi.lib;userenv.lib;Iphlpapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>../../../src;../../../lib/libuv/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_SCL_SECURE_NO_WARNINGS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>../../../src;../../../lib/libuv/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_SCL_SECURE_NO_WARNINGS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>ws2_32.lib;Psapi.lib;userenv.lib;Iphlpapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\src\orca\base\condition\Condition.h" />
+    <ClInclude Include="..\..\..\src\orca\base\error\ErrorHandle.h" />
+    <ClInclude Include="..\..\..\src\orca\base\error\ErrorInfo.h" />
+    <ClInclude Include="..\..\..\src\orca\base\libuv_cpp11\uv\Async.h" />
+    <ClInclude Include="..\..\..\src\orca\base\libuv_cpp11\uv\CycleBuffer.h" />
+    <ClInclude Include="..\..\..\src\orca\base\libuv_cpp11\uv\EventLoop.h" />
+    <ClInclude Include="..\..\..\src\orca\base\libuv_cpp11\uv\ListBuffer.h" />
+    <ClInclude Include="..\..\..\src\orca\base\libuv_cpp11\uv\LogInterface.h" />
+    <ClInclude Include="..\..\..\src\orca\base\libuv_cpp11\uv\Packet.h" />
+    <ClInclude Include="..\..\..\src\orca\base\libuv_cpp11\uv\PacketBuffer.h" />
+    <ClInclude Include="..\..\..\src\orca\base\libuv_cpp11\uv\Signal.h" />
+    <ClInclude Include="..\..\..\src\orca\base\libuv_cpp11\uv\SocketAddr.h" />
+    <ClInclude Include="..\..\..\src\orca\base\libuv_cpp11\uv\TcpAccepter.h" />
+    <ClInclude Include="..\..\..\src\orca\base\libuv_cpp11\uv\TcpClient.h" />
+    <ClInclude Include="..\..\..\src\orca\base\libuv_cpp11\uv\TcpConnection.h" />
+    <ClInclude Include="..\..\..\src\orca\base\libuv_cpp11\uv\TcpServer.h" />
+    <ClInclude Include="..\..\..\src\orca\base\libuv_cpp11\uv\Timer.h" />
+    <ClInclude Include="..\..\..\src\orca\base\libuv_cpp11\uv\TimerWheel.h" />
+    <ClInclude Include="..\..\..\src\orca\base\libuv_cpp11\uv\uv11.h" />
+    <ClInclude Include="..\..\..\src\orca\base\queue\BlockQueue.h" />
+    <ClInclude Include="..\..\..\src\orca\base\spinlock\SpinLock.h" />
+    <ClInclude Include="..\..\..\src\orca\base\thread\Thread.h" />
+    <ClInclude Include="..\..\..\src\orca\base\thread\ThreadPool.h" />
+    <ClInclude Include="..\..\..\src\orca\core\Actor.h" />
+    <ClInclude Include="..\..\..\src\orca\core\Address.h" />
+    <ClInclude Include="..\..\..\src\orca\core\Assert.h" />
+    <ClInclude Include="..\..\..\src\orca\core\Define.h" />
+    <ClInclude Include="..\..\..\src\orca\core\EndPoint.h" />
+    <ClInclude Include="..\..\..\src\orca\core\Framework.h" />
+    <ClInclude Include="..\..\..\src\orca\core\Mail.h" />
+    <ClInclude Include="..\..\..\src\orca\core\Mailbox.h" />
+    <ClInclude Include="..\..\..\src\orca\core\MailboxCenter.h" />
+    <ClInclude Include="..\..\..\src\orca\core\MailboxPage.h" />
+    <ClInclude Include="..\..\..\src\orca\core\MailBoxThread.h" />
+    <ClInclude Include="..\..\..\src\orca\core\MessagePack.h" />
+    <ClInclude Include="..\..\..\src\orca\core\MessageTraits.h" />
+    <ClInclude Include="..\..\..\src\orca\core\net\ActorClient.h" />
+    <ClInclude Include="..\..\..\src\orca\core\net\ActorServer.h" />
+    <ClInclude Include="..\..\..\src\orca\core\net\Protocol.h" />
+    <ClInclude Include="..\..\..\src\orca\core\RemoteMail.h" />
+    <ClInclude Include="..\..\..\src\orca\orca.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="..\..\..\lib\libuv\lib\vc2017\Release.x64\libuv.lib" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\examples\errorhandle\errorhandle.cpp" />
+    <ClCompile Include="..\..\..\src\orca\base\condition\Condition.cpp" />
+    <ClCompile Include="..\..\..\src\orca\base\error\ErrorInfo.cpp" />
+    <ClCompile Include="..\..\..\src\orca\base\libuv_cpp11\uv\CycleBuffer.cpp" />
+    <ClCompile Include="..\..\..\src\orca\base\libuv_cpp11\uv\EventLoop.cpp" />
+    <ClCompile Include="..\..\..\src\orca\base\libuv_cpp11\uv\ListBuffer.cpp" />
+    <ClCompile Include="..\..\..\src\orca\base\libuv_cpp11\uv\Packet.cpp" />
+    <ClCompile Include="..\..\..\src\orca\base\libuv_cpp11\uv\Signal.cpp" />
+    <ClCompile Include="..\..\..\src\orca\base\libuv_cpp11\uv\TcpAccepter.cpp" />
+    <ClCompile Include="..\..\..\src\orca\base\libuv_cpp11\uv\TcpClient.cpp" />
+    <ClCompile Include="..\..\..\src\orca\base\libuv_cpp11\uv\TcpConnection.cpp" />
+    <ClCompile Include="..\..\..\src\orca\base\libuv_cpp11\uv\TcpServer.cpp" />
+    <ClCompile Include="..\..\..\src\orca\base\libuv_cpp11\uv\TimerWheel.cpp" />
+    <ClCompile Include="..\..\..\src\orca\base\spinlock\SpinLock.cpp" />
+    <ClCompile Include="..\..\..\src\orca\base\thread\Thread.cpp" />
+    <ClCompile Include="..\..\..\src\orca\base\thread\ThreadPool.cpp" />
+    <ClCompile Include="..\..\..\src\orca\core\MailBoxThread.cpp" />
+    <ClCompile Include="..\..\..\src\orca\core\net\ActorClient.cpp" />
+    <ClCompile Include="..\..\..\src\orca\core\net\ActorServer.cpp" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
