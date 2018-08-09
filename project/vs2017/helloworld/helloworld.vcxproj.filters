@@ -4,9 +4,6 @@
     <Filter Include="example">
       <UniqueIdentifier>{0a4ce002-5bf4-4db7-a7ef-f72bbd3fb885}</UniqueIdentifier>
     </Filter>
-    <Filter Include="lib">
-      <UniqueIdentifier>{67fe3935-5b8e-486a-8902-3f033b9e18ba}</UniqueIdentifier>
-    </Filter>
     <Filter Include="src">
       <UniqueIdentifier>{07e8342c-192d-40db-8f07-5f4b84552919}</UniqueIdentifier>
     </Filter>
@@ -15,9 +12,6 @@
     </Filter>
     <Filter Include="src\orca\base">
       <UniqueIdentifier>{1bd2e513-1bf4-4732-92d9-6f8990358f29}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="lib\libuv">
-      <UniqueIdentifier>{7dac54ef-da0f-480f-86f7-d77cd19beb73}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\orca\core">
       <UniqueIdentifier>{dc5daa72-6ee5-4744-87a1-aa9e5b641e56}</UniqueIdentifier>
@@ -168,11 +162,6 @@
     <ClInclude Include="..\..\..\src\orca\base\condition\Condition.h">
       <Filter>src\orca\base\condition</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <Library Include="..\..\..\lib\libuv\lib\vc2017\Release.x64\libuv.lib">
-      <Filter>lib\libuv</Filter>
-    </Library>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\examples\helloworld\helloworld.cpp.cpp">
