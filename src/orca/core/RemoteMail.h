@@ -101,7 +101,7 @@ inline int RemoteMail<MessageType>::unpack(const char* data, int size)
     {
         index += unPackString(remoteActor_.actorName, &data[index], (size - index));
     }
-    message_ = std::make_shared<MessageType>(&data[index], size - index);
+    message_ = std::make_shared<MessageType>(const_cast<char*>(&data[index]), size - index);
     return 0;
 }
 

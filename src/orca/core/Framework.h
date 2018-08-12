@@ -96,7 +96,7 @@ Framework<MessageType>::Framework(struct FrameworkConfig& config)
     if (nullptr != config.endPointAddress)
     {
         endPoint_ = std::make_shared<EndPoint<MessageType>>(*(config.endPointAddress), uniqueID_);
-        endPoint_->registerRemoteMessage(std::bind(&Framework<MessageType>::onRemoteMessageByName,this,std::placeholders::_1,std::placeholders::_2,std::placeholders::_3),
+        endPoint_->registerRemoteMessage(std::bind(&Framework<MessageType>::onRemoteMessageByName, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3),
             std::bind(&Framework<MessageType>::onRemoteMessageByAddress,this,std::placeholders::_1,std::placeholders::_2,std::placeholders::_3));
     }
     threadPool_.registerPorcess(std::bind(&Framework::process, this));

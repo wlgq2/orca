@@ -88,7 +88,7 @@ inline EndPoint<MessageType>::EndPoint(EndPointAddress & addr, uint32_t id)
 {
     uv::SocketAddr uvaddr(addr.ip, addr.port, static_cast<uv::SocketAddr::IPV>(addr.ipv));
     server_ = std::make_shared<ActorServer>(&loop_, uvaddr, id_,
-        std::bind(&EndPoint<MessageType>::onActorMessage,this,std::placeholders::_1,std::placeholders::_2));
+         std::bind(&EndPoint<MessageType>::onActorMessage, this, std::placeholders::_1, std::placeholders::_2));
     timer_ = new uv::Timer<void*>(&loop_, MessageProcessPeriodMS, MessageProcessPeriodMS,
         [this](uv::Timer<void*>* ,void*)
     {
