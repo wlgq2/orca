@@ -62,6 +62,7 @@ public:
 private:
     uint32_t id_;
     uv::EventLoop loop_;
+    uv::Signal* signal_;
     std::atomic<bool> remoteRegisterCompleted_;
     std::vector<ActorClientPtr> endPoints_;
     std::map<uint32_t, ActorClientPtr> endPointMap_;
@@ -83,6 +84,7 @@ const int EndPoint<MessageType>::MessageProcessPeriodMS = 10;
 template<typename MessageType>
 inline EndPoint<MessageType>::EndPoint(EndPointAddress & addr, uint32_t id)
     :id_(id),
+    signal_(new uv::Signal(&loop_,13)),
     remoteRegisterCompleted_(false),
     timer_(nullptr)
 {
@@ -94,6 +96,11 @@ inline EndPoint<MessageType>::EndPoint(EndPointAddress & addr, uint32_t id)
     {
         processMail();
     }, nullptr);
+    signal_->setHandle([this](int)
+    {
+        //warning.
+        base::ErrorHandle::Instance()->error(base::ErrorInfo::UVSigPipe,"sigpipe");
+    });
 }
 
 template<typename MessageType>
@@ -105,6 +112,12 @@ inline EndPoint<MessageType>::~EndPoint()
         //release timer pointer in loop callback.
         delete timer;
     });
+    auto sig = signal_;
+    signal_->close([sig]()
+    {
+        delete sig;
+    });
+
 }
 
 template<typename MessageType>

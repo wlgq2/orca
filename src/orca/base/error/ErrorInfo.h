@@ -15,6 +15,7 @@ public:
         UVWriteFail = -2048,
         UVConnectFail,
         UVDisconnectFromServer,
+        UVSigPipe,
 
         UndefinedError = -1024,
         NoFindActorName,
