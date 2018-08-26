@@ -83,7 +83,7 @@ void orca::core::ActorClient::reconnect()
         [this](uv::Timer<void*>* timer, void*)
     {
         this->connect();
-        timer->close([](uv::Timer<void*>* timer) 
+        timer->close([](uv::Timer<void*>* timer)
         {
             //release timer in loop callback.
             delete timer; 

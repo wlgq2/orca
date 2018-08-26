@@ -44,7 +44,7 @@ int main(int argc, char** args)
     //actor->actor2(remote) send message.
     actor.send(message,"actor2",1025);
     framework.loop();
-#else  
+#else
     //complie endpoint 2 ±‡“Î∂Àµ„2.
 
     //framework configs.

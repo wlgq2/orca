@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="remoteactormessage" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin/Debug/orca" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+				</Compiler>
+			</Target>
+			<Target title="Release">
+				<Option output="bin/Release/orca" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-std=c++11" />
+			<Add option="-Wall" />
+			<Add directory="../../../lib/libuv1.22.0/include" />
+			<Add directory="../../../src" />
+		</Compiler>
+		<Linker>
+			<Add option="-pthread" />
+			<Add library="../../../lib/libuv1.22.0/lib/gcc5 .5.0/libuv.a" />
+		</Linker>
+		<Unit filename="../../../examples/remoteActorMessage/MessageType.h" />
+		<Unit filename="../../../examples/remoteActorMessage/main.cpp" />
+		<Unit filename="../../../src/orca/base/SpinLock/SpinLock.cpp" />
+		<Unit filename="../../../src/orca/base/SpinLock/SpinLock.h" />
+		<Unit filename="../../../src/orca/base/condition/Condition.cpp" />
+		<Unit filename="../../../src/orca/base/condition/Condition.h" />
+		<Unit filename="../../../src/orca/base/error/ErrorHandle.h" />
+		<Unit filename="../../../src/orca/base/error/ErrorInfo.cpp" />
+		<Unit filename="../../../src/orca/base/error/ErrorInfo.h" />
+		<Unit filename="../../../src/orca/base/libuv_cpp11/uv/Async.h" />
+		<Unit filename="../../../src/orca/base/libuv_cpp11/uv/CycleBuffer.cpp" />
+		<Unit filename="../../../src/orca/base/libuv_cpp11/uv/CycleBuffer.h" />
+		<Unit filename="../../../src/orca/base/libuv_cpp11/uv/EventLoop.cpp" />
+		<Unit filename="../../../src/orca/base/libuv_cpp11/uv/EventLoop.h" />
+		<Unit filename="../../../src/orca/base/libuv_cpp11/uv/ListBuffer.cpp" />
+		<Unit filename="../../../src/orca/base/libuv_cpp11/uv/ListBuffer.h" />
+		<Unit filename="../../../src/orca/base/libuv_cpp11/uv/LogInterface.h" />
+		<Unit filename="../../../src/orca/base/libuv_cpp11/uv/Packet.cpp" />
+		<Unit filename="../../../src/orca/base/libuv_cpp11/uv/Packet.h" />
+		<Unit filename="../../../src/orca/base/libuv_cpp11/uv/PacketBuffer.h" />
+		<Unit filename="../../../src/orca/base/libuv_cpp11/uv/Signal.cpp" />
+		<Unit filename="../../../src/orca/base/libuv_cpp11/uv/Signal.h" />
+		<Unit filename="../../../src/orca/base/libuv_cpp11/uv/SocketAddr.h" />
+		<Unit filename="../../../src/orca/base/libuv_cpp11/uv/TcpAccepter.cpp" />
+		<Unit filename="../../../src/orca/base/libuv_cpp11/uv/TcpAccepter.h" />
+		<Unit filename="../../../src/orca/base/libuv_cpp11/uv/TcpClient.cpp" />
+		<Unit filename="../../../src/orca/base/libuv_cpp11/uv/TcpClient.h" />
+		<Unit filename="../../../src/orca/base/libuv_cpp11/uv/TcpConnection.cpp" />
+		<Unit filename="../../../src/orca/base/libuv_cpp11/uv/TcpConnection.h" />
+		<Unit filename="../../../src/orca/base/libuv_cpp11/uv/TcpServer.cpp" />
+		<Unit filename="../../../src/orca/base/libuv_cpp11/uv/TcpServer.h" />
+		<Unit filename="../../../src/orca/base/libuv_cpp11/uv/Timer.h" />
+		<Unit filename="../../../src/orca/base/libuv_cpp11/uv/TimerWheel.cpp" />
+		<Unit filename="../../../src/orca/base/libuv_cpp11/uv/TimerWheel.h" />
+		<Unit filename="../../../src/orca/base/libuv_cpp11/uv/uv11.h" />
+		<Unit filename="../../../src/orca/base/log/Log.h" />
+		<Unit filename="../../../src/orca/base/queue/BlockQueue.h" />
+		<Unit filename="../../../src/orca/base/thread/Thread.cpp" />
+		<Unit filename="../../../src/orca/base/thread/Thread.h" />
+		<Unit filename="../../../src/orca/base/thread/ThreadPool.cpp" />
+		<Unit filename="../../../src/orca/base/thread/ThreadPool.h" />
+		<Unit filename="../../../src/orca/core/Actor.h" />
+		<Unit filename="../../../src/orca/core/Address.h" />
+		<Unit filename="../../../src/orca/core/Assert.h" />
+		<Unit filename="../../../src/orca/core/Define.h" />
+		<Unit filename="../../../src/orca/core/EndPoint.h" />
+		<Unit filename="../../../src/orca/core/Framework.h" />
+		<Unit filename="../../../src/orca/core/Mail.h" />
+		<Unit filename="../../../src/orca/core/MailBoxThread.cpp" />
+		<Unit filename="../../../src/orca/core/MailBoxThread.h" />
+		<Unit filename="../../../src/orca/core/Mailbox.h" />
+		<Unit filename="../../../src/orca/core/MailboxCenter.h" />
+		<Unit filename="../../../src/orca/core/MailboxPage.h" />
+		<Unit filename="../../../src/orca/core/MessagePack.h" />
+		<Unit filename="../../../src/orca/core/MessageTraits.h" />
+		<Unit filename="../../../src/orca/core/RemoteMail.h" />
+		<Unit filename="../../../src/orca/core/net/ActorClient.cpp" />
+		<Unit filename="../../../src/orca/core/net/ActorClient.h" />
+		<Unit filename="../../../src/orca/core/net/ActorServer.cpp" />
+		<Unit filename="../../../src/orca/core/net/ActorServer.h" />
+		<Unit filename="../../../src/orca/core/net/Protocol.h" />
+		<Extensions>
+			<code_completion />
+			<debugger />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

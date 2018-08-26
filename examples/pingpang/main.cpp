@@ -10,6 +10,7 @@ public:
     ActorTest(orca::Framework* framework,std::string name = "")
         :Actor(framework, name)
     {
+        clearCnt();
         registerHandler(std::bind(&ActorTest::handle,this,std::placeholders::_1,std::placeholders::_2));
     }
     void handle(orca::MessagePack& pack, orca::Address& from)
@@ -43,7 +44,7 @@ int main(int argc, char** args)
 
     //actor1->actor2 send message.
     actor1.send(message,actor2.getAddress());
-    
+
     //new thread count.
     std::thread t1([&actor2]()
     {

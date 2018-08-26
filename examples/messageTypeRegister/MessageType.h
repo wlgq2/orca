@@ -10,12 +10,12 @@ public:
     {
         if (size > Size)
             size = Size;
-        memcpy(message, str, size);
+        std::copy(str, str+size,message);
     }
     ~MyMessage()
     {
     }
-  
+
     const unsigned long size()
     {
         return Size;
@@ -29,7 +29,7 @@ private:
     static const int Size = 1024;
     char message[Size];
 };
-                         
+
 //registet messge type.注册自定义消息类型。
 REGISTER_MESSAGE_TYPE(MyMessage);
 
