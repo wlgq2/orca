@@ -1,5 +1,5 @@
 # orca
-<br>A actor framework base on c++11/14.</br>
+A actor framework base on c++11/14.
 <br>一个C++11/14风格的actor库。</br>
 <br>接口上参考过Theron库，实现上避开了Theron相关不合理实现及一些可复现的bug，ping-pong测试性能优于Theron和CAF。</br>
 ## Dependent
