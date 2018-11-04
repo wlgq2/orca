@@ -8,7 +8,7 @@ A actor framework base on c++11/14.
 Linux：提供codebolcks工程与cmake编译环境；
 <br>Windows：通过Visual Studios2017编译工程。</br>
 ## Testing
-<br>本地消息测试：</br>
+本地消息测试：
 
  local message | Theron|CAF|orca|
 :---------:|:--------:|:--------:|:--------:|
