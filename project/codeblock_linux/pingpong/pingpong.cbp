@@ -2,7 +2,7 @@
 <CodeBlocks_project_file>
 	<FileVersion major="1" minor="6" />
 	<Project>
-		<Option title="pingpang" />
+		<Option title="pingpong" />
 		<Option pch_mode="2" />
 		<Option compiler="gcc" />
 		<Build>
@@ -38,8 +38,8 @@
 			<Add option="-pthread" />
 			<Add library="../../../lib/libuv1.22.0/lib/gcc5 .5.0/libuv.a" />
 		</Linker>
-		<Unit filename="../../../examples/pingpang/MessageType.h" />
-		<Unit filename="../../../examples/pingpang/main.cpp" />
+		<Unit filename="../../../examples/pingpong/MessageType.h" />
+		<Unit filename="../../../examples/pingpong/main.cpp" />
 		<Unit filename="../../../src/orca/base/SpinLock/SpinLock.cpp" />
 		<Unit filename="../../../src/orca/base/SpinLock/SpinLock.h" />
 		<Unit filename="../../../src/orca/base/condition/Condition.cpp" />
@@ -102,6 +102,7 @@
 		<Extensions>
 			<code_completion />
 			<debugger />
+			<envvars />
 		</Extensions>
 	</Project>
 </CodeBlocks_project_file>

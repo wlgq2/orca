@@ -162,7 +162,7 @@
     <ClInclude Include="..\..\..\src\orca\base\condition\Condition.h">
       <Filter>src\orca\base\condition</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\examples\pingpang\MessageType.h">
+    <ClInclude Include="..\..\..\examples\pingpong\MessageType.h">
       <Filter>example</Filter>
     </ClInclude>
   </ItemGroup>
@@ -221,7 +221,7 @@
     <ClCompile Include="..\..\..\src\orca\base\condition\Condition.cpp">
       <Filter>src\orca\base\condition</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\examples\pingpang\main.cpp">
+    <ClCompile Include="..\..\..\examples\pingpong\main.cpp">
       <Filter>example</Filter>
     </ClCompile>
   </ItemGroup>

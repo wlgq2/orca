@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.14
+VisualStudioVersion = 15.0.26730.15
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "helloworld", "helloworld\helloworld.vcxproj", "{F48247E6-F77D-452A-9B2F-DE8A14082C5A}"
 EndProject
@@ -9,11 +9,11 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SendByName", "SendByName\Se
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MessageTypeRegister", "MessageTypeRegister\MessageTypeRegister.vcxproj", "{C9FC9B41-614B-4F69-98BC-FA3F96D64634}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "pingpang", "pingpang\pingpang.vcxproj", "{EB646E6C-DEED-4310-A7D0-93143BBD6A9E}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "errorhandle", "errorhandle\errorhandle.vcxproj", "{38917F0F-6E28-4B03-AAE2-5AD9347CF1D1}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RemoteActorMessage", "RemoteActorMessage\RemoteActorMessage.vcxproj", "{52BB6E2E-43CA-4108-8912-1E435A23C30C}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "pingpong", "pingpong\pingpong.vcxproj", "{EB646E6C-DEED-4310-A7D0-93143BBD6A9E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -47,14 +47,6 @@ Global
 		{C9FC9B41-614B-4F69-98BC-FA3F96D64634}.Release|x64.Build.0 = Release|x64
 		{C9FC9B41-614B-4F69-98BC-FA3F96D64634}.Release|x86.ActiveCfg = Release|Win32
 		{C9FC9B41-614B-4F69-98BC-FA3F96D64634}.Release|x86.Build.0 = Release|Win32
-		{EB646E6C-DEED-4310-A7D0-93143BBD6A9E}.Debug|x64.ActiveCfg = Debug|x64
-		{EB646E6C-DEED-4310-A7D0-93143BBD6A9E}.Debug|x64.Build.0 = Debug|x64
-		{EB646E6C-DEED-4310-A7D0-93143BBD6A9E}.Debug|x86.ActiveCfg = Debug|Win32
-		{EB646E6C-DEED-4310-A7D0-93143BBD6A9E}.Debug|x86.Build.0 = Debug|Win32
-		{EB646E6C-DEED-4310-A7D0-93143BBD6A9E}.Release|x64.ActiveCfg = Release|x64
-		{EB646E6C-DEED-4310-A7D0-93143BBD6A9E}.Release|x64.Build.0 = Release|x64
-		{EB646E6C-DEED-4310-A7D0-93143BBD6A9E}.Release|x86.ActiveCfg = Release|Win32
-		{EB646E6C-DEED-4310-A7D0-93143BBD6A9E}.Release|x86.Build.0 = Release|Win32
 		{38917F0F-6E28-4B03-AAE2-5AD9347CF1D1}.Debug|x64.ActiveCfg = Debug|x64
 		{38917F0F-6E28-4B03-AAE2-5AD9347CF1D1}.Debug|x64.Build.0 = Debug|x64
 		{38917F0F-6E28-4B03-AAE2-5AD9347CF1D1}.Debug|x86.ActiveCfg = Debug|Win32
@@ -71,6 +63,14 @@ Global
 		{52BB6E2E-43CA-4108-8912-1E435A23C30C}.Release|x64.Build.0 = Release|x64
 		{52BB6E2E-43CA-4108-8912-1E435A23C30C}.Release|x86.ActiveCfg = Release|Win32
 		{52BB6E2E-43CA-4108-8912-1E435A23C30C}.Release|x86.Build.0 = Release|Win32
+		{EB646E6C-DEED-4310-A7D0-93143BBD6A9E}.Debug|x64.ActiveCfg = Debug|x64
+		{EB646E6C-DEED-4310-A7D0-93143BBD6A9E}.Debug|x64.Build.0 = Debug|x64
+		{EB646E6C-DEED-4310-A7D0-93143BBD6A9E}.Debug|x86.ActiveCfg = Debug|Win32
+		{EB646E6C-DEED-4310-A7D0-93143BBD6A9E}.Debug|x86.Build.0 = Debug|Win32
+		{EB646E6C-DEED-4310-A7D0-93143BBD6A9E}.Release|x64.ActiveCfg = Release|x64
+		{EB646E6C-DEED-4310-A7D0-93143BBD6A9E}.Release|x64.Build.0 = Release|x64
+		{EB646E6C-DEED-4310-A7D0-93143BBD6A9E}.Release|x86.ActiveCfg = Release|Win32
+		{EB646E6C-DEED-4310-A7D0-93143BBD6A9E}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
