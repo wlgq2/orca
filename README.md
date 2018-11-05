@@ -18,7 +18,7 @@ Linux：提供codebolcks工程与cmake编译环境；
 
 <br>远程消息测试：</br>
 
- local message | Theron|CAF|orca|
+ remote message | Theron|CAF|orca|
 :---------:|:--------:|:--------:|:--------:|
 1K字节(次/秒)    | / |/|/|
 2K字节(次/秒)    | / |/|/|
