@@ -4,6 +4,7 @@ A actor framework base on c++11/14.
 <br>接口上参考过Theron库，实现上避开了Theron相关不合理实现及一些可复现的bug，ping-pong测试性能优于Theron和CAF。</br>
 ## Dependent
 网络部分基于libuv，项目中提供libuv1.22.0 gcc5.5.0及visual studio 2017编译的版本，如需其他版本则需要自己编译libuv。
+<br>C++封装了一层libuv：https://github.com/wlgq2/libuv_cpp11</br>
 ## Build
 Linux：提供codebolcks工程与cmake编译环境；
 <br>Windows：通过Visual Studios2017编译工程。</br>
