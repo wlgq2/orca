@@ -31,4 +31,4 @@ Linux：提供codebolcks工程与cmake编译环境；
 注：Theron的网络部分用非阻塞+轮询实现，所以性能很差。
 ```
 ## How To Use
-* Read Wiki for documents https://github.com/wlgq2/orca/wiki
+* 阅读Wiki： https://github.com/wlgq2/orca/wiki
