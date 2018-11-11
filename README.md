@@ -32,3 +32,4 @@ Linux：提供codebolcks工程与cmake编译环境；
 ```
 ## How To Use
 * 阅读Wiki： https://github.com/wlgq2/orca/wiki
+* 使用简介： https://segmentfault.com/blog/wlgq2
