@@ -224,5 +224,8 @@
     <ClCompile Include="..\..\..\examples\remoteActorMessage\main.cpp">
       <Filter>example</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\src\orca\base\libuv_cpp11\uv\Async.cpp">
+      <Filter>src\orca\base\uv</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

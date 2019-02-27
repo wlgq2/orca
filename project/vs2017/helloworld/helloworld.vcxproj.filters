@@ -221,5 +221,8 @@
     <ClCompile Include="..\..\..\src\orca\base\condition\Condition.cpp">
       <Filter>src\orca\base\condition</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\src\orca\base\libuv_cpp11\uv\Async.cpp">
+      <Filter>src\orca\base\uv</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

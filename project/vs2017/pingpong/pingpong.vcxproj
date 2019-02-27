@@ -182,6 +182,7 @@
     <ClCompile Include="..\..\..\examples\pingpong\main.cpp" />
     <ClCompile Include="..\..\..\src\orca\base\condition\Condition.cpp" />
     <ClCompile Include="..\..\..\src\orca\base\error\ErrorInfo.cpp" />
+    <ClCompile Include="..\..\..\src\orca\base\libuv_cpp11\uv\Async.cpp" />
     <ClCompile Include="..\..\..\src\orca\base\libuv_cpp11\uv\CycleBuffer.cpp" />
     <ClCompile Include="..\..\..\src\orca\base\libuv_cpp11\uv\EventLoop.cpp" />
     <ClCompile Include="..\..\..\src\orca\base\libuv_cpp11\uv\ListBuffer.cpp" />

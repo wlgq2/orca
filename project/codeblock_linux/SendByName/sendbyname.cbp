@@ -46,6 +46,7 @@
 		<Unit filename="../../../src/orca/base/error/ErrorHandle.h" />
 		<Unit filename="../../../src/orca/base/error/ErrorInfo.cpp" />
 		<Unit filename="../../../src/orca/base/error/ErrorInfo.h" />
+		<Unit filename="../../../src/orca/base/libuv_cpp11/uv/Async.cpp" />
 		<Unit filename="../../../src/orca/base/libuv_cpp11/uv/Async.h" />
 		<Unit filename="../../../src/orca/base/libuv_cpp11/uv/CycleBuffer.cpp" />
 		<Unit filename="../../../src/orca/base/libuv_cpp11/uv/CycleBuffer.h" />
