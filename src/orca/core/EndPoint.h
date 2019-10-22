@@ -4,7 +4,7 @@
 #include <string>
 #include <vector>
 #include <queue>
-#include "../base/libuv_cpp11/uv/uv11.h"
+#include "../base/uv-cpp/uv/uv11.h"
 #include "../base/thread/Thread.h"
 #include "net/ActorClient.h"
 #include "net/ActorServer.h"
@@ -62,12 +62,13 @@ public:
 private:
     uint32_t id_;
     uv::EventLoop loop_;
+    EndPointAddress addr_;
     uv::Signal* signal_;
     std::atomic<bool> remoteRegisterCompleted_;
     std::vector<ActorClientPtr> endPoints_;
     std::map<uint32_t, ActorClientPtr> endPointMap_;
     std::shared_ptr<ActorServer> server_;
-    uv::Timer<void*>* timer_;
+    uv::Timer* timer_;
     std::queue<RemoteMailPtr> sendCache_;
 
     //void onActorMessageCallback_;
@@ -82,20 +83,20 @@ template<typename MessageType>
 const int EndPoint<MessageType>::MessageProcessPeriodMS = 10;
 
 template<typename MessageType>
-inline EndPoint<MessageType>::EndPoint(EndPointAddress & addr, uint32_t id)
+inline EndPoint<MessageType>::EndPoint(EndPointAddress& addr, uint32_t id)
     :id_(id),
+    addr_(addr),
     signal_(new uv::Signal(&loop_,13)),
     remoteRegisterCompleted_(false),
     timer_(nullptr)
 {
-    uv::SocketAddr uvaddr(addr.ip, addr.port, static_cast<uv::SocketAddr::IPV>(addr.ipv));
-    server_ = std::make_shared<ActorServer>(&loop_, uvaddr, id_,
+    server_ = std::make_shared<ActorServer>(&loop_, id_,
          std::bind(&EndPoint<MessageType>::onActorMessage, this, std::placeholders::_1, std::placeholders::_2));
-    timer_ = new uv::Timer<void*>(&loop_, MessageProcessPeriodMS, MessageProcessPeriodMS,
-        [this](uv::Timer<void*>* ,void*)
+    timer_ = new uv::Timer(&loop_, MessageProcessPeriodMS, MessageProcessPeriodMS,
+        [this](uv::Timer*)
     {
         processMail();
-    }, nullptr);
+    });
     signal_->setHandle([this](int)
     {
         //warning.
@@ -107,7 +108,7 @@ template<typename MessageType>
 inline EndPoint<MessageType>::~EndPoint()
 {
     timer_->close(
-        [](uv::Timer<void*>* timer)
+        [](uv::Timer* timer)
     {
         //release timer pointer in loop callback.
         delete timer;
@@ -129,7 +130,8 @@ inline void EndPoint<MessageType>::run()
         (*it)->connect();
     }
 
-    server_->start();
+    uv::SocketAddr uvaddr(addr_.ip, addr_.port, static_cast<uv::SocketAddr::IPV>(addr_.ipv));
+    server_->bindAndListen(uvaddr);
     timer_->start();
     loop_.run();
 }
@@ -216,7 +218,7 @@ inline void EndPoint<MessageType>::processMail()
 {
     //only run in loop thread.
     ORCA_ASSERT_MSG(loop_.isRunInLoopThread(),"remote message process can only run in uv loop thread.");
-    int size = sendCache_.size();
+    int size = (int)(sendCache_.size());
     for (int i = 0; i < size; i++)
     {
         auto message = sendCache_.front();

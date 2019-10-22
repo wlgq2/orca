@@ -2,7 +2,7 @@
 #define    ORCA_ACTOR_CLIENT_H
 
 #include <memory>
-#include  "../../base/libuv_cpp11/uv/uv11.h"
+#include  "../../base/uv-cpp/uv/uv11.h"
 
 namespace orca
 {
@@ -19,8 +19,7 @@ public:
 
     void setRegisterRemoteFrameworkCallback(OnRegisterRemoteFramework callback);
     void connect();
-    void onConnect(bool isSuccessed);
-    void onDisconnect();
+    void onConnectStatus(uv::TcpClient::ConnectStatus status);
     void onMessage(const char* data, ssize_t size);
 
     static const int ReconectTimeMS;
@@ -30,7 +29,7 @@ public:
 private:
     uv::SocketAddr addr_;
     bool isConenected_;
-    uv::Timer<void*>* timer_;
+    uv::Timer* timer_;
     uint32_t localId_;
     int remoteId_;
     int cnt_;
@@ -38,7 +37,7 @@ private:
 
 private:
     void reconnect();
-    void heartbeat(uv::Timer<void*>*,void*);
+    void heartbeat(uv::Timer*);
 
 };
 using ActorClientPtr = std::shared_ptr<ActorClient>;

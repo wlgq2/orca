@@ -39,7 +39,7 @@ int main(int argc, char** args)
     //message pack.
     char data[] = "a message from remote actor";
     orca::MessagePack message;
-    message.create(data,sizeof(data));
+    message.create(data,(int)sizeof(data));
 
     //actor->actor2(remote) send message.
     actor.send(message,"actor2",1025);

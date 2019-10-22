@@ -196,7 +196,7 @@ inline int RemoteMail<MessageType>::unPackAddress(struct Address& addr, const ch
 template<typename MessageType>
 inline int RemoteMail<MessageType>::packString(std::string& name, char* data)
 {
-    int strSize = remoteActor_.actorName.size();
+    int strSize = (int)remoteActor_.actorName.size();
     if (strSize > 255)
     {
         base::ErrorHandle::Instance()->error(base::ErrorInfo::ActorNameTooLong, std::string("actor's name more than 512 bytes:") + remoteActor_.actorName);
@@ -225,7 +225,7 @@ inline int RemoteMail<MessageType>::unPackString(std::string& name, const char* 
 template<typename MessageType>
 inline int RemoteMail<MessageType>::extendSize()
 {
-    int size = 0;
+    size_t size = 0;
     if (indexMode_ == ByName)
     {
         size = sizeof(char) +sizeof(from_) +sizeof(char) + remoteActor_.actorName.size() ;
@@ -234,7 +234,7 @@ inline int RemoteMail<MessageType>::extendSize()
     {
         size = sizeof(char) + sizeof(from_) + sizeof(to_) ;
     }
-    return size;
+    return (int)size;
 }
 
 }

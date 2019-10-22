@@ -8,8 +8,8 @@ using namespace std;
 
 const int ActorServer::HeartTimeOutSecend = 120;
 
-ActorServer::ActorServer(uv::EventLoop* loop, uv::SocketAddr& addr, uint32_t id, OnActorMeessageCallback callback)
-    :uv::TcpServer(loop,addr),
+ActorServer::ActorServer(uv::EventLoop* loop, uint32_t id, OnActorMeessageCallback callback)
+    :uv::TcpServer(loop),
     id_(id),
     onActorMessageCallback_(callback)
 {

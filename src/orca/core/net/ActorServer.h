@@ -4,7 +4,7 @@
 #include <map>
 #include <memory>
 
-#include  "../../base/libuv_cpp11/uv/uv11.h"
+#include  "../../base/uv-cpp/uv/uv11.h"
 
 namespace orca
 {
@@ -15,7 +15,7 @@ using OnActorMeessageCallback = std::function<void(const char*, int)>;
 class ActorServer : public uv::TcpServer
 {
 public:
-    ActorServer(uv::EventLoop* loop,uv::SocketAddr& addr,uint32_t id, OnActorMeessageCallback callback);
+    ActorServer(uv::EventLoop* loop,uint32_t id, OnActorMeessageCallback callback);
     void onMessage(std::shared_ptr<uv::TcpConnection>connection, const char* data, ssize_t size);
     static const int HeartTimeOutSecend;
 

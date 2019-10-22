@@ -40,7 +40,7 @@ int main(int argc, char** args)
     //message pack.
     char data[1024] = "1k ping-pang message";
     orca::MessagePack message;
-    message.create(data,sizeof(data));
+    message.create(data,(int)sizeof(data));
 
     //actor1->actor2 send message.
     actor1.send(message,actor2.getAddress());

@@ -1,16 +1,16 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
 
 PROJECT(orca)
-SET(VERSION 1.0.0.0)
+SET(VERSION 1.0.0)
 
 
 SET(LIB_DIRECTORY
-    ${PROJECT_SOURCE_DIR}/lib/libuv1.22.0/lib/gcc5.5.0/)
+    ${PROJECT_SOURCE_DIR}/lib/libuv1.22.0/lib/gcc7.4.0/)
 
 SET(SOURCE_DIRECTORY
     ${PROJECT_SOURCE_DIR}/src/orca/base/condition/
     ${PROJECT_SOURCE_DIR}/src/orca/base/error/
-    ${PROJECT_SOURCE_DIR}/src/orca/base/libuv_cpp11/uv/
+    ${PROJECT_SOURCE_DIR}/src/orca/base/uv-cpp/uv/
     ${PROJECT_SOURCE_DIR}/src/orca/base/queue/
     ${PROJECT_SOURCE_DIR}/src/orca/base/SpinLock/
     ${PROJECT_SOURCE_DIR}/src/orca/base/thread/
@@ -20,14 +20,7 @@ SET(SOURCE_DIRECTORY
     
 SET(INCLUDE_DIRECTORY
     ${PROJECT_SOURCE_DIR}/lib/libuv1.22.0/include/
-    ${PROJECT_SOURCE_DIR}/src/orca/base/condition/
-    ${PROJECT_SOURCE_DIR}/src/orca/base/error/
-    ${PROJECT_SOURCE_DIR}/src/orca/base/libuv_cpp11/uv/
-    ${PROJECT_SOURCE_DIR}/src/orca/base/queue/
-    ${PROJECT_SOURCE_DIR}/src/orca/base/SpinLock/
-    ${PROJECT_SOURCE_DIR}/src/orca/base/thread/
-    ${PROJECT_SOURCE_DIR}/src/orca/core/
-    ${PROJECT_SOURCE_DIR}/src/orca/core/net/
+    ${PROJECT_SOURCE_DIR}/
     )
     
 SET(OUTPUT_DIR 
