@@ -14,7 +14,7 @@
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{6F177171-15F8-495B-9190-94C8AF22CA9D}</ProjectGuid>
     <RootNamespace>helloworld</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.10240.0</WindowsTargetPlatformVersion>
     <ProjectName>SendByName</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -49,13 +49,13 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>../../../src;../../../lib/libuv1.22.0/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <ConformanceMode>false</ConformanceMode>
+      <AdditionalIncludeDirectories>../../../src;../../../uv-cpp/libuv1.30.0/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_SCL_SECURE_NO_WARNINGS;_CRT_SECURE_NO_WARNINGS;_WINSOCK_DEPRECATED_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <AdditionalDependencies>libuv.lib;ws2_32.lib;Psapi.lib;userenv.lib;Iphlpapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>../../../lib/libuv1.22.0/lib/vc2017/x64_Debug</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>../../../uv-cpp/libuv1.30.0/lib/win_sdk10.0.10240/Debug</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -65,15 +65,15 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>../../../src;../../../lib/libuv1.22.0/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <ConformanceMode>false</ConformanceMode>
+      <AdditionalIncludeDirectories>../../../src;../../../uv-cpp/libuv1.30.0/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_SCL_SECURE_NO_WARNINGS;_CRT_SECURE_NO_WARNINGS;_WINSOCK_DEPRECATED_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalDependencies>libuv.lib;ws2_32.lib;Psapi.lib;userenv.lib;Iphlpapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>../../../lib/libuv1.22.0/lib/vc2017/x64_Release</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>../../../uv-cpp/libuv1.30.0/lib/win_sdk10.0.10240/Release</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -84,24 +84,6 @@
     <ClInclude Include="..\..\..\src\orca\base\spinlock\SpinLock.h" />
     <ClInclude Include="..\..\..\src\orca\base\thread\Thread.h" />
     <ClInclude Include="..\..\..\src\orca\base\thread\ThreadPool.h" />
-    <ClInclude Include="..\..\..\src\orca\base\uv-cpp\uv\Async.h" />
-    <ClInclude Include="..\..\..\src\orca\base\uv-cpp\uv\CycleBuffer.h" />
-    <ClInclude Include="..\..\..\src\orca\base\uv-cpp\uv\EventLoop.h" />
-    <ClInclude Include="..\..\..\src\orca\base\uv-cpp\uv\Idle.h" />
-    <ClInclude Include="..\..\..\src\orca\base\uv-cpp\uv\ListBuffer.h" />
-    <ClInclude Include="..\..\..\src\orca\base\uv-cpp\uv\LogWriter.h" />
-    <ClInclude Include="..\..\..\src\orca\base\uv-cpp\uv\Packet.h" />
-    <ClInclude Include="..\..\..\src\orca\base\uv-cpp\uv\PacketBuffer.h" />
-    <ClInclude Include="..\..\..\src\orca\base\uv-cpp\uv\Signal.h" />
-    <ClInclude Include="..\..\..\src\orca\base\uv-cpp\uv\SocketAddr.h" />
-    <ClInclude Include="..\..\..\src\orca\base\uv-cpp\uv\TcpAccepter.h" />
-    <ClInclude Include="..\..\..\src\orca\base\uv-cpp\uv\TcpClient.h" />
-    <ClInclude Include="..\..\..\src\orca\base\uv-cpp\uv\TcpConnection.h" />
-    <ClInclude Include="..\..\..\src\orca\base\uv-cpp\uv\TcpServer.h" />
-    <ClInclude Include="..\..\..\src\orca\base\uv-cpp\uv\Timer.h" />
-    <ClInclude Include="..\..\..\src\orca\base\uv-cpp\uv\TimerWheel.h" />
-    <ClInclude Include="..\..\..\src\orca\base\uv-cpp\uv\Udp.h" />
-    <ClInclude Include="..\..\..\src\orca\base\uv-cpp\uv\uv11.h" />
     <ClInclude Include="..\..\..\src\orca\core\Actor.h" />
     <ClInclude Include="..\..\..\src\orca\core\Address.h" />
     <ClInclude Include="..\..\..\src\orca\core\Assert.h" />
@@ -118,6 +100,7 @@
     <ClInclude Include="..\..\..\src\orca\core\net\ActorClient.h" />
     <ClInclude Include="..\..\..\src\orca\core\net\ActorServer.h" />
     <ClInclude Include="..\..\..\src\orca\core\net\Protocol.h" />
+    <ClInclude Include="..\..\..\src\orca\core\net\TcpPacket.h" />
     <ClInclude Include="..\..\..\src\orca\core\RemoteMail.h" />
     <ClInclude Include="..\..\..\src\orca\orca.h" />
   </ItemGroup>
@@ -128,25 +111,32 @@
     <ClCompile Include="..\..\..\src\orca\base\spinlock\SpinLock.cpp" />
     <ClCompile Include="..\..\..\src\orca\base\thread\Thread.cpp" />
     <ClCompile Include="..\..\..\src\orca\base\thread\ThreadPool.cpp" />
-    <ClCompile Include="..\..\..\src\orca\base\uv-cpp\uv\Async.cpp" />
-    <ClCompile Include="..\..\..\src\orca\base\uv-cpp\uv\CycleBuffer.cpp" />
-    <ClCompile Include="..\..\..\src\orca\base\uv-cpp\uv\EventLoop.cpp" />
-    <ClCompile Include="..\..\..\src\orca\base\uv-cpp\uv\Idle.cpp" />
-    <ClCompile Include="..\..\..\src\orca\base\uv-cpp\uv\ListBuffer.cpp" />
-    <ClCompile Include="..\..\..\src\orca\base\uv-cpp\uv\LogWriter.cpp" />
-    <ClCompile Include="..\..\..\src\orca\base\uv-cpp\uv\Packet.cpp" />
-    <ClCompile Include="..\..\..\src\orca\base\uv-cpp\uv\Signal.cpp" />
-    <ClCompile Include="..\..\..\src\orca\base\uv-cpp\uv\SocketAddr.cpp" />
-    <ClCompile Include="..\..\..\src\orca\base\uv-cpp\uv\TcpAccepter.cpp" />
-    <ClCompile Include="..\..\..\src\orca\base\uv-cpp\uv\TcpClient.cpp" />
-    <ClCompile Include="..\..\..\src\orca\base\uv-cpp\uv\TcpConnection.cpp" />
-    <ClCompile Include="..\..\..\src\orca\base\uv-cpp\uv\TcpServer.cpp" />
-    <ClCompile Include="..\..\..\src\orca\base\uv-cpp\uv\Timer.cpp" />
-    <ClCompile Include="..\..\..\src\orca\base\uv-cpp\uv\TimerWheel.cpp" />
-    <ClCompile Include="..\..\..\src\orca\base\uv-cpp\uv\Udp.cpp" />
     <ClCompile Include="..\..\..\src\orca\core\MailBoxThread.cpp" />
     <ClCompile Include="..\..\..\src\orca\core\net\ActorClient.cpp" />
     <ClCompile Include="..\..\..\src\orca\core\net\ActorServer.cpp" />
+    <ClCompile Include="..\..\..\src\orca\core\net\TcpPacket.cpp" />
+    <ClCompile Include="..\..\..\uv-cpp\uv\Async.cpp" />
+    <ClCompile Include="..\..\..\uv-cpp\uv\CycleBuffer.cpp" />
+    <ClCompile Include="..\..\..\uv-cpp\uv\DnsGet.cpp" />
+    <ClCompile Include="..\..\..\uv-cpp\uv\EventLoop.cpp" />
+    <ClCompile Include="..\..\..\uv-cpp\uv\GlobalConfig.cpp" />
+    <ClCompile Include="..\..\..\uv-cpp\uv\http\HttpClient.cpp" />
+    <ClCompile Include="..\..\..\uv-cpp\uv\http\HttpCommon.cpp" />
+    <ClCompile Include="..\..\..\uv-cpp\uv\http\HttpServer.cpp" />
+    <ClCompile Include="..\..\..\uv-cpp\uv\http\Request.cpp" />
+    <ClCompile Include="..\..\..\uv-cpp\uv\http\Response.cpp" />
+    <ClCompile Include="..\..\..\uv-cpp\uv\Idle.cpp" />
+    <ClCompile Include="..\..\..\uv-cpp\uv\ListBuffer.cpp" />
+    <ClCompile Include="..\..\..\uv-cpp\uv\LogWriter.cpp" />
+    <ClCompile Include="..\..\..\uv-cpp\uv\Packet.cpp" />
+    <ClCompile Include="..\..\..\uv-cpp\uv\Signal.cpp" />
+    <ClCompile Include="..\..\..\uv-cpp\uv\SocketAddr.cpp" />
+    <ClCompile Include="..\..\..\uv-cpp\uv\TcpAccepter.cpp" />
+    <ClCompile Include="..\..\..\uv-cpp\uv\TcpClient.cpp" />
+    <ClCompile Include="..\..\..\uv-cpp\uv\TcpConnection.cpp" />
+    <ClCompile Include="..\..\..\uv-cpp\uv\TcpServer.cpp" />
+    <ClCompile Include="..\..\..\uv-cpp\uv\Timer.cpp" />
+    <ClCompile Include="..\..\..\uv-cpp\uv\Udp.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

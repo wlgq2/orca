@@ -31,14 +31,14 @@
     <Filter Include="src\orca\base\thread">
       <UniqueIdentifier>{de945575-feff-4ab8-b735-3dff17137836}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\orca\base\uv">
-      <UniqueIdentifier>{e501e1ba-18ca-41d4-a28c-cef5768bcc68}</UniqueIdentifier>
-    </Filter>
     <Filter Include="src\orca\core\net">
       <UniqueIdentifier>{6c9df7f0-92f1-41ce-aad0-11ca7b10cc2f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\orca\base\uv\http">
-      <UniqueIdentifier>{d6a2d088-e7fd-4b63-b0e5-a6df41f905f8}</UniqueIdentifier>
+    <Filter Include="uv">
+      <UniqueIdentifier>{efb03668-0d94-4570-bf91-7d0fd95855d1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="uv\http">
+      <UniqueIdentifier>{f367ccb8-11ec-4a44-8f3a-fd5541f66d3c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -152,74 +152,74 @@
     <ClCompile Include="..\..\..\examples\remoteActorMessage\main.cpp">
       <Filter>example</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\orca\base\uv-cpp\uv\Async.cpp">
-      <Filter>src\orca\base\uv</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\orca\base\uv-cpp\uv\CycleBuffer.cpp">
-      <Filter>src\orca\base\uv</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\orca\base\uv-cpp\uv\DnsGet.cpp">
-      <Filter>src\orca\base\uv</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\orca\base\uv-cpp\uv\EventLoop.cpp">
-      <Filter>src\orca\base\uv</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\orca\base\uv-cpp\uv\GlobalConfig.cpp">
-      <Filter>src\orca\base\uv</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\orca\base\uv-cpp\uv\Idle.cpp">
-      <Filter>src\orca\base\uv</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\orca\base\uv-cpp\uv\ListBuffer.cpp">
-      <Filter>src\orca\base\uv</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\orca\base\uv-cpp\uv\LogWriter.cpp">
-      <Filter>src\orca\base\uv</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\orca\base\uv-cpp\uv\Packet.cpp">
-      <Filter>src\orca\base\uv</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\orca\base\uv-cpp\uv\Signal.cpp">
-      <Filter>src\orca\base\uv</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\orca\base\uv-cpp\uv\SocketAddr.cpp">
-      <Filter>src\orca\base\uv</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\orca\base\uv-cpp\uv\TcpAccepter.cpp">
-      <Filter>src\orca\base\uv</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\orca\base\uv-cpp\uv\TcpClient.cpp">
-      <Filter>src\orca\base\uv</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\orca\base\uv-cpp\uv\TcpConnection.cpp">
-      <Filter>src\orca\base\uv</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\orca\base\uv-cpp\uv\TcpServer.cpp">
-      <Filter>src\orca\base\uv</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\orca\base\uv-cpp\uv\Timer.cpp">
-      <Filter>src\orca\base\uv</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\orca\base\uv-cpp\uv\Udp.cpp">
-      <Filter>src\orca\base\uv</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\orca\base\uv-cpp\uv\http\HttpClient.cpp">
-      <Filter>src\orca\base\uv\http</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\orca\base\uv-cpp\uv\http\HttpCommon.cpp">
-      <Filter>src\orca\base\uv\http</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\orca\base\uv-cpp\uv\http\HttpServer.cpp">
-      <Filter>src\orca\base\uv\http</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\orca\base\uv-cpp\uv\http\Request.cpp">
-      <Filter>src\orca\base\uv\http</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\orca\base\uv-cpp\uv\http\Response.cpp">
-      <Filter>src\orca\base\uv\http</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\src\orca\core\net\TcpPacket.cpp">
       <Filter>src\orca\core\net</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\uv-cpp\uv\Async.cpp">
+      <Filter>uv</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\uv-cpp\uv\CycleBuffer.cpp">
+      <Filter>uv</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\uv-cpp\uv\DnsGet.cpp">
+      <Filter>uv</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\uv-cpp\uv\EventLoop.cpp">
+      <Filter>uv</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\uv-cpp\uv\GlobalConfig.cpp">
+      <Filter>uv</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\uv-cpp\uv\Idle.cpp">
+      <Filter>uv</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\uv-cpp\uv\ListBuffer.cpp">
+      <Filter>uv</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\uv-cpp\uv\LogWriter.cpp">
+      <Filter>uv</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\uv-cpp\uv\Packet.cpp">
+      <Filter>uv</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\uv-cpp\uv\Signal.cpp">
+      <Filter>uv</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\uv-cpp\uv\SocketAddr.cpp">
+      <Filter>uv</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\uv-cpp\uv\TcpAccepter.cpp">
+      <Filter>uv</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\uv-cpp\uv\TcpClient.cpp">
+      <Filter>uv</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\uv-cpp\uv\TcpConnection.cpp">
+      <Filter>uv</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\uv-cpp\uv\TcpServer.cpp">
+      <Filter>uv</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\uv-cpp\uv\Timer.cpp">
+      <Filter>uv</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\uv-cpp\uv\Udp.cpp">
+      <Filter>uv</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\uv-cpp\uv\http\HttpClient.cpp">
+      <Filter>uv\http</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\uv-cpp\uv\http\HttpCommon.cpp">
+      <Filter>uv\http</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\uv-cpp\uv\http\HttpServer.cpp">
+      <Filter>uv\http</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\uv-cpp\uv\http\Request.cpp">
+      <Filter>uv\http</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\uv-cpp\uv\http\Response.cpp">
+      <Filter>uv\http</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

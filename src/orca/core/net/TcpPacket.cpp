@@ -54,7 +54,7 @@ int TcpPacket::ReadTcpBuffer(uv::PacketBuffer* packetbuf, void* out)
         }
         UnpackNum((uint8_t*)packet->buffer_.c_str() + 1, packet->dataSize_);
         UnpackNum((uint8_t*)packet->buffer_.c_str() + 3, packet->messageType_);
-        uint16_t msgsize = packet->dataSize_ + PacketMinSize()+ sizeof(uint64_t);
+        uint16_t msgsize = (uint16_t)(packet->dataSize_ + PacketMinSize()+ sizeof(uint64_t));
         //包不完整
         if (size < msgsize)
         {
