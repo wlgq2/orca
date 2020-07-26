@@ -20,7 +20,7 @@ class TcpPacket :public uv::Packet
 {
 public :
     void packWithType(const char* data, uint16_t size);
-
+    const char* getData();
     static int ReadTcpBuffer(uv::PacketBuffer* packetbuf, void* out);
 public:
     uint64_t messageType_;

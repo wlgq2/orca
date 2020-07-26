@@ -26,6 +26,11 @@ void TcpPacket::packWithType(const char * data, uint16_t size)
     buffer_.back() = EndByte;
 }
 
+const char* TcpPacket::getData()
+{
+    return buffer_.c_str() + sizeof(HeadByte) + sizeof(dataSize_)+sizeof(messageType_);
+}
+
 
 int TcpPacket::ReadTcpBuffer(uv::PacketBuffer* packetbuf, void* out)
 {
