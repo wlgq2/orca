@@ -3,6 +3,7 @@
 
 #include "../../base/error/ErrorHandle.h"
 #include "Protocol.h"
+#include "TcpPacket.h"
 
 using namespace orca::core;
 using namespace std;
@@ -67,21 +68,22 @@ void orca::core::ActorClient::onConnectStatus(uv::TcpClient::ConnectStatus statu
 
 void orca::core::ActorClient::onMessage(const char* data, ssize_t size)
 {
-//uvÐÞ¸Ä
-#if  0
-    appendToBuffer(data, (int)size);
-    uv::Packet packet;
-    while (0 == readFromBuffer(packet))
+    auto packetBuf = getCurrentBuf();
+    if (nullptr != packetBuf)
     {
-        if (Protocol::RespFrameworkId == packet.reserve_)
+        packetBuf->append(data, (int)size);
+        TcpPacket packet;
+        while (0 == packetBuf->readGeneric(&packet))
         {
-            uint32_t id = *((uint32_t*)packet.getData());
-            remoteId_ = id;
-            if (onRegisterRemoteFramework_)
-                onRegisterRemoteFramework_(remoteId_,shared_from_this());
+            if (Protocol::RespFrameworkId == packet.messageType_)
+            {
+                uint32_t id = *((uint32_t*)packet.getData());
+                remoteId_ = id;
+                if (onRegisterRemoteFramework_)
+                    onRegisterRemoteFramework_(remoteId_, shared_from_this());
+            }
         }
     }
-#endif
 }
 
 void orca::core::ActorClient::reconnect()
@@ -101,28 +103,26 @@ void orca::core::ActorClient::reconnect()
 
 void orca::core::ActorClient::heartbeat(uv::Timer*)
 {
-//uvÐÞ¸Ä
-#if  0
     if (isConenected_)
     {
         if (++cnt_ > HeartbeatTimeSec)
         {
             cnt_ = 0;
             //send heartbeat.
-            uv::Packet packet;
+            TcpPacket packet;
             char null = 0x00;
-            packet.reserve_ = Protocol::HeartBeatMessage;
-            packet.fill(&null, sizeof(char));
-            write(packet.Buffer(), packet.BufferSize());
+            packet.messageType_ = Protocol::HeartBeatMessage;
+            packet.packWithType(&null, sizeof(char));
+            write(packet.Buffer().c_str(), packet.PacketSize());
         }
         if (remoteId_ < 0)
         {
             //req remote framework id.
-            uv::Packet packet;
+            TcpPacket packet;
             uint32_t id = localId_;
-            packet.reserve_ = Protocol::ReqFrameworkId;
-            packet.fill((const char*)(&id), sizeof(uint32_t));
-            write(packet.Buffer(), packet.BufferSize(),
+            packet.messageType_ = Protocol::ReqFrameworkId;
+            packet.packWithType((const char*)(&id), sizeof(uint32_t));
+            write(packet.Buffer().c_str(), packet.PacketSize(),
                 [this](uv::WriteInfo info)
             {
                 if (0 != info.status)
@@ -132,5 +132,4 @@ void orca::core::ActorClient::heartbeat(uv::Timer*)
             });
         }
     }
-#endif
 }

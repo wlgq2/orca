@@ -12,6 +12,7 @@
 #include "../base/error/ErrorHandle.h"
 #include "Assert.h"
 #include "net/Protocol.h"
+#include "net/TcpPacket.h"
 
 namespace orca
 {
@@ -216,8 +217,6 @@ inline void EndPoint<MessageType>::appendMail(RemoteMailPtr mail)
 template<typename MessageType>
 inline void EndPoint<MessageType>::processMail()
 {
-//uvÐÞ¸Ä
-#if 0
     //only run in loop thread.
     ORCA_ASSERT_MSG(loop_.isRunInLoopThread(),"remote message process can only run in uv loop thread.");
     int size = (int)(sendCache_.size());
@@ -238,11 +237,11 @@ inline void EndPoint<MessageType>::processMail()
                 delete data;
                 continue;
             }
-            uv::Packet packet;
-            packet.reserve_ = Protocol::ActorMessage;
-            packet.fill(data, size);
+            TcpPacket packet;
+            packet.messageType_ = Protocol::ActorMessage;
+            packet.packWithType(data, size);
             delete data;
-            client->write(packet.Buffer(), packet.BufferSize(),
+            client->write(packet.Buffer().c_str(), packet.PacketSize(),
                 [this](uv::WriteInfo& writeInfo)
             {
                 if (0 != writeInfo.status)
@@ -264,7 +263,6 @@ inline void EndPoint<MessageType>::processMail()
         }
 
     }
-#endif
 }
 
 template<typename MessageType>

@@ -100,6 +100,7 @@
     <ClInclude Include="..\..\..\src\orca\core\net\ActorClient.h" />
     <ClInclude Include="..\..\..\src\orca\core\net\ActorServer.h" />
     <ClInclude Include="..\..\..\src\orca\core\net\Protocol.h" />
+    <ClInclude Include="..\..\..\src\orca\core\net\TcpPacket.h" />
     <ClInclude Include="..\..\..\src\orca\core\RemoteMail.h" />
     <ClInclude Include="..\..\..\src\orca\orca.h" />
   </ItemGroup>
@@ -135,6 +136,7 @@
     <ClCompile Include="..\..\..\src\orca\core\MailBoxThread.cpp" />
     <ClCompile Include="..\..\..\src\orca\core\net\ActorClient.cpp" />
     <ClCompile Include="..\..\..\src\orca\core\net\ActorServer.cpp" />
+    <ClCompile Include="..\..\..\src\orca\core\net\TcpPacket.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

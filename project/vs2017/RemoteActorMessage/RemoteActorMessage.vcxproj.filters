@@ -120,6 +120,9 @@
     <ClInclude Include="..\..\..\examples\remoteActorMessage\MessageType.h">
       <Filter>example</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\src\orca\core\net\TcpPacket.h">
+      <Filter>src\orca\core\net</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\src\orca\core\MailBoxThread.cpp">
@@ -214,6 +217,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\src\orca\base\uv-cpp\uv\http\Response.cpp">
       <Filter>src\orca\base\uv\http</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\orca\core\net\TcpPacket.cpp">
+      <Filter>src\orca\core\net</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -23,7 +23,22 @@ namespace orca
 {
 namespace core
 {
-
+class UvConfig
+{
+public:
+    static UvConfig& RunOnce()
+    {
+        static UvConfig single;
+        return single;
+    }
+private:
+    UvConfig()
+    {
+        uv::GlobalConfig::BufferModeStatus = uv::GlobalConfig::CycleBuffer;
+        uv::GlobalConfig::CycleBufferSize = 1024 << 6; //64kb
+        uv::GlobalConfig::ReadBufferVoid = std::bind(&TcpPacket::ReadTcpBuffer, std::placeholders::_1, std::placeholders::_2);
+    }
+};
 struct FrameworkConfig
 {
     FrameworkConfig()
@@ -99,6 +114,7 @@ Framework<MessageType>::Framework(struct FrameworkConfig& config)
         endPoint_->registerRemoteMessage(std::bind(&Framework<MessageType>::onRemoteMessageByName, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3),
             std::bind(&Framework<MessageType>::onRemoteMessageByAddress,this,std::placeholders::_1,std::placeholders::_2,std::placeholders::_3));
     }
+    UvConfig::RunOnce();
     threadPool_.registerPorcess(std::bind(&Framework::process, this));
 }
 
@@ -109,6 +125,7 @@ Framework<MessageType>::Framework()
     mailboxCenter_(0),
     endPoint_(nullptr)
 {
+    UvConfig::RunOnce();
     threadPool_.registerPorcess(std::bind(&Framework::process, this));
 }
 
