@@ -37,6 +37,9 @@
     <Filter Include="src\orca\core\net">
       <UniqueIdentifier>{6c9df7f0-92f1-41ce-aad0-11ca7b10cc2f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\orca\base\uv\http">
+      <UniqueIdentifier>{18c45b10-4f17-4206-82db-c95873502e29}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\src\orca\orca.h">
@@ -114,65 +117,8 @@
     <ClInclude Include="..\..\..\src\orca\base\condition\Condition.h">
       <Filter>src\orca\base\condition</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\src\orca\base\uv-cpp\uv\Async.h">
-      <Filter>src\orca\base\uv</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\orca\base\uv-cpp\uv\CycleBuffer.h">
-      <Filter>src\orca\base\uv</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\orca\base\uv-cpp\uv\EventLoop.h">
-      <Filter>src\orca\base\uv</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\orca\base\uv-cpp\uv\Idle.h">
-      <Filter>src\orca\base\uv</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\orca\base\uv-cpp\uv\ListBuffer.h">
-      <Filter>src\orca\base\uv</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\orca\base\uv-cpp\uv\LogWriter.h">
-      <Filter>src\orca\base\uv</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\orca\base\uv-cpp\uv\Packet.h">
-      <Filter>src\orca\base\uv</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\orca\base\uv-cpp\uv\PacketBuffer.h">
-      <Filter>src\orca\base\uv</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\orca\base\uv-cpp\uv\Signal.h">
-      <Filter>src\orca\base\uv</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\orca\base\uv-cpp\uv\SocketAddr.h">
-      <Filter>src\orca\base\uv</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\orca\base\uv-cpp\uv\TcpAccepter.h">
-      <Filter>src\orca\base\uv</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\orca\base\uv-cpp\uv\TcpClient.h">
-      <Filter>src\orca\base\uv</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\orca\base\uv-cpp\uv\TcpConnection.h">
-      <Filter>src\orca\base\uv</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\orca\base\uv-cpp\uv\TcpServer.h">
-      <Filter>src\orca\base\uv</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\orca\base\uv-cpp\uv\Timer.h">
-      <Filter>src\orca\base\uv</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\orca\base\uv-cpp\uv\TimerWheel.h">
-      <Filter>src\orca\base\uv</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\orca\base\uv-cpp\uv\Udp.h">
-      <Filter>src\orca\base\uv</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\orca\base\uv-cpp\uv\uv11.h">
-      <Filter>src\orca\base\uv</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\examples\helloworld\helloworld.cpp.cpp">
-      <Filter>example</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\src\orca\core\MailBoxThread.cpp">
       <Filter>src\orca\core</Filter>
     </ClCompile>
@@ -197,13 +143,22 @@
     <ClCompile Include="..\..\..\src\orca\base\condition\Condition.cpp">
       <Filter>src\orca\base\condition</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\examples\helloworld\helloworld.cpp">
+      <Filter>example</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\..\src\orca\base\uv-cpp\uv\Async.cpp">
       <Filter>src\orca\base\uv</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\orca\base\uv-cpp\uv\CycleBuffer.cpp">
       <Filter>src\orca\base\uv</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\src\orca\base\uv-cpp\uv\DnsGet.cpp">
+      <Filter>src\orca\base\uv</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\..\src\orca\base\uv-cpp\uv\EventLoop.cpp">
+      <Filter>src\orca\base\uv</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\orca\base\uv-cpp\uv\GlobalConfig.cpp">
       <Filter>src\orca\base\uv</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\orca\base\uv-cpp\uv\Idle.cpp">
@@ -239,11 +194,23 @@
     <ClCompile Include="..\..\..\src\orca\base\uv-cpp\uv\Timer.cpp">
       <Filter>src\orca\base\uv</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\orca\base\uv-cpp\uv\TimerWheel.cpp">
-      <Filter>src\orca\base\uv</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\src\orca\base\uv-cpp\uv\Udp.cpp">
       <Filter>src\orca\base\uv</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\orca\base\uv-cpp\uv\http\HttpClient.cpp">
+      <Filter>src\orca\base\uv\http</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\orca\base\uv-cpp\uv\http\HttpCommon.cpp">
+      <Filter>src\orca\base\uv\http</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\orca\base\uv-cpp\uv\http\HttpServer.cpp">
+      <Filter>src\orca\base\uv\http</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\orca\base\uv-cpp\uv\http\Request.cpp">
+      <Filter>src\orca\base\uv\http</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\orca\base\uv-cpp\uv\http\Response.cpp">
+      <Filter>src\orca\base\uv\http</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

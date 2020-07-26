@@ -7,14 +7,14 @@ Last modified: 2019-2-21
 
 Description: https://github.com/wlgq2/uv-cpp
 */
-#include "Async.h"
+#include "include/Async.h"
 
 using namespace uv;
 
 Async::Async(EventLoop * loop)
     : handle_(new uv_async_t)
 {
-    ::uv_async_init(loop->hanlde(), handle_, Async::Callback);
+    ::uv_async_init(loop->handle(), handle_, Async::Callback);
     handle_->data = static_cast<void*>(this);
 }
 
@@ -23,7 +23,7 @@ Async::~Async()
 
 }
 
-void Async::runInThisLoop(AsyncCallback callback)
+void Async::runInThisLoop(DefaultCallback callback)
 {
     {
         std::lock_guard<std::mutex> lock(mutex_);
@@ -43,7 +43,7 @@ void uv::Async::process()
     }
 }
 
-void uv::Async::close(AsyncCallback callback)
+void uv::Async::close(DefaultCallback callback)
 {
     if (::uv_is_closing((uv_handle_t*)handle_) == 0)
     {

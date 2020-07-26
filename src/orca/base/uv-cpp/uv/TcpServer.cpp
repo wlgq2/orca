@@ -3,7 +3,7 @@
 
    Author: orcaer@yeah.net
 
-   Last modified: 2019-10-19
+   Last modified: 2019-12-31
 
    Description: https://github.com/wlgq2/uv-cpp
 */
@@ -13,12 +13,17 @@
 #include <memory>
 #include <string>
 
-#include "TcpServer.h"
-#include "LogWriter.h"
+#include "include/TcpServer.h"
+#include "include/LogWriter.h"
 
 using namespace std;
 using namespace uv;
 
+
+void uv::TcpServer::SetBufferMode(uv::GlobalConfig::BufferMode mode)
+{
+    uv::GlobalConfig::BufferModeStatus = mode;
+}
 
 TcpServer::TcpServer(EventLoop* loop, bool tcpNoDelay)
     :loop_(loop),
@@ -42,21 +47,24 @@ void TcpServer::setTimeout(unsigned int seconds)
     timerWheel_.setTimeout(seconds);
 }
 
-void uv::TcpServer::onAccept(EventLoop * loop, uv_tcp_t * client)
+void uv::TcpServer::onAccept(EventLoop * loop, UVTcpPtr client)
 {
     string key;
-    SocketAddr::AddrToStr(client, key, ipv_);
+    SocketAddr::AddrToStr(client.get(), key, ipv_);
 
-    uv::LogWriter::Instance()->info("new connect  " + key);
-
+    uv::LogWriter::Instance()->debug("new connect  " + key);
     shared_ptr<TcpConnection> connection(new TcpConnection(loop, key, client));
     if (connection)
     {
         connection->setMessageCallback(std::bind(&TcpServer::onMessage, this, placeholders::_1, placeholders::_2, placeholders::_3));
         connection->setConnectCloseCallback(std::bind(&TcpServer::closeConnection, this, placeholders::_1));
-
         addConnnection(key, connection);
-        timerWheel_.insertNew(connection);
+        if (timerWheel_.getTimeout() > 0)
+        {
+            auto wrapper = std::make_shared<ConnectionWrapper>(connection);
+            connection->setWrapper(wrapper);
+            timerWheel_.insert(wrapper);
+        }
         if (onNewConnectCallback_)
             onNewConnectCallback_(connection);
     }
@@ -92,7 +100,7 @@ void TcpServer::removeConnnection(string& name)
     connnections_.erase(name);
 }
 
-shared_ptr<TcpConnection> TcpServer::getConnnection(string& name)
+shared_ptr<TcpConnection> TcpServer::getConnnection(const string& name)
 {
     auto rst = connnections_.find(name);
     if(rst == connnections_.end())
@@ -102,7 +110,7 @@ shared_ptr<TcpConnection> TcpServer::getConnnection(string& name)
     return rst->second;
 }
 
-void TcpServer::closeConnection(string& name)
+void TcpServer::closeConnection(const string& name)
 {
     auto connection = getConnnection(name);
     if (nullptr != connection)
@@ -116,7 +124,7 @@ void TcpServer::closeConnection(string& name)
                 {
                     onConnectCloseCallback_(connection);
                 }
-                connnections_.erase(name);
+                removeConnnection(name);
             }
 
         });
@@ -128,7 +136,10 @@ void TcpServer::onMessage(TcpConnectionPtr connection,const char* buf,ssize_t si
 {
     if(onMessageCallback_)
         onMessageCallback_(connection,buf,size);
-    timerWheel_.insert(connection);
+    if (timerWheel_.getTimeout() > 0)
+    {
+        timerWheel_.insert(connection->getWrapper());
+    }
 }
 
 

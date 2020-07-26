@@ -14,21 +14,28 @@ EchoServer::EchoServer(EventLoop* loop)
     setMessageCallback(std::bind(&EchoServer::newMessage,this,placeholders::_1,placeholders::_2,placeholders::_3));
 }
 
-void EchoServer::newMessage(shared_ptr<TcpConnection> connection,const char* buf,ssize_t size)
+void EchoServer::newMessage(shared_ptr<TcpConnection> connection, const char* buf, ssize_t size)
 {
-
-#if     USED_NO_PACKET
     cnt++;
-    connection->write(buf,size,nullptr);
-#else
-    uv::Packet packet;
-    connection->appendToBuffer(buf, size);
-    while (0 == connection->readFromBuffer(packet))
+    //不使用buffer
+    if (uv::GlobalConfig::BufferModeStatus == uv::GlobalConfig::NoBuffer)
     {
-        cnt++;
-        connection->write(packet.Buffer(), packet.BufferSize(), nullptr);
+        connection->write(buf, size, nullptr);
     }
-#endif
+    else  //使用buffer
+    {
+        auto packetbuf = connection->getPacketBuffer();
+        if (nullptr != packetbuf)
+        {
+            packetbuf->append(buf, static_cast<int>(size));
+            //循环读取buffer
+            Packet packet;
+            while (0 == packetbuf->readPacket(packet))
+            {   
+                connection->write(packet.Buffer().c_str(), packet.PacketSize(), nullptr);
+            }
+        }
+    }
 
 }
 

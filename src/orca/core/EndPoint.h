@@ -4,7 +4,7 @@
 #include <string>
 #include <vector>
 #include <queue>
-#include "../base/uv-cpp/uv/uv11.h"
+#include "../base/uv-cpp/uv/include/uv11.h"
 #include "../base/thread/Thread.h"
 #include "net/ActorClient.h"
 #include "net/ActorServer.h"
@@ -216,6 +216,8 @@ inline void EndPoint<MessageType>::appendMail(RemoteMailPtr mail)
 template<typename MessageType>
 inline void EndPoint<MessageType>::processMail()
 {
+//uvÐÞ¸Ä
+#if 0
     //only run in loop thread.
     ORCA_ASSERT_MSG(loop_.isRunInLoopThread(),"remote message process can only run in uv loop thread.");
     int size = (int)(sendCache_.size());
@@ -248,8 +250,6 @@ inline void EndPoint<MessageType>::processMail()
                     orca::base::ErrorHandle::Instance()->error(base::ErrorInfo::UVWriteFail, std::string("uv write message fail:")+uv::EventLoop::GetErrorMessage(writeInfo.status));
                 }
             });
-
-
         }
         else
         {
@@ -264,6 +264,7 @@ inline void EndPoint<MessageType>::processMail()
         }
 
     }
+#endif
 }
 
 template<typename MessageType>

@@ -8,9 +8,9 @@
    Description: https://github.com/wlgq2/uv-cpp
 */
 
-#include "EventLoop.h"
-#include "TcpConnection.h"
-#include "Async.h"
+#include "include/EventLoop.h"
+#include "include/TcpConnection.h"
+#include "include/Async.h"
 
 using namespace uv;
 
@@ -46,13 +46,13 @@ EventLoop::~EventLoop()
     }
 }
 
-EventLoop* uv::EventLoop::DefalutLoop()
+EventLoop* uv::EventLoop::DefaultLoop()
 {
     static EventLoop defaultLoop(EventLoop::Mode::Default);
     return &defaultLoop;
 }
 
-uv_loop_t* EventLoop::hanlde()
+uv_loop_t* EventLoop::handle()
 {
     return loop_;
 }

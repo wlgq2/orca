@@ -18,12 +18,12 @@
 
 using namespace uv;
 
-#define      TEST_SIGNAL      0
-#define      TEST_SERVER      0
-#define      TEST_CLIENT      0
-#define      TEST_ASYNC       0
-#define      TEST_TIMER       0
-#define      TEST_LOG         0
+#define      TEST_SIGNAL      1
+#define      TEST_SERVER      1
+#define      TEST_CLIENT      1
+#define      TEST_ASYNC       1
+#define      TEST_TIMER       1
+#define      TEST_LOG         1
 #define      TEST_UDP         1
 
 #define       TEST_IPV6       0
@@ -33,7 +33,7 @@ int main(int argc, char** args)
     //定义事件分发器类
     EventLoop* loop = new EventLoop();
     //or
-    //EventLoop* loop = EventLoop::DefalutLoop();
+    //EventLoop* loop = EventLoop::DefaultLoop();
 
 #if    TEST_SIGNAL
     //接管SIGPIPE信号。

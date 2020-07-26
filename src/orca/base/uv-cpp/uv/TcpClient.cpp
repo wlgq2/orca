@@ -3,15 +3,16 @@
 
    Author: orcaer@yeah.net
 
-   Last modified: 2018-10-9
+   Last modified: 2019-12-31
 
    Description: https://github.com/wlgq2/uv-cpp
 */
 
 #include <string>
 
-#include "TcpClient.h"
-#include "LogWriter.h"
+#include "include/TcpClient.h"
+#include "include/LogWriter.h"
+#include "include/Packet.h"
 
 using namespace uv;
 using namespace std;
@@ -19,7 +20,6 @@ using namespace std;
 
 TcpClient::TcpClient(EventLoop* loop, bool tcpNoDelay)
     :loop_(loop),
-    socket_(new uv_tcp_t()),
     connect_(new uv_connect_t()),
     ipv(SocketAddr::Ipv4),
     tcpNoDelay_(tcpNoDelay),
@@ -27,7 +27,7 @@ TcpClient::TcpClient(EventLoop* loop, bool tcpNoDelay)
     onMessageCallback_(nullptr),
     connection_(nullptr)
 {
-    update();
+    connect_->data = static_cast<void*>(this);
 }
 
 TcpClient::~TcpClient()
@@ -48,10 +48,11 @@ void uv::TcpClient::setTcpNoDelay(bool isNoDelay)
 
 void TcpClient::connect(SocketAddr& addr)
 {
-    ipv = addr.Ipv();
-    ::uv_tcp_connect(connect_, socket_, addr.Addr(), [](uv_connect_t* req, int status)
+    update();
+    ipv = addr.Ipv();    
+    ::uv_tcp_connect(connect_, socket_.get(), addr.Addr(), [](uv_connect_t* req, int status)
     {
-        auto handle = static_cast<TcpClient*>(((uv_tcp_t *)(req->handle))->data);
+        auto handle = static_cast<TcpClient*>((req->data));
         if (0 != status)
         {
             uv::LogWriter::Instance()->error( "connect fail.");
@@ -68,7 +69,7 @@ void TcpClient::onConnect(bool successed)
     if(successed)
     {
         string name;
-        SocketAddr::AddrToStr(socket_,name,ipv);
+        SocketAddr::AddrToStr(socket_.get(),name,ipv);
 
         connection_ = make_shared<TcpConnection>(loop_, name, socket_);
         connection_->setMessageCallback(std::bind(&TcpClient::onMessage,this,std::placeholders::_1,std::placeholders::_2,std::placeholders::_3));
@@ -77,18 +78,18 @@ void TcpClient::onConnect(bool successed)
     }
     else
     {
-        if (::uv_is_active((uv_handle_t*)socket_))
+        if (::uv_is_active((uv_handle_t*)socket_.get()))
         {
-            ::uv_read_stop((uv_stream_t*)socket_);
+            ::uv_read_stop((uv_stream_t*)socket_.get());
         }
-        if (::uv_is_closing((uv_handle_t*)socket_) == 0)
+        if (::uv_is_closing((uv_handle_t*)socket_.get()) == 0)
         {
-            ::uv_close((uv_handle_t*)socket_,
+            socket_->data = static_cast<void*>(this);
+            ::uv_close((uv_handle_t*)socket_.get(),
                 [](uv_handle_t* handle)
             {
                 auto client = static_cast<TcpClient*>(handle->data);
                 client->afterConnectFail();
-                delete handle;
             });
         }
     }
@@ -107,29 +108,26 @@ void TcpClient::onMessage(shared_ptr<TcpConnection> connection,const char* buf,s
         onMessageCallback_(buf,size);
 }
 
-void uv::TcpClient::close(std::function<void(std::string&)> callback)
+void uv::TcpClient::close(std::function<void(uv::TcpClient*)> callback)
 {
     if (connection_)
     {
-        connection_->close([this, callback](std::string& name)
+        connection_->close([this, callback](std::string&)
         {
-            onClose(name);
+            //onClose(name);
             if (callback)
-                callback(name);
+                callback(this);
         });
 
     }
     else if(callback)
     {
-        std::string str("");
-        callback(str);
+        callback(this);
     }
 }
 
 void uv::TcpClient::afterConnectFail()
 {
-    socket_ = new uv_tcp_t();
-    update();  
     runConnectCallback(TcpClient::OnConnnectFail);
 }
 
@@ -172,36 +170,25 @@ void uv::TcpClient::setMessageCallback(NewMessageCallback callback)
     onMessageCallback_ = callback;
 }
 
-
 EventLoop* uv::TcpClient::Loop()
 {
     return loop_;
 }
 
-int uv::TcpClient::appendToBuffer(const char* data, int size)
+PacketBufferPtr uv::TcpClient::getCurrentBuf()
 {
-    if(connection_)
-    {
-        return connection_->appendToBuffer(data,size);
-    }
-    return -1;
+    if (connection_)
+        return connection_->getPacketBuffer();
+    return nullptr;
 }
 
-int uv::TcpClient::readFromBuffer(Packet& packet)
-{
-    if(connection_)
-    {
-        return connection_->readFromBuffer(packet);
-    }
-    return -1;
-}
 
 void TcpClient::update()
 {
-    ::uv_tcp_init(loop_->hanlde(), socket_);
+    socket_ = make_shared<uv_tcp_t>();
+    ::uv_tcp_init(loop_->handle(), socket_.get());
     if (tcpNoDelay_)
-        ::uv_tcp_nodelay(socket_,1);
-    socket_->data = static_cast<void*>(this);
+        ::uv_tcp_nodelay(socket_.get(), 1 );
 }
 
 void uv::TcpClient::runConnectCallback(TcpClient::ConnectStatus satus)
@@ -213,9 +200,6 @@ void uv::TcpClient::runConnectCallback(TcpClient::ConnectStatus satus)
 void uv::TcpClient::onClose(std::string& name)
 {
     //connection_ = nullptr;
-    //old socket_ pointer will release when reconnect.
-    socket_ = new uv_tcp_t();
-    update();
     uv::LogWriter::Instance()->info("Close tcp client connection complete.");
     runConnectCallback(TcpClient::OnConnnectClose);
 }

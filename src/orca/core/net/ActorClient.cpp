@@ -67,6 +67,8 @@ void orca::core::ActorClient::onConnectStatus(uv::TcpClient::ConnectStatus statu
 
 void orca::core::ActorClient::onMessage(const char* data, ssize_t size)
 {
+//uvÐÞ¸Ä
+#if  0
     appendToBuffer(data, (int)size);
     uv::Packet packet;
     while (0 == readFromBuffer(packet))
@@ -79,6 +81,7 @@ void orca::core::ActorClient::onMessage(const char* data, ssize_t size)
                 onRegisterRemoteFramework_(remoteId_,shared_from_this());
         }
     }
+#endif
 }
 
 void orca::core::ActorClient::reconnect()
@@ -98,6 +101,8 @@ void orca::core::ActorClient::reconnect()
 
 void orca::core::ActorClient::heartbeat(uv::Timer*)
 {
+//uvÐÞ¸Ä
+#if  0
     if (isConenected_)
     {
         if (++cnt_ > HeartbeatTimeSec)
@@ -127,4 +132,5 @@ void orca::core::ActorClient::heartbeat(uv::Timer*)
             });
         }
     }
+#endif
 }

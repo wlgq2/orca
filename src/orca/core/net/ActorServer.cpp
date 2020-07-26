@@ -20,6 +20,8 @@ ActorServer::ActorServer(uv::EventLoop* loop, uint32_t id, OnActorMeessageCallba
 
 void orca::core::ActorServer::onMessage(std::shared_ptr<uv::TcpConnection>connection, const char* data, ssize_t size)
 {
+//uvÐÞ¸Ä
+#if  0
     connection->appendToBuffer(data, (int)size);
     uv::Packet packet;
     while (0 == connection->readFromBuffer(packet))
@@ -39,6 +41,7 @@ void orca::core::ActorServer::onMessage(std::shared_ptr<uv::TcpConnection>connec
             break;
         }
     }
+#endif
 }
 
 void orca::core::ActorServer::onReqFrameworkId(uint32_t id, std::shared_ptr<uv::TcpConnection> connection)
@@ -46,6 +49,8 @@ void orca::core::ActorServer::onReqFrameworkId(uint32_t id, std::shared_ptr<uv::
     
     //resp remote framework id.
     uv::Packet packet;
+//uvÐÞ¸Ä
+#if  0
     packet.reserve_ = Protocol::RespFrameworkId;
     packet.fill((const char*)(&id_), sizeof(uint32_t));
     connection->write(packet.Buffer(), packet.BufferSize(), 
@@ -56,7 +61,7 @@ void orca::core::ActorServer::onReqFrameworkId(uint32_t id, std::shared_ptr<uv::
             base::ErrorHandle::Instance()->error(base::ErrorInfo::UVWriteFail,uv::EventLoop::GetErrorMessage(info.status));
         }
     });
-
+#endif
     endPoints_[id] = connection;
 }
 

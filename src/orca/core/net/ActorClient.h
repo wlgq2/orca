@@ -2,7 +2,7 @@
 #define    ORCA_ACTOR_CLIENT_H
 
 #include <memory>
-#include  "../../base/uv-cpp/uv/uv11.h"
+#include  "../../base/uv-cpp/uv/include/uv11.h"
 
 namespace orca
 {

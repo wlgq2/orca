@@ -3,41 +3,39 @@ Copyright © 2017-2019, orcaer@yeah.net  All rights reserved.
 
 Author: orcaer@yeah.net
 
-Last modified: 2018-7-18
+Last modified: 2019-10-24
 
 Description: https://github.com/wlgq2/uv-cpp
 */
-#include "CycleBuffer.h"
+#include "include/CycleBuffer.h"
+#include "include/GlobalConfig.h"
 
 using namespace uv;
 
-
-const uint32_t ArrayBuffer::BufferSize = (1 << 13) + 1;
-
-uv::ArrayBuffer::ArrayBuffer()
+CycleBuffer::CycleBuffer()
     :writeIndex_(0),
     readIndex_(0)
 {
-    buffer_ = new uint8_t[BufferSize];
+    buffer_ = new uint8_t[GlobalConfig::GlobalConfig::CycleBufferSize];
 }
 
-uv::ArrayBuffer::~ArrayBuffer()
+CycleBuffer::~CycleBuffer()
 {
     delete[] buffer_;
 }
 
 
-int uv::ArrayBuffer::append(const char* data, int size)
+int CycleBuffer::append(const char* data, uint64_t size)
 {
     SizeInfo info;
     usableSizeInfo(info);
 
-    if (info.size < (uint32_t)size)
+    if (info.size < size)
     {
         //缓存不够
-        return 0;
+        return -1;
     }
-    if (info.part1 >= (uint32_t)size)
+    if (info.part1 >= size)
     {
         std::copy(data, data + size, buffer_ + writeIndex_);
     }
@@ -47,89 +45,69 @@ int uv::ArrayBuffer::append(const char* data, int size)
         std::copy(data + info.part1, data + size, buffer_);
     }
     addWriteIndex(size);
-    return size;
+    return 0;
 
 }
 
-int uv::ArrayBuffer::read(Packet& packet)
+int CycleBuffer::readBufferN(std::string& data, uint64_t N)
 {
-    while (true)
+    SizeInfo info;
+    readSizeInfo(info);
+    if (N > readSize())
     {
-        while ((readIndex_ != writeIndex_) &&( buffer_[readIndex_] != Packet::HeadByte))
-        {
-            addReadIndex(1);
-        }
-        SizeInfo info;
-        readSizeInfo(info);
-        if (info.size <= Packet::PacketMinSize())
-        {
-            return -1;
-        }
-
-        uint8_t cnt[2];
-        int index = readIndex_;
-        for (int i = 0; i < 2; i++)
-        {
-            if (++index == BufferSize)
-                index = 0;
-            cnt[i] = buffer_[index];
-        }
-        uint16_t size;
-        Packet::UnpackNum(cnt, size);
-        if (size + Packet::PacketMinSize() > info.size)
-        {
-            return -1;
-        }
-        if (info.part1 >= size + Packet::PacketMinSize())
-        {
-            int end = readIndex_ + size + Packet::PacketMinSize() - 1;
-            if (buffer_[end] != Packet::EndByte)
-            {
-                //从下一字节重新寻找包头。
-                addReadIndex(1);
-                continue;
-            }
-            char* data = new char[size + Packet::PacketMinSize()];
-            std::copy(buffer_+readIndex_, buffer_ + readIndex_ + size + Packet::PacketMinSize(), data);
-            packet.update(data, (uint16_t)(size + Packet::PacketMinSize()));
-            addReadIndex(size + Packet::PacketMinSize());
-            return 0;
-        }
-        else
-        {
-            int end = size+ Packet::PacketMinSize()-info.part1-1;
-            if (buffer_[end] != Packet::EndByte)
-            {
-                //从下一字节重新寻找包头。
-                addReadIndex(1);
-                continue;
-            }
-            char* data = new char[size + Packet::PacketMinSize()];
-            std::copy(buffer_ + readIndex_, buffer_ + BufferSize, data);
-            int remain = size + Packet::PacketMinSize() - info.part1;
-            std::copy(buffer_, buffer_ + remain, data+info.part1);
-            packet.update(data, (uint16_t)(size + Packet::PacketMinSize()));
-            addReadIndex(size + Packet::PacketMinSize());
-            return 0;
-        }
+        return -1;
     }
+    int start = (int)data.size();
+    data.resize(start + N);
+    //string被resize空间，所以操作指针安全
+    char* out = const_cast<char*>(data.c_str());
+    out += start;
+    if (N <= info.part1)
+    {
+        std::copy(buffer_ + readIndex_, buffer_ + readIndex_ + N, out);
+    }
+    else
+    {
+        std::copy(buffer_ + readIndex_, buffer_ + GlobalConfig::CycleBufferSize, out);
+        uint64_t remain = N - info.part1;
+        std::copy(buffer_, buffer_ + remain, out + info.part1);
+    }
+
+    return 0;
 }
 
-int uv::ArrayBuffer::usableSize()
+int CycleBuffer::clearBufferN(uint64_t N)
 {
-    int usable;
+    if(N>readSize())
+    {
+        N =readSize();
+    }
+    addReadIndex(N);
+    return 0;
+}
+
+int CycleBuffer::clear()
+{
+    writeIndex_ = 0;
+    readIndex_ = 0;
+    return 0;
+}
+
+uint64_t CycleBuffer::usableSize()
+{
+    uint64_t usable;
     if (writeIndex_ < readIndex_)
     {
         usable = readIndex_ - writeIndex_ - 1;
     }
     else
     {
-        usable = BufferSize + readIndex_- writeIndex_-1;
+        usable = GlobalConfig::CycleBufferSize + readIndex_- writeIndex_-1;
     }
     return usable;
 }
 
-void uv::ArrayBuffer::usableSizeInfo(SizeInfo& info)
+void CycleBuffer::usableSizeInfo(SizeInfo& info)
 {
     if (writeIndex_ < readIndex_)
     {
@@ -139,27 +117,20 @@ void uv::ArrayBuffer::usableSizeInfo(SizeInfo& info)
     else
     {
         bool readIsZore = (0 == readIndex_);
-        info.part1 = readIsZore ? BufferSize - writeIndex_-1: BufferSize - writeIndex_;
+        info.part1 = readIsZore ? GlobalConfig::CycleBufferSize - writeIndex_-1: GlobalConfig::CycleBufferSize - writeIndex_;
         info.part2 = readIsZore ? 0 : readIndex_ - 1;
     }
     info.size = info.part1 + info.part2;
 }
 
-int uv::ArrayBuffer::readSize()
+uint64_t CycleBuffer::readSize()
 {
-    int read;
-    if (writeIndex_ >= readIndex_)
-    {
-        read = writeIndex_ - readIndex_;
-    }
-    else
-    {
-        read = BufferSize - readIndex_ + writeIndex_;
-    }
-    return read;
+    SizeInfo info;
+    readSizeInfo(info);
+    return info.size;
 }
 
-void uv::ArrayBuffer::readSizeInfo(SizeInfo& info)
+void CycleBuffer::readSizeInfo(SizeInfo& info)
 {
     if (writeIndex_ >= readIndex_)
     {
@@ -168,28 +139,28 @@ void uv::ArrayBuffer::readSizeInfo(SizeInfo& info)
     }
     else
     {
-        info.part1 = BufferSize - readIndex_;
+        info.part1 = GlobalConfig::CycleBufferSize - readIndex_;
         info.part2 = writeIndex_;
     }
     info.size = info.part1 + info.part2;
 }
 
-int uv::ArrayBuffer::addWriteIndex(uint32_t size)
+int CycleBuffer::addWriteIndex(uint64_t size)
 {
-    if (size > BufferSize)
+    if (size > GlobalConfig::CycleBufferSize)
         return -1;
     writeIndex_ += size;
-    if (writeIndex_ >= BufferSize)
-        writeIndex_ -= BufferSize;
+    if (writeIndex_ >= GlobalConfig::CycleBufferSize)
+        writeIndex_ -= GlobalConfig::CycleBufferSize;
     return 0;
 }
 
-int uv::ArrayBuffer::addReadIndex(uint32_t size)
+int CycleBuffer::addReadIndex(uint64_t size)
 {
-    if (size > BufferSize)
+    if (size > GlobalConfig::CycleBufferSize)
         return -1;
     readIndex_ += size;
-    if (readIndex_ >= BufferSize)
-        readIndex_ -= BufferSize;
+    if (readIndex_ >= GlobalConfig::CycleBufferSize)
+        readIndex_ -= GlobalConfig::CycleBufferSize;
     return 0;
 }
