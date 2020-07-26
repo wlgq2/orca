@@ -5,12 +5,13 @@ SET(VERSION 1.0.0)
 
 
 SET(LIB_DIRECTORY
-    ${PROJECT_SOURCE_DIR}/lib/libuv1.22.0/lib/gcc7.4.0/)
+    ${PROJECT_SOURCE_DIR}/uv-cpp/libuv1.30.0/lib/gcc8.3.0/)
 
 SET(SOURCE_DIRECTORY
+    ${PROJECT_SOURCE_DIR}/uv-cpp/uv/
+    ${PROJECT_SOURCE_DIR}/uv-cpp/uv/http/
     ${PROJECT_SOURCE_DIR}/src/orca/base/condition/
     ${PROJECT_SOURCE_DIR}/src/orca/base/error/
-    ${PROJECT_SOURCE_DIR}/src/orca/base/uv-cpp/uv/
     ${PROJECT_SOURCE_DIR}/src/orca/base/queue/
     ${PROJECT_SOURCE_DIR}/src/orca/base/SpinLock/
     ${PROJECT_SOURCE_DIR}/src/orca/base/thread/
@@ -19,7 +20,7 @@ SET(SOURCE_DIRECTORY
     )
     
 SET(INCLUDE_DIRECTORY
-    ${PROJECT_SOURCE_DIR}/lib/libuv1.22.0/include/
+    ${PROJECT_SOURCE_DIR}/uv-cpp/libuv1.30.0/include/
     ${PROJECT_SOURCE_DIR}/
     )
     
