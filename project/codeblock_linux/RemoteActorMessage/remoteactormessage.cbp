@@ -31,12 +31,12 @@
 		<Compiler>
 			<Add option="-Wall" />
 			<Add option="-std=c++11" />
-			<Add directory="../../../lib/libuv1.22.0/include" />
+			<Add directory="../../../uv-cpp/libuv1.30.0/include" />
 			<Add directory="../../../src" />
 		</Compiler>
 		<Linker>
 			<Add option="-pthread" />
-			<Add library="../../../lib/libuv1.22.0/lib/gcc7.4.0/libuv.a" />
+			<Add library="../../../uv-cpp/libuv1.30.0/lib/gcc8.3.0/libuv.a" />
 		</Linker>
 		<Unit filename="../../../examples/remoteActorMessage/MessageType.h" />
 		<Unit filename="../../../examples/remoteActorMessage/main.cpp" />
@@ -53,40 +53,6 @@
 		<Unit filename="../../../src/orca/base/thread/Thread.h" />
 		<Unit filename="../../../src/orca/base/thread/ThreadPool.cpp" />
 		<Unit filename="../../../src/orca/base/thread/ThreadPool.h" />
-		<Unit filename="../../../src/orca/base/uv-cpp/uv/Async.cpp" />
-		<Unit filename="../../../src/orca/base/uv-cpp/uv/Async.h" />
-		<Unit filename="../../../src/orca/base/uv-cpp/uv/CycleBuffer.cpp" />
-		<Unit filename="../../../src/orca/base/uv-cpp/uv/CycleBuffer.h" />
-		<Unit filename="../../../src/orca/base/uv-cpp/uv/EventLoop.cpp" />
-		<Unit filename="../../../src/orca/base/uv-cpp/uv/EventLoop.h" />
-		<Unit filename="../../../src/orca/base/uv-cpp/uv/Idle.cpp" />
-		<Unit filename="../../../src/orca/base/uv-cpp/uv/Idle.h" />
-		<Unit filename="../../../src/orca/base/uv-cpp/uv/ListBuffer.cpp" />
-		<Unit filename="../../../src/orca/base/uv-cpp/uv/ListBuffer.h" />
-		<Unit filename="../../../src/orca/base/uv-cpp/uv/LogWriter.cpp" />
-		<Unit filename="../../../src/orca/base/uv-cpp/uv/LogWriter.h" />
-		<Unit filename="../../../src/orca/base/uv-cpp/uv/Packet.cpp" />
-		<Unit filename="../../../src/orca/base/uv-cpp/uv/Packet.h" />
-		<Unit filename="../../../src/orca/base/uv-cpp/uv/PacketBuffer.h" />
-		<Unit filename="../../../src/orca/base/uv-cpp/uv/Signal.cpp" />
-		<Unit filename="../../../src/orca/base/uv-cpp/uv/Signal.h" />
-		<Unit filename="../../../src/orca/base/uv-cpp/uv/SocketAddr.cpp" />
-		<Unit filename="../../../src/orca/base/uv-cpp/uv/SocketAddr.h" />
-		<Unit filename="../../../src/orca/base/uv-cpp/uv/TcpAccepter.cpp" />
-		<Unit filename="../../../src/orca/base/uv-cpp/uv/TcpAccepter.h" />
-		<Unit filename="../../../src/orca/base/uv-cpp/uv/TcpClient.cpp" />
-		<Unit filename="../../../src/orca/base/uv-cpp/uv/TcpClient.h" />
-		<Unit filename="../../../src/orca/base/uv-cpp/uv/TcpConnection.cpp" />
-		<Unit filename="../../../src/orca/base/uv-cpp/uv/TcpConnection.h" />
-		<Unit filename="../../../src/orca/base/uv-cpp/uv/TcpServer.cpp" />
-		<Unit filename="../../../src/orca/base/uv-cpp/uv/TcpServer.h" />
-		<Unit filename="../../../src/orca/base/uv-cpp/uv/Timer.cpp" />
-		<Unit filename="../../../src/orca/base/uv-cpp/uv/Timer.h" />
-		<Unit filename="../../../src/orca/base/uv-cpp/uv/TimerWheel.cpp" />
-		<Unit filename="../../../src/orca/base/uv-cpp/uv/TimerWheel.h" />
-		<Unit filename="../../../src/orca/base/uv-cpp/uv/Udp.cpp" />
-		<Unit filename="../../../src/orca/base/uv-cpp/uv/Udp.h" />
-		<Unit filename="../../../src/orca/base/uv-cpp/uv/uv11.h" />
 		<Unit filename="../../../src/orca/core/Actor.h" />
 		<Unit filename="../../../src/orca/core/Address.h" />
 		<Unit filename="../../../src/orca/core/Assert.h" />
@@ -107,6 +73,30 @@
 		<Unit filename="../../../src/orca/core/net/ActorServer.cpp" />
 		<Unit filename="../../../src/orca/core/net/ActorServer.h" />
 		<Unit filename="../../../src/orca/core/net/Protocol.h" />
+		<Unit filename="../../../src/orca/core/net/TcpPacket.cpp" />
+		<Unit filename="../../../src/orca/core/net/TcpPacket.h" />
+		<Unit filename="../../../uv-cpp/uv/Async.cpp" />
+		<Unit filename="../../../uv-cpp/uv/CycleBuffer.cpp" />
+		<Unit filename="../../../uv-cpp/uv/DnsGet.cpp" />
+		<Unit filename="../../../uv-cpp/uv/EventLoop.cpp" />
+		<Unit filename="../../../uv-cpp/uv/GlobalConfig.cpp" />
+		<Unit filename="../../../uv-cpp/uv/Idle.cpp" />
+		<Unit filename="../../../uv-cpp/uv/ListBuffer.cpp" />
+		<Unit filename="../../../uv-cpp/uv/LogWriter.cpp" />
+		<Unit filename="../../../uv-cpp/uv/Packet.cpp" />
+		<Unit filename="../../../uv-cpp/uv/Signal.cpp" />
+		<Unit filename="../../../uv-cpp/uv/SocketAddr.cpp" />
+		<Unit filename="../../../uv-cpp/uv/TcpAccepter.cpp" />
+		<Unit filename="../../../uv-cpp/uv/TcpClient.cpp" />
+		<Unit filename="../../../uv-cpp/uv/TcpConnection.cpp" />
+		<Unit filename="../../../uv-cpp/uv/TcpServer.cpp" />
+		<Unit filename="../../../uv-cpp/uv/Timer.cpp" />
+		<Unit filename="../../../uv-cpp/uv/Udp.cpp" />
+		<Unit filename="../../../uv-cpp/uv/http/HttpClient.cpp" />
+		<Unit filename="../../../uv-cpp/uv/http/HttpCommon.cpp" />
+		<Unit filename="../../../uv-cpp/uv/http/HttpServer.cpp" />
+		<Unit filename="../../../uv-cpp/uv/http/Request.cpp" />
+		<Unit filename="../../../uv-cpp/uv/http/Response.cpp" />
 		<Extensions>
 			<code_completion />
 			<debugger />
